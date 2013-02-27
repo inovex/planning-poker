@@ -1,7 +1,12 @@
 var http = require('http');
 var fs = require('fs');
 var url = require('url');
-var supportedImages = /\.(css|png)$/;
+var express = require('express');
+
+var app = express();
+app.use(express.static(__dirname + '/public'));
+app.set('views', __dirname + '/views');
+app.engine('html', require('ejs').renderFile);
 
 var readFile = function(filename) {
 	var output = '';
@@ -13,6 +18,15 @@ var readFile = function(filename) {
 	return output;
 }
 
+app.get('/', function(req, res) {
+	res.render('index.html');
+	res.end();
+});
+
+app.listen(1337, '127.0.0.1');
+console.log('Server running at http://127.0.0.1:1337/');
+
+/*
 http.createServer(function (req, res) {
 	var path,
 		output;
@@ -22,8 +36,7 @@ http.createServer(function (req, res) {
 
 	switch(path) {
 		case '/':
-			res.writeHead(200, {'Content-Type': 'text/html'});
-			output = readFile('templates/index.html');
+			
 			break;
 
 		default:
@@ -40,8 +53,6 @@ http.createServer(function (req, res) {
 			}
 	}
 
-	res.write(output);
-
-	res.end();
+	
 }).listen(1337, '127.0.0.1');
-console.log('Server running at http://127.0.0.1:1337/');
+*/

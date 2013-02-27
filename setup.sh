@@ -1,6 +1,12 @@
 echo "Installing missing npm packages"
 
-npm ll --global | grep -q express
-if [ $? -ne 0 ]; then
-	sudo npm install --global express
-fi
+function install_npm_package {
+	echo "Checking npm package $1"
+	npm ll | grep -q $1
+	if [ $? -ne 0 ]; then
+		sudo npm install $1
+	fi	
+}
+
+install_npm_package express
+install_npm_package ejs
