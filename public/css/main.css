@@ -38,7 +38,7 @@ p {
 	padding: 0;
 }
 
-.poker-login-overlay {
+.poker-overlay {
 	position: fixed;
 	background: rgba(0, 0, 0, 0.3);
 	top: 0;
