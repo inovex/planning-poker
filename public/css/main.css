@@ -104,5 +104,6 @@ h1 {
 
 .poker-cards .poker-card:hover {
 	background-color: #f46200;
+	border-color: #000;
 	cursor: pointer;
 }
