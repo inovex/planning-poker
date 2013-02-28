@@ -43,10 +43,7 @@ app.post('/login', function(req, res) {
         // Create random id for user
         user.id = 0;
         //console.log(user);
-        console.log(new Date());
         currentUsers[user.id] = user;
-        console.log(currentUsers);
-
         res.json(user);
         //res.write(JSON.stringify(user));
     });

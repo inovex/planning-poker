@@ -3,7 +3,7 @@
 		options = jQuery.extend({}, jQuery.fn.login.options, options);
 		var user;
 
-		user = localStorage.getItem('user');
+		user = localStorage.getItem(options.lsUserKey);
 		if (user !== null) {
 			$(options.overlay).hide();
 		}
@@ -27,12 +27,15 @@
 		event.preventDefault();
 		loadOptions = {
 			method: 'POST',
-			data: $(event.data.form).serialize()
+			data: $(event.data.form).serialize(),
 		};
-		$.ajax('/login', loadOptions);
+		$.ajax('/login', loadOptions).done(function(data) {
+			localStorage.setItem(event.data.options.lsUserKey, data);
+		});
 	};
 
 	jQuery.fn.login.options = {
-		overlay: null
+		overlay: null,
+		lsUserKey: 'user'
 	};
 })(jQuery, jQuery);
