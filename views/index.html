@@ -3,6 +3,8 @@
 <head>
 	<title>Planning Poker online | inovex GmbH</title>
 	<link rel="stylesheet" type="text/css" href="css/main.css" />
+	<script type="text/javascript" href="js/jquery/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" href="js/jquery/modules/jquery.login.js"></script>
 </head>
 
 <body>
@@ -10,7 +12,7 @@
 		<div class="poker-login">
 			<div class="poker-top">Login</div>
 				<div class="poker-content">
-				<form action="" method="post">
+				<form action="" method="post" id="poker-login-form">
 					<p class="poker-login-user">
 						<label>Bitte gibt deine Rolle an</label>
 						<select name="role">
@@ -39,6 +41,7 @@
 			<h1>Planning Poker online</h1>
 
 			<div class="poker-felt">
+				<!--
 				<div class="poker-card-display">
 					<a class="poker-card">8</a>
 					<span class="poker-card-player">Khalid</a>
@@ -51,6 +54,7 @@
 					<a class="poker-card">5</a>
 					<span class="poker-card-player">Andreas</a>
 				</div>
+				//-->
 			</div>
 			<div class="poker-separator">&nbsp;</div>
 
@@ -77,6 +81,7 @@
 			<b>&copy;2013 inovex GmbH</b> - Developed by Dominik Jungowski
 		</div>
 	</footer>
+	<script type="text/javascript">$('#poker-login-form').login();</script>
 </body>
 
 </html>

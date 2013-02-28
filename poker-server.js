@@ -8,6 +8,9 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').renderFile);
 
+// App Variables
+var currentUsers = {};
+
 var readFile = function(filename) {
 	var output = '';
 	try {
@@ -20,6 +23,11 @@ var readFile = function(filename) {
 
 app.get('/', function(req, res) {
 	res.render('index.html');
+	res.end();
+});
+
+app.get('/login', function(req, res) {
+	currentUsers;
 	res.end();
 });
 
