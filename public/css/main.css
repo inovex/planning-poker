@@ -55,13 +55,42 @@ h1 {
 	color: #999;
 }
 
+.poker-felt {
+	border-radius: 5px;
+	background-image: url('../img/poker-felt.jpg');
+	border-radius: 5px;
+	margin-bottom: 10px;
+	padding: 40px;
+	height: 140px;
+}
+
+.poker-felt .poker-card-display {
+	float: left;
+	margin-right: 40px;
+}
+
+.poker-felt .poker-card {
+	margin-bottom: 5px;
+}
+
+.poker-felt .poker-card-player {
+	color: #fff;
+	font-size: 15px;
+	display: block;
+	width: 70px;
+	clear: both;
+	text-align: center;
+}
+
 .poker-cards {
 	clear: both;
+	padding-left: 17px;
 }
 
 .poker-card {
 	display: block;
 	border: 2px solid #f46200;
+	background-color: #fff;
 	border-radius: 5px;
 	float: left;
 	width: 70px;
@@ -73,7 +102,7 @@ h1 {
 	font-weight: bold;
 }
 
-.poker-card:hover {
+.poker-cards .poker-card:hover {
 	background-color: #f46200;
 	cursor: pointer;
 }
