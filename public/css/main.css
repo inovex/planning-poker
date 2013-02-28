@@ -20,6 +20,11 @@ h1 {
 	margin: 20px 0 20px 0;
 }
 
+.poker-separator {
+	clear: both;
+	height: 0px;
+}
+
 .poker-top {
 	background-color: #f46200;
 	height: 10px;
@@ -48,4 +53,27 @@ h1 {
 	border-radius: 10px 10px 0 0;
 	padding-top: 10px;
 	color: #999;
+}
+
+.poker-cards {
+	clear: both;
+}
+
+.poker-card {
+	display: block;
+	border: 2px solid #f46200;
+	border-radius: 5px;
+	float: left;
+	width: 70px;
+	height: 120px;
+	line-height: 120px;
+	margin-right: 5px;
+	text-align: center;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.poker-card:hover {
+	background-color: #f46200;
+	cursor: pointer;
 }
