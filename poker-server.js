@@ -36,10 +36,10 @@ wsServer.on('request', function(request) {
         if (message.type === 'utf8') {
             console.log('Received Message: ' + message.utf8Data);
             switch(message.utf8Data) {
-            	case 'get-intial-data':
+            	case 'get-initial-data':
+            		connection.sendUTF(JSON.stringify(getUserUpdateList()));
             		break;
             }
-            //connection.sendUTF(message.utf8Data);
         }
         else if (message.type === 'binary') {
             console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
@@ -105,11 +105,15 @@ app.post('/login', function(req, res) {
     });
 });
 
-broadcastUsers = function() {
-	var pushData = {
+getUserUpdateList = function () {
+	return {
     	type: 'userlist',
     	data: currentUsers
     };
+};
+
+broadcastUsers = function() {
+	var pushData = getUserUpdateList();
     wsServer.broadcastUTF(JSON.stringify(pushData));
 }
 
