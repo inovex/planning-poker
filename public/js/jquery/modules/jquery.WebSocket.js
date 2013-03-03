@@ -49,7 +49,7 @@
 						user;
 
 					user = users[userId];
-					userArray.push('<span class="poker-role-' + user.role + '">' + user.name + '</span>');
+					userArray.push('<span class="poker-role poker-role-' + user.role + '">' + user.name + '</span>');
 				}
 				$(this.elements.userlist).html(userArray.join(', '));
 			};
@@ -64,6 +64,7 @@
 				</div>
 			*/
 			this.handleCardDisplay = function(cards) {
+				$(this.elements.pokerFelt).empty();
 				for (var userId in cards) {
 					var card,
 						pokerCardId;

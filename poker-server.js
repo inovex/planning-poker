@@ -147,9 +147,15 @@ app.post('/logout', function(req, res) {
 
 	req.on('end', function () {
 		user = qs.parse(user);
+
 		currentUsers[user.id] = null;
 		delete currentUsers[user.id];
+
+		carddisplay[user.id] = null;
+		delete carddisplay[user.id];
+
 		broadcastUsers();
+		broadcastCards();
     	res.json(true);
     });
 });

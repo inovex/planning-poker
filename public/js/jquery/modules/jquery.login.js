@@ -11,9 +11,7 @@
 				method: 'POST',
 				data: user,
 				success: function(data) {
-					jQuery.fn.login.updateUserInfo(user, options);
-					jQuery.fn.login.openWebSocket(options);
-					$(options.overlay).hide(400);
+					jQuery.fn.login.postLogin(user, options);
 				}
 			});
 		}
@@ -46,14 +44,18 @@
 			data: $(event.data.form).serialize(),
 			success: function(data) {
 				localStorage.setItem(options.lsUserKey, JSON.stringify(data));
-				jQuery.fn.login.updateUserInfo(data, options);
-				jQuery.fn.login.openWebSocket(options);
-				$(options.overlay).hide(400);	
+				jQuery.fn.login.postLogin(data, options);
 			},
 			fail: function(data) {
 				$(event.data.form).find('.poker-login-submit').removeAttr('disabled');	
 			}
 		});
+	};
+
+	jQuery.fn.login.postLogin = function(user, options) {
+		jQuery.fn.login.updateUserInfo(user, options);
+		jQuery.fn.login.openWebSocket(options);
+		$(options.overlay).hide(400);
 	};
 
 	jQuery.fn.login.updateUserInfo = function(user, options) {
