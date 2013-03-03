@@ -6,9 +6,16 @@
 		user = localStorage.getItem(options.lsUserKey);
 		if (user !== null) {
 			user = JSON.parse(user);
-			jQuery.fn.login.updateUserInfo(user, options);
-			jQuery.fn.login.openWebSocket(options);
-			$(options.overlay).hide();
+			$.ajax({
+				url: '/login',
+				method: 'POST',
+				data: user,
+				success: function(data) {
+					jQuery.fn.login.updateUserInfo(user, options);
+					jQuery.fn.login.openWebSocket(options);
+					$(options.overlay).hide(400);
+				}
+			});
 		}
 
 		// Klickhandler registrieren
