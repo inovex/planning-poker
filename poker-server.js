@@ -44,6 +44,13 @@ wsServer.on('request', function(request) {
         			carddisplay[messageData.userId] = messageData.cardValue
         			broadcastCards();
         			break;
+
+        		case 'show-cards':
+        			var pushData = {
+        				type: 'show-cards'
+        			};
+        			wsServer.broadcastUTF(JSON.stringify(pushData));
+        			break;
             }
         }
         else if (message.type === 'binary') {

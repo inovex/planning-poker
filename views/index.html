@@ -113,7 +113,9 @@
 			{
 				userlist: '.poker-users-online',
 				pokerFelt: '.poker-felt',
-				pokerCardsShowButton: '#poker-cards-show-button'
+				pokerCardsShowButton: '#poker-cards-show-button',
+				showCardsSelectorClass: 'poker-card-display',
+				showCardsToggleClass: 'poker-card-display-hidden'
 			}
 		);
 
@@ -138,10 +140,7 @@
 			selectedClass: 'poker-card-selected'
 		});
 
-		$('#poker-cards-show-button').showcards({
-			selectorClass: 'poker-card-display',
-			toggleClass: 'poker-card-display-hidden'
-		});
+		$('#poker-cards-show-button').showcards();
 
 		$(window).on('load', function() {
 			$('.poker-login-user input[type="text"]').focus();

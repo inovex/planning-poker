@@ -1,17 +1,16 @@
 (function($, jQuery) {
 	jQuery.fn.showcards = function(options) {
-		var me;
 		options = jQuery.extend({}, jQuery.fn.showcards.options, options);
 
-		me = this
 		$(this).on('click', function(event) {
-			$('.' + options.selectorClass).removeClass(options.toggleClass);
-			$(me).attr('disabled', 'disabled');
+			var pushData = {
+				type: 'show-cards'
+			};
+			window.managedSocket.send(JSON.stringify(pushData));
 		});
 	};	
 
 	jQuery.fn.showcards.options = {
-		selectorClass: null,
-		toggleClass: null
+		
 	};
 })(jQuery, jQuery);

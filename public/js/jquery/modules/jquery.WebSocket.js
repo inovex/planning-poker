@@ -35,6 +35,10 @@
 						case 'carddisplay':
 							me.handleCardDisplay(data.data);
 							break;
+
+						case 'show-cards':
+							me.handleShowCards();
+							break;
 					}
 				}
 			};
@@ -93,6 +97,13 @@
 						$(this.elements.pokerCardsShowButton).removeAttr('disabled');
 					}
 				}
+			}
+
+			this.handleShowCards = function() {
+				//showCardsSelectorClass: null,
+				//showCardsToggleClass: null
+				$('.' + this.elements.showCardsSelectorClass).removeClass(this.elements.showCardsToggleClass);
+				$(this.elements.pokerCardsShowButton).attr('disabled', 'disabled');
 			}
 
 			return this;
