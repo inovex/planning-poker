@@ -35,7 +35,6 @@
 			this.handleUserList = function(users)  {
 				var userArray;
 
-				console.log(users);
 				userArray = [];
 				for (userId in users) {
 					var span,
