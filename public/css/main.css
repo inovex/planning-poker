@@ -160,8 +160,20 @@ img.poker-logout {
 
 .poker-cards .poker-card:hover {
 	background-color: #f46200;
-	border-color: #000;
 	cursor: pointer;
+}
+
+.poker-card-back {
+	display: none;
+	border-color: #000;
+}
+
+.poker-card-display-hidden .poker-card {
+	display: none;
+}
+
+.poker-card-display-hidden .poker-card-back {
+	display: block;
 }
 
 .poker-userinfo {
