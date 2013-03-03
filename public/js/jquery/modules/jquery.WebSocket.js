@@ -14,8 +14,11 @@
 
 				window.managedSocket = new WebSocket('ws://' + this.socketOptions.address + ':' + this.socketOptions.port);
 				socket = window.managedSocket;
-
 				me = this;
+
+				socket.onopen = function(event) {
+					socket.send('get-initial-data');
+				}
 
 				socket.onmessage = function(event) {
 					var data;

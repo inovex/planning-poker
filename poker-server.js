@@ -35,11 +35,15 @@ wsServer.on('request', function(request) {
     connection.on('message', function(message) {
         if (message.type === 'utf8') {
             console.log('Received Message: ' + message.utf8Data);
-            connection.sendUTF(message.utf8Data);
+            switch(message.utf8Data) {
+            	case 'get-intial-data':
+            		break;
+            }
+            //connection.sendUTF(message.utf8Data);
         }
         else if (message.type === 'binary') {
             console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
-            connection.sendBytes(message.binaryData);
+            //connection.sendBytes(message.binaryData);
         }
     });
     connection.on('close', function(reasonCode, description) {
