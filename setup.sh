@@ -11,3 +11,4 @@ function install_npm_package {
 install_npm_package express
 install_npm_package ejs
 install_npm_package iniparser
+install_npm_package websocket
