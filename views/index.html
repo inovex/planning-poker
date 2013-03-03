@@ -6,6 +6,7 @@
 	<script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.login.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.logout.js"></script>
+	<script type="text/javascript" src="js/jquery/modules/jquery.cardselection.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.WebSocket.js"></script>
 </head>
 
@@ -121,6 +122,8 @@
 		$('.poker-logout').logout({
 			lsUserKey: options.lsUserKey
 		});
+
+		$('.poker-cards').cardselection();
 
 		$(window).on('load', function() {
 			$('.poker-login-user input[type="text"]').focus();

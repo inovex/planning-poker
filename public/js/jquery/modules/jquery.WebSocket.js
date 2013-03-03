@@ -17,7 +17,10 @@
 				me = this;
 
 				socket.onopen = function(event) {
-					socket.send('get-initial-data');
+					var socketData = {
+						type: 'get-initial-data'
+					};
+					socket.send(JSON.stringify(socketData));
 				}
 
 				socket.onmessage = function(event) {
@@ -33,6 +36,7 @@
 			};
 
 			this.handleUserList = function(users)  {
+				window.currentUsers = users;
 				var userArray;
 
 				userArray = [];

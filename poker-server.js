@@ -26,7 +26,6 @@ wsServer = new WebSocketServer({
     // to accept it.
     autoAcceptConnections: false
 });
-var connections = [];
 
 wsServer.on('request', function(request) {
 	console.log(request.requestedProtocols);
@@ -35,10 +34,14 @@ wsServer.on('request', function(request) {
     connection.on('message', function(message) {
         if (message.type === 'utf8') {
             console.log('Received Message: ' + message.utf8Data);
-            switch(message.utf8Data) {
+            var messageData = JSON.parse(message.utf8Data);
+            switch(messageData.type) {
             	case 'get-initial-data':
             		connection.sendUTF(JSON.stringify(getUserUpdateList()));
             		break;
+
+        		case 'play-card':
+        			break;
             }
         }
         else if (message.type === 'binary') {
@@ -53,6 +56,7 @@ wsServer.on('request', function(request) {
 
 // App Variables
 var currentUsers = {};
+var carddisplay = {};
 
 var readFile = function(filename) {
 	var output = '';
