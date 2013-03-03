@@ -35,7 +35,7 @@ app.get('/', function(req, res) {
 app.post('/login', function(req, res) {
     var user,
     	sha1sum;
-    	
+
     user = '';
     //res.set('Content-Type', 'application/json');
     req.on('data', function (data) {
@@ -53,14 +53,12 @@ app.post('/login', function(req, res) {
 			if (ex) throw ex;
 			sha1sum.update(buf);
 			user.id = sha1sum.digest('hex');
-			console.log(user);
 	        currentUsers[user.id] = user;
 	        res.json(user);
-
-	        console.log(currentUsers);
 		});
     });
 });
 
-app.listen(config.http.port, config.http.listen);
-console.log('HTTP Server running at http://' + config.http.listen + ':' + config.http.port + '/');
+app.listen(config.http.port, config.http.listen, function() {
+	console.log('HTTP Server running at http://' + config.http.listen + ':' + config.http.port + '/');
+});
