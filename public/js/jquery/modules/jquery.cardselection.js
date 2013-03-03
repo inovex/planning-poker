@@ -5,10 +5,12 @@
 		this.on('click', function(event) {
 			var socket,
 				cardValue,
-				user;
+				user,
+				selectedCard;
 
 			socket = window.managedSocket;
-			cardValue = $(event.target).html();
+			selectedCard = $(event.target);
+			cardValue = selectedCard.html();
 			user = JSON.parse(localStorage.getItem(options.lsUserKey));
 
 			socketData = {
@@ -18,6 +20,8 @@
 			};
 
 			socket.send(JSON.stringify(socketData));
+			$('.' + options.selectedClass).removeClass(options.selectedClass);
+			selectedCard.addClass(options.selectedClass);
 		})
 	};
 

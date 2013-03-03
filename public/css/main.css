@@ -158,7 +158,7 @@ img.poker-logout {
 	font-weight: bold;
 }
 
-.poker-cards .poker-card:hover {
+.poker-cards .poker-card:hover, .poker-card-selected {
 	background-color: #f46200;
 	cursor: pointer;
 }
