@@ -72,7 +72,7 @@
 				Du bist angemeldet als: <span class="poker-userinfo-name"></span> (<span class="poker-userinfo-role"></span>)
 				<img src="img/icon/lock_open.png" alt="Ausloggen" title="Ausloggen" class="poker-logout" />
 			</div>
-			<div class="poker-cards">
+			<div class="poker-cards scrum-developer">
 				<a class="poker-card">0</a>
 				<a class="poker-card">1/2</a>
 				<a class="poker-card">1</a>
@@ -85,6 +85,9 @@
 				<a class="poker-card">40</a>
 				<a class="poker-card">100</a>
 				<a class="poker-card">?</a>
+			</div>
+			<div class="poker-cards-show scrum-master">
+				<button id="poker-cards-show-button" disabled="disabled">Karten aufdecken</button>
 			</div>
 			<div class="poker-separator">&nbsp;</div>
 		</div>
@@ -117,7 +120,11 @@
 			userInfoClass: '.poker-userinfo',
 			nameClass: '.poker-userinfo-name',
 			roleClass: '.poker-userinfo-role',
-			lsUserKey: options.lsUserKey
+			lsUserKey: options.lsUserKey,
+			scrumMaster: {
+				hide: ['.scrum-developer'],
+				show: ['.scrum-master']
+			}
 		});
 
 		$('.poker-logout').logout({

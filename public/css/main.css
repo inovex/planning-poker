@@ -38,6 +38,12 @@ p {
 	padding: 0;
 }
 
+/** Role specific definitions */
+
+.scrum-master, .scrum-product-owner {
+	display: none;
+}
+
 .poker-overlay {
 	position: fixed;
 	background: rgba(0, 0, 0, 0.3);
@@ -161,6 +167,20 @@ img.poker-logout {
 .poker-cards .poker-card:hover, .poker-card-selected {
 	background-color: #f46200;
 	cursor: pointer;
+}
+
+.poker-cards-show {
+	text-align: right;
+	padding-right: 20px;
+}
+
+.poker-cards-show button {
+	background-color: #0DD550;
+	font-size: 17px;
+	font-weight: bold;
+	border: none;
+	padding: 10px;
+	border-radius: 5px;
 }
 
 .poker-card-back {

@@ -53,9 +53,22 @@
 	};
 
 	jQuery.fn.login.postLogin = function(user, options) {
+		if (user.role == 'sm') {
+			jQuery.fn.login.preparePageForScrumMaster(options);
+		}
 		jQuery.fn.login.updateUserInfo(user, options);
 		jQuery.fn.login.openWebSocket(options);
 		$(options.overlay).hide(400);
+	};
+
+	jQuery.fn.login.preparePageForScrumMaster = function(options) {
+		for (var i in options.scrumMaster.hide) {
+			$(options.scrumMaster.hide[i]).hide();
+		}
+
+		for (var i in options.scrumMaster.show) {
+			$(options.scrumMaster.show[i]).show();
+		}
 	};
 
 	jQuery.fn.login.updateUserInfo = function(user, options) {
@@ -77,6 +90,10 @@
 		overlay: null,
 		lsUserKey: 'user',
 		nameClass: null,
-		roleClass: null
+		roleClass: null,
+		scrumMaster: {
+			show: [],
+			hide: []
+		}
 	};
 })(jQuery, jQuery);

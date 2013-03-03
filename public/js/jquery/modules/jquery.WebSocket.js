@@ -84,6 +84,9 @@
 					}
 					card.find('.poker-card-value').html(cards[userId]);
 					card.find('.poker-card-player').html(window.currentUsers[userId].name);
+
+					// Schauen, ob alle devs abgestimmt haben
+					console.log($('.poker-role-dev').length);
 				}
 			}
 
