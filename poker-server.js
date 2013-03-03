@@ -84,11 +84,10 @@ app.post('/login', function(req, res) {
     });
     req.on('end', function () {
     	user = qs.parse(user);
-    	console.log(user);
-    	if (typeof user.id !== null && typeof currentUsers[user.id] !== null) {
+    	if (typeof user.id !== 'undefined') {
     		currentUsers[user.id] = user;
+    		res.json(user);
     		broadcastUsers();
-        	res.json(user);
     	} else {
 	    	// Create random id for user
 	    	sha1sum = crypto.createHash('sha1');
@@ -97,9 +96,8 @@ app.post('/login', function(req, res) {
 				sha1sum.update(buf);
 				user.id = sha1sum.digest('hex');
 		        currentUsers[user.id] = user;
-
-		        broadcastUsers();
         		res.json(user);
+        		broadcastUsers();
 			});
 		}
     });

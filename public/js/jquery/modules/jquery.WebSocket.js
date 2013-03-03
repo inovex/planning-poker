@@ -35,9 +35,14 @@
 			this.handleUserList = function(users)  {
 				var userArray;
 
+				console.log(users);
 				userArray = [];
 				for (userId in users) {
-					userArray.push(users[userId].name);
+					var span,
+						user;
+
+					user = users[userId];
+					userArray.push('<span class="poker-role-' + user.role + '">' + user.name + '</span>');
 				}
 				$(this.elements.userlist).html(userArray.join(', '));
 			};

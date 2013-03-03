@@ -180,9 +180,26 @@ img.poker-logout {
 .poker-users {
 	font-weight: bold;
 	margin-bottom: 10px;
+	float: left;
 }
 
 .poker-users-online {
 	font-weight: normal;
+	margin-left: 3px;
+}
+
+.poker-users-online .poker-role-dev {
 	color: #f46200;
+}
+
+.poker-users-online .poker-role-sm {
+	color: #0DD550;	
+}
+
+.poker-users-online .poker-role-po {
+	color: #666;
+}
+
+.poker-users p {
+	float: left;
 }
