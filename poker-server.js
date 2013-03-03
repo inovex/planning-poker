@@ -28,7 +28,6 @@ wsServer = new WebSocketServer({
 });
 
 wsServer.on('request', function(request) {
-	console.log(request.requestedProtocols);
 	var connection = request.accept();
     console.log((new Date()) + ' Connection accepted.');
     connection.on('message', function(message) {
