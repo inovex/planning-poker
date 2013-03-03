@@ -4,6 +4,7 @@ var url = require('url');
 var qs = require('querystring');
 var express = require('express');
 var iniparser = require('iniparser');
+var crypto = require('crypto');
 
 console.log('Loading config');
 var config = iniparser.parseSync('./config.ini');
@@ -32,7 +33,8 @@ app.get('/', function(req, res) {
 });
 
 app.post('/login', function(req, res) {
-    var user;
+    var user,
+    	sha1sum;
     user = '';
     //res.set('Content-Type', 'application/json');
     req.on('data', function (data) {
@@ -43,13 +45,19 @@ app.post('/login', function(req, res) {
         }
     });
     req.on('end', function () {
-        user = qs.parse(user);
-        // Create random id for user
-        user.id = 0;
-        //console.log(user);
-        currentUsers[user.id] = user;
-        res.json(user);
-        //res.write(JSON.stringify(user));
+    	user = qs.parse(user);
+    	// Create random id for user
+    	sha1sum = crypto.createHash('sha1');
+		crypto.randomBytes(256, function(ex, buf) {
+			if (ex) throw ex;
+			sha1sum.update(buf);
+			user.id = sha1sum.digest('hex');
+			console.log(user);
+	        currentUsers[user.id] = user;
+	        res.json(user);
+
+	        console.log(currentUsers);
+		});
     });
 
 	//res.end();
