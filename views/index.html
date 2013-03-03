@@ -6,6 +6,7 @@
 	<script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.login.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.logout.js"></script>
+	<script type="text/javascript" src="js/jquery/modules/jquery.WebSocket.js"></script>
 </head>
 
 <body>
@@ -40,6 +41,9 @@
 
 		<div class="poker-content">
 			<h1>Planning Poker online</h1>
+			<div>
+				Im Raum: <span class="poker-users-online"></span>
+			</div>
 
 			<div class="poker-felt">
 				<!--
@@ -87,11 +91,19 @@
 		</div>
 	</footer>
 	<script type="text/javascript">
+		var options = {
+			socket: {
+				adress: '127.0.0.1',
+				port: 80
+			}
+		};
+
 		$('#poker-login-form').login({
 			overlay: '.poker-overlay',
 			userInfoClass: '.poker-userinfo',
 			nameClass: '.poker-userinfo-name',
-			roleClass: '.poker-userinfo-role'
+			roleClass: '.poker-userinfo-role',
+			socketOptions: options.socket
 		});
 
 		$('.poker-logout').logout();

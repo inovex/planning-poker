@@ -39,6 +39,7 @@
 		$.ajax('/login', loadOptions).done(function(data, status) {
 			localStorage.setItem(options.lsUserKey, JSON.stringify(data));
 			jQuery.fn.login.updateUserInfo(data, options);
+			jQuery.fn.login.openWebSocket(options);
 			$(options.overlay).hide(400);
 		}).fail(function() {
 			$(event.data.form).find('.poker-login-submit').removeAttr('disabled');
@@ -51,6 +52,10 @@
 		$(options.userInfoClass).show();
 	};
 
+	jQuery.fn.login.openWebSocket = function(options) {
+		$(document).WebSocket(options.socketOptions);
+	}
+
 	jQuery.fn.login.options = {
 		availableRoles: {
 			dev: 'Entwickler',
@@ -60,6 +65,10 @@
 		overlay: null,
 		lsUserKey: 'user',
 		nameClass: null,
-		roleClass: null
+		roleClass: null,
+		socketOptions: {
+			address: null,
+			port: null
+		}
 	};
 })(jQuery, jQuery);

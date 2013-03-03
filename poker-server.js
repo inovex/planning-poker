@@ -1,4 +1,5 @@
 var http = require('http');
+var WebSocketServer = require('websocket').server;
 var fs = require('fs');
 var url = require('url');
 var qs = require('querystring');
@@ -10,9 +11,41 @@ console.log('Loading config');
 var config = iniparser.parseSync('./config.ini');
 
 var app = express();
+var httpServer = http.createServer(app);
 app.use(express.static(__dirname + config.filesystem.public_files));
 app.set('views', __dirname + config.filesystem.view_files);
 app.engine('html', require('ejs').renderFile);
+
+console.log('Creating WebSocket Server');
+wsServer = new WebSocketServer({
+    httpServer: httpServer,
+    // You should not use autoAcceptConnections for production
+    // applications, as it defeats all standard cross-origin protection
+    // facilities built into the protocol and the browser.  You should
+    // *always* verify the connection's origin and decide whether or not
+    // to accept it.
+    autoAcceptConnections: false
+});
+var connections = [];
+
+wsServer.on('request', function(request) {
+	console.log(request.requestedProtocols);
+	var connection = request.accept();
+    console.log((new Date()) + ' Connection accepted.');
+    connection.on('message', function(message) {
+        if (message.type === 'utf8') {
+            console.log('Received Message: ' + message.utf8Data);
+            connection.sendUTF(message.utf8Data);
+        }
+        else if (message.type === 'binary') {
+            console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
+            connection.sendBytes(message.binaryData);
+        }
+    });
+    connection.on('close', function(reasonCode, description) {
+        console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
+    });
+});
 
 // App Variables
 var currentUsers = {};
@@ -54,11 +87,12 @@ app.post('/login', function(req, res) {
 			sha1sum.update(buf);
 			user.id = sha1sum.digest('hex');
 	        currentUsers[user.id] = user;
+	        wsServer.broadcastUTF('New user logged in: ' + user.name);
 	        res.json(user);
 		});
     });
 });
 
-app.listen(config.http.port, config.http.listen, function() {
+httpServer.listen(config.http.port, config.http.listen, function() {
 	console.log('HTTP Server running at http://' + config.http.listen + ':' + config.http.port + '/');
 });
