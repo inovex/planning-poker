@@ -112,7 +112,8 @@ img.poker-logout {
 	margin-top: 20px;
 	box-shadow: 0 0 5px #606060;
 	background: #666;
-	border-radius: 10px 10px 0 0;
+	/*border-radius: 10px 10px 0 0;*/
+	border-radius: 10px;
 	padding-top: 10px;
 	color: #999;
 }
