@@ -38,9 +38,12 @@ wsServer.on('request', function(request) {
             switch(messageData.type) {
             	case 'get-initial-data':
             		connection.sendUTF(JSON.stringify(getUserUpdateList()));
+            		connection.sendUTF(JSON.stringify(getCardUpdateList()));
             		break;
 
         		case 'play-card':
+        			carddisplay[messageData.userId] = messageData.cardValue
+        			broadcastCards();
         			break;
             }
         }
@@ -117,6 +120,18 @@ getUserUpdateList = function () {
 broadcastUsers = function() {
 	var pushData = getUserUpdateList();
     wsServer.broadcastUTF(JSON.stringify(pushData));
+}
+
+getCardUpdateList = function () {
+	return {
+    	type: 'carddisplay',
+    	data: carddisplay
+    };
+};
+
+broadcastCards = function() {
+	var pushData = getCardUpdateList();
+    wsServer.broadcastUTF(JSON.stringify(pushData));	
 }
 
 app.post('/logout', function(req, res) {

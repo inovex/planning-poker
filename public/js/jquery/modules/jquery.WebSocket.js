@@ -31,6 +31,10 @@
 						case 'userlist':
 							me.handleUserList(data.data)
 							break;
+
+						case 'carddisplay':
+							me.handleCardDisplay(data.data);
+							break;
 					}
 				}
 			};
@@ -49,6 +53,38 @@
 				}
 				$(this.elements.userlist).html(userArray.join(', '));
 			};
+
+			/**
+				<div class="poker-card-display poker-card-display-hidden">
+					<a class="poker-card">8</a>
+					<a class="poker-card poker-card-back">
+						<img src="img/inovex-logo.png" alt="" />
+					</a>
+					<span class="poker-card-player">Khalid</a>
+				</div>
+			*/
+			this.handleCardDisplay = function(cards) {
+				for (var userId in cards) {
+					var card,
+						pokerCardId;
+
+					pokerCardId = 'poker-card-' + userId;
+					card = $('#' + pokerCardId);
+
+					if (!card.is('div')) {
+						card = $('<div id="' + pokerCardId + '" class="poker-card-display poker-card-display-hidden">' +
+							'<a class="poker-card poker-card-value">#</a>' +
+							'<a class="poker-card poker-card-back">' +
+								'<img src="img/inovex-logo.png" alt="" />' +
+							'</a>' +
+							'<span class="poker-card-player">#</a>' +
+						'</div>');
+						$(this.elements.pokerFelt).append(card);
+					}
+					card.find('.poker-card-value').html(cards[userId]);
+					card.find('.poker-card-player').html(window.currentUsers[userId].name);
+				}
+			}
 
 			return this;
 		}

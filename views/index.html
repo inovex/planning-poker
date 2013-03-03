@@ -107,7 +107,8 @@
 		window.managedSocket = $.WebSocket(
 			options.socket,
 			{
-				userlist: '.poker-users-online'
+				userlist: '.poker-users-online',
+				pokerFelt: '.poker-felt',
 			}
 		);
 
@@ -123,7 +124,9 @@
 			lsUserKey: options.lsUserKey
 		});
 
-		$('.poker-cards').cardselection();
+		$('.poker-cards').cardselection({
+			lsUserKey: options.lsUserKey
+		});
 
 		$(window).on('load', function() {
 			$('.poker-login-user input[type="text"]').focus();
