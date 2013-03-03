@@ -28,7 +28,7 @@
 					</p>
 
 					<p class="poker-login-user">
-						<input type="submit" value="Einloggen" />
+						<input type="submit" value="Einloggen" class="poker-login-submit" />
 					</p>
 				</form>
 			</div>
@@ -57,7 +57,10 @@
 				//-->
 			</div>
 			<div class="poker-separator">&nbsp;</div>
-
+			<div class="poker-userinfo">
+				Du bist angemeldet als: <span class="poker-userinfo-name"></span> (<span class="poker-userinfo-role"></span>)
+			</div>
+			<div class="poker-separator">&nbsp;</div>
 			<div class="poker-cards">
 				<a class="poker-card">0</a>
 				<a class="poker-card">1/2</a>
@@ -83,7 +86,9 @@
 	</footer>
 	<script type="text/javascript">
 		$('#poker-login-form').login({
-			overlay: '.poker-overlay'
+			overlay: '.poker-overlay',
+			nameClass: '.poker-userinfo-name',
+			roleClass: '.poker-userinfo-role'
 		});
 	</script>
 </body>

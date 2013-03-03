@@ -5,6 +5,8 @@
 
 		user = localStorage.getItem(options.lsUserKey);
 		if (user !== null) {
+			user = JSON.parse(user);
+			jQuery.fn.login.updateUserInfo(user, options);
 			$(options.overlay).hide();
 		}
 
@@ -22,20 +24,42 @@
 	};
 
 	jQuery.fn.login.loginUser = function(event) {
-		var loadOptions;
+		var loadOptions,
+			options;
 
+		// Prevent default and disable login button
 		event.preventDefault();
+		$(event.data.form).find('.poker-login-submit').attr('disabled', 'disabled');
+
+		options = event.data.options;
 		loadOptions = {
 			method: 'POST',
 			data: $(event.data.form).serialize(),
 		};
-		$.ajax('/login', loadOptions).done(function(data) {
-			localStorage.setItem(event.data.options.lsUserKey, data);
+		$.ajax('/login', loadOptions).done(function(data, status) {
+			localStorage.setItem(options.lsUserKey, JSON.stringify(data));
+			jQuery.fn.login.updateUserInfo(data, options);
+			$(options.overlay).hide(400);
+		}).fail(function() {
+			$(event.data.form).find('.poker-login-submit').removeAttr('disabled');
 		});
 	};
 
+	jQuery.fn.login.updateUserInfo = function(user, options) {
+		console.log(user);
+		$(options.nameClass).html(user.name);
+		$(options.roleClass).html(options.availableRoles[user.role]);
+	};
+
 	jQuery.fn.login.options = {
+		availableRoles: {
+			dev: 'Entwickler',
+			po: 'Product Owner',
+			sm: 'Scrum Master'
+		},
 		overlay: null,
-		lsUserKey: 'user'
+		lsUserKey: 'user',
+		nameClass: null,
+		roleClass: null
 	};
 })(jQuery, jQuery);
