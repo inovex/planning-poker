@@ -87,9 +87,38 @@ app.post('/login', function(req, res) {
 			sha1sum.update(buf);
 			user.id = sha1sum.digest('hex');
 	        currentUsers[user.id] = user;
-	        wsServer.broadcastUTF('New user logged in: ' + user.name);
+
+	        broadcastUsers();
 	        res.json(user);
 		});
+    });
+});
+
+broadcastUsers = function() {
+	var pushData = {
+    	type: 'userlist',
+    	data: currentUsers
+    };
+    wsServer.broadcastUTF(JSON.stringify(pushData));
+}
+
+app.post('/logout', function(req, res) {
+	var user;
+
+	req.on('data', function (data) {
+        user += data;
+        if (user.length > 1e6) {
+            // FLOOD ATTACK OR FAULTY CLIENT, NUKE REQUEST
+            request.connection.destroy();
+        }
+    });
+
+	req.on('end', function () {
+		user = qs.parse(user);
+		currentUsers[user.id] = null;
+		delete currentUsers[user.id];
+		broadcastUsers();
+    	res.json(true);
     });
 });
 

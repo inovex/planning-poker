@@ -1,12 +1,45 @@
-(function($, jQuery) {
-	jQuery.fn.WebSocket = function(options) {
-		var socket;
+(function($){
 
-		window.managedSocket = new WebSocket('ws://' + options.adress + ':' + options.port);
-		socket = window.managedSocket;
+    // attach to jQuery
+    $.extend({
+        // export WebSocket = $.WebSocket
+        WebSocket: function(socketOptions, elements) {
+			var socket;
 
-		socket.onmessage = function(event) {
-			console.log(event.data);
+			this.socketOptions = socketOptions;
+			this.elements = elements;
+
+			this.open = function() {
+				var me;
+
+				window.managedSocket = new WebSocket('ws://' + this.socketOptions.address + ':' + this.socketOptions.port);
+				socket = window.managedSocket;
+
+				me = this;
+
+				socket.onmessage = function(event) {
+					var data;
+					data = JSON.parse(event.data);
+
+					switch(data.type) {
+						case 'userlist':
+							me.handleUserList(data.data)
+							break;
+					}
+				}
+			};
+
+			this.handleUserList = function(users)  {
+				var userArray;
+
+				userArray = [];
+				for (userId in users) {
+					userArray.push(users[userId].name);
+				}
+				$(this.elements.userlist).html(userArray.join(', '));
+			};
+
+			return this;
 		}
-	};
-})(jQuery, jQuery);
+	});
+})(jQuery);

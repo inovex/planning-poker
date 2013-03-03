@@ -93,20 +93,30 @@
 	<script type="text/javascript">
 		var options = {
 			socket: {
-				adress: '127.0.0.1',
+				address: '127.0.0.1',
 				port: 80
-			}
+			},
+			lsUserKey: 'user'
 		};
+
+		window.managedSocket = $.WebSocket(
+			options.socket,
+			{
+				userlist: '.poker-users-online'
+			}
+		);
 
 		$('#poker-login-form').login({
 			overlay: '.poker-overlay',
 			userInfoClass: '.poker-userinfo',
 			nameClass: '.poker-userinfo-name',
 			roleClass: '.poker-userinfo-role',
-			socketOptions: options.socket
+			lsUserKey: options.lsUserKey
 		});
 
-		$('.poker-logout').logout();
+		$('.poker-logout').logout({
+			lsUserKey: options.lsUserKey
+		});
 
 		$(window).on('load', function() {
 			$('.poker-login-user input[type="text"]').focus();

@@ -7,6 +7,7 @@
 		if (user !== null) {
 			user = JSON.parse(user);
 			jQuery.fn.login.updateUserInfo(user, options);
+			jQuery.fn.login.openWebSocket(options);
 			$(options.overlay).hide();
 		}
 
@@ -53,7 +54,7 @@
 	};
 
 	jQuery.fn.login.openWebSocket = function(options) {
-		$(document).WebSocket(options.socketOptions);
+		window.managedSocket.open();
 	}
 
 	jQuery.fn.login.options = {
@@ -65,10 +66,6 @@
 		overlay: null,
 		lsUserKey: 'user',
 		nameClass: null,
-		roleClass: null,
-		socketOptions: {
-			address: null,
-			port: null
-		}
+		roleClass: null
 	};
 })(jQuery, jQuery);
