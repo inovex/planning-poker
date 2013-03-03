@@ -89,8 +89,6 @@
 
 					amountDevs = $('.poker-role-dev').length;
 					// Schauen, ob alle devs abgestimmt haben
-					console.log(amountDevs);
-					console.log(card.find('.poker-card-value').length);
 					if (amountDevs > 0 && amountDevs == card.find('.poker-card-value').length) {
 						$(this.elements.pokerCardsShowButton).removeAttr('disabled');
 					}
