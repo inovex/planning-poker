@@ -71,6 +71,11 @@ p {
 	margin-bottom: 10px;
 }
 
+img.poker-logout {
+	position: relative;
+	top: 3px;	
+}
+
 .poker-separator {
 	clear: both;
 	height: 0px;
@@ -157,4 +162,17 @@ p {
 	background-color: #f46200;
 	border-color: #000;
 	cursor: pointer;
+}
+
+.poker-userinfo {
+	text-align: right;
+	padding-right: 20px;
+	margin-bottom: 10px;
+	font-weight: bold;
+	display: none;
+}
+
+.poker-userinfo-name, .poker-userinfo-role {
+	font-weight: normal;
+	color: #f46200;
 }

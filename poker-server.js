@@ -35,6 +35,7 @@ app.get('/', function(req, res) {
 app.post('/login', function(req, res) {
     var user,
     	sha1sum;
+    	
     user = '';
     //res.set('Content-Type', 'application/json');
     req.on('data', function (data) {
@@ -59,8 +60,6 @@ app.post('/login', function(req, res) {
 	        console.log(currentUsers);
 		});
     });
-
-	//res.end();
 });
 
 app.listen(config.http.port, config.http.listen);

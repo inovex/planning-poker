@@ -46,9 +46,9 @@
 	};
 
 	jQuery.fn.login.updateUserInfo = function(user, options) {
-		console.log(user);
 		$(options.nameClass).html(user.name);
 		$(options.roleClass).html(options.availableRoles[user.role]);
+		$(options.userInfoClass).show();
 	};
 
 	jQuery.fn.login.options = {
