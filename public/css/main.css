@@ -176,3 +176,13 @@ img.poker-logout {
 	font-weight: normal;
 	color: #f46200;
 }
+
+.poker-users {
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.poker-users-online {
+	font-weight: normal;
+	color: #f46200;
+}
