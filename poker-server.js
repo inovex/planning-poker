@@ -3,10 +3,14 @@ var fs = require('fs');
 var url = require('url');
 var qs = require('querystring');
 var express = require('express');
+var iniparser = require('iniparser');
+
+console.log('Loading config');
+var config = iniparser.parseSync('./config.ini');
 
 var app = express();
-app.use(express.static(__dirname + '/public'));
-app.set('views', __dirname + '/views');
+app.use(express.static(__dirname + config.filesystem.public_files));
+app.set('views', __dirname + config.filesystem.view_files);
 app.engine('html', require('ejs').renderFile);
 
 // App Variables
@@ -51,5 +55,5 @@ app.post('/login', function(req, res) {
 	//res.end();
 });
 
-app.listen(1337, '127.0.0.1');
-console.log('Server running at http://127.0.0.1:1337/');
+app.listen(config.http.port, config.http.listen);
+console.log('HTTP Server running at http://' + config.http.listen + ':' + config.http.port + '/');

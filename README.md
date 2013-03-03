@@ -13,3 +13,7 @@ Installation
 2. Run server
 
 		node poker-server.js
+
+3. If you are running  the server on port 80
+
+		sudo node poker-server.js
