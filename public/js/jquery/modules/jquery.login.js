@@ -53,25 +53,24 @@
 	};
 
 	jQuery.fn.login.postLogin = function(user, options) {
-		if (user.role == 'sm') {
-			jQuery.fn.login.preparePageForScrumMaster(options);
-		}
+		jQuery.fn.login.preparePageForRole(user.role, options);
 		jQuery.fn.login.updateUserInfo(user, options);
 		jQuery.fn.login.openWebSocket(options);
 		$(options.overlay).hide(400);
 	};
 
-	jQuery.fn.login.preparePageForScrumMaster = function(options) {
-		for (var i in options.scrumMaster.hide) {
-			$(options.scrumMaster.hide[i]).hide();
+	jQuery.fn.login.preparePageForRole = function(role, options) {
+		for (var i in options.roleSettings[role].hide) {
+			$(options.roleSettings[role][i]).hide();
 		}
 
-		for (var i in options.scrumMaster.show) {
-			$(options.scrumMaster.show[i]).show();
+		for (var i in options.roleSettings[role].show) {
+			$(options.roleSettings[role][i]).show();
 		}
 	};
 
 	jQuery.fn.login.updateUserInfo = function(user, options) {
+		console.log(user);
 		$(options.nameClass).html(user.name);
 		$(options.roleClass).html(options.availableRoles[user.role]);
 		$(options.userInfoClass).show();
@@ -83,17 +82,27 @@
 
 	jQuery.fn.login.options = {
 		availableRoles: {
-			dev: 'Entwickler',
-			po: 'Product Owner',
-			sm: 'Scrum Master'
+			developer: 'Entwickler',
+			productOwner: 'Product Owner',
+			scrumMaster: 'Scrum Master'
+		},
+		roleSettings: {
+			developer: {
+				show: [],
+				hide: []
+			},
+			scrumMaster: {
+				show: [],
+				hide: []
+			},
+			productOwner: {
+				show: [],
+				hide: []
+			}
 		},
 		overlay: null,
 		lsUserKey: 'user',
 		nameClass: null,
-		roleClass: null,
-		scrumMaster: {
-			show: [],
-			hide: []
-		}
+		roleClass: null
 	};
 })(jQuery, jQuery);
