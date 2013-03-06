@@ -61,16 +61,15 @@
 
 	jQuery.fn.login.preparePageForRole = function(role, options) {
 		for (var i in options.roleSettings[role].hide) {
-			$(options.roleSettings[role][i]).hide();
+			$(options.roleSettings[role].hide[i]).hide();
 		}
 
 		for (var i in options.roleSettings[role].show) {
-			$(options.roleSettings[role][i]).show();
+			$(options.roleSettings[role].show[i]).show();
 		}
 	};
 
 	jQuery.fn.login.updateUserInfo = function(user, options) {
-		console.log(user);
 		$(options.nameClass).html(user.name);
 		$(options.roleClass).html(options.availableRoles[user.role]);
 		$(options.userInfoClass).show();
