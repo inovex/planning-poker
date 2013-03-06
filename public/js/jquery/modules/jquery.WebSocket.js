@@ -39,6 +39,10 @@
 						case 'show-cards':
 							me.handleShowCards();
 							break;
+
+						case 'userstory':
+							me.handleUserstory(data.userstory);
+							break;
 					}
 				}
 			};
@@ -105,6 +109,12 @@
 				$('.' + this.elements.showCardsSelectorClass).removeClass(this.elements.showCardsToggleClass);
 				$(this.elements.pokerCardsShowButton).attr('disabled', 'disabled');
 			}
+
+			this.handleUserstory = function(userstory) {
+				userstory = userstory.nl2br();
+				$(this.elements.userstoryText).html(userstory);
+				$(this.elements.editUserStoryButton).removeAttr('disabled');
+			};
 
 			return this;
 		}

@@ -38,10 +38,23 @@ p {
 	padding: 0;
 }
 
+button {
+	cursor: pointer;
+}
+
 /** Role specific definitions */
 
 .scrum-master, .scrum-product-owner {
 	display: none;
+}
+
+.scrum-master button, .scrum-product-owner button {
+	background-color: #0DD550;
+	font-size: 17px;
+	font-weight: bold;
+	border: none;
+	padding: 10px;
+	border-radius: 5px;
 }
 
 .poker-overlay {
@@ -175,15 +188,6 @@ img.poker-logout {
 	padding-right: 20px;
 }
 
-.poker-cards-show button {
-	background-color: #0DD550;
-	font-size: 17px;
-	font-weight: bold;
-	border: none;
-	padding: 10px;
-	border-radius: 5px;
-}
-
 .poker-card-back {
 	display: none;
 	border-color: #000;
@@ -221,15 +225,15 @@ img.poker-logout {
 	margin-left: 3px;
 }
 
-.poker-users-online .poker-role-dev {
+.poker-role-developer {
 	color: #f46200;
 }
 
-.poker-users-online .poker-role-sm {
+.poker-role-scrumMaster {
 	color: #0DD550;	
 }
 
-.poker-users-online .poker-role-po {
+.poker-role-productOwner {
 	color: #666;
 }
 
@@ -237,8 +241,34 @@ img.poker-logout {
 	float: left;
 }
 
-.poker-userstory-form {
+.poker-userstory {
+	font-weight: bold;
+}
 
+.poker-userstory-text-container {
+	font-weight: normal;
+	margin: 5px 10px 10px 10px;
+	padding: 3px;
+	border: 1px dashed #f46200;
+	border-radius: 5px;
+}
+
+#poker-userstory-text {
+	max-height: 100px;
+	overflow: scroll;
+}
+
+.poker-userstory-edit {
+	text-align: right;
+}
+
+#poker-userstory-edit-button {
+	font-size: 12px;
+	padding: 5px;
+}
+
+.poker-userstory-form {
+	text-align: right;
 }
 
 .poker-userstory-form textarea {

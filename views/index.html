@@ -4,10 +4,12 @@
 	<title>Planning Poker online | inovex GmbH</title>
 	<link rel="stylesheet" type="text/css" href="css/main.css" />
 	<script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="js/nl2br.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.login.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.logout.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.cardselection.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.showcards.js"></script>
+	<script type="text/javascript" src="js/jquery/modules/jquery.productOwner.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.WebSocket.js"></script>
 </head>
 
@@ -46,6 +48,18 @@
 			<div class="poker-users">
 				<p>Im Raum:</p>
 				<p class="poker-users-online"></p>
+			</div>
+
+			<div class="poker-separator">&nbsp;</div>
+
+			<div class="poker-userstory">
+				<p>Aktuelle Userstory:</p>
+				<div class="poker-userstory-text-container">
+					<p id="poker-userstory-text"></p>
+					<p class="poker-userstory-edit scrum-product-owner">
+						<button id="poker-userstory-edit-button" disabled="disabled">Userstory bearbeiten</button>
+					</p>
+				</div>
 			</div>
 
 			<div class="poker-separator">&nbsp;</div>
@@ -92,6 +106,8 @@
 			</div>
 			<form class="poker-userstory-form scrum-product-owner">
 				<textarea id="poker-userstory-textarea"></textarea>
+				<button id="poker-userstory-reset" type="reset">Userstory zur&uuml;cksetzen</button>
+				<button id="poker-userstory-post" disabled="disabled">Userstory &uuml;bernehmen</button>
 			</form>
 			<div class="poker-separator">&nbsp;</div>
 		</div>
@@ -118,7 +134,9 @@
 				pokerFelt: '.poker-felt',
 				pokerCardsShowButton: '#poker-cards-show-button',
 				showCardsSelectorClass: 'poker-card-display',
-				showCardsToggleClass: 'poker-card-display-hidden'
+				showCardsToggleClass: 'poker-card-display-hidden',
+				userstoryText: '#poker-userstory-text',
+				editUserStoryButton: '#poker-userstory-edit-button'
 			}
 		);
 
@@ -154,6 +172,13 @@
 		});
 
 		$('#poker-cards-show-button').showcards();
+
+		$('.scrum-product-owner').productOwner({
+			postUserStoryTextarea: '#poker-userstory-textarea',
+			postUserStoryButton: '#poker-userstory-post',
+			editUserStoryButton: '#poker-userstory-edit-button',
+			userStoryText: '#poker-userstory-text'
+		});
 
 		$(window).on('load', function() {
 			$('.poker-login-user input[type="text"]').focus();

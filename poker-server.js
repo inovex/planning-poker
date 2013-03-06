@@ -38,6 +38,7 @@ wsServer.on('request', function(request) {
             	case 'get-initial-data':
             		connection.sendUTF(JSON.stringify(getUserUpdateList()));
             		connection.sendUTF(JSON.stringify(getCardUpdateList()));
+            		connection.sendUTF(JSON.stringify(getUserstoryUpdate()));
             		break;
 
         		case 'play-card':
@@ -50,6 +51,11 @@ wsServer.on('request', function(request) {
         				type: 'show-cards'
         			};
         			wsServer.broadcastUTF(JSON.stringify(pushData));
+        			break;
+
+        		case 'post-userstory':
+        			currentUserstory  = messageData.userstory;
+        			broadcastUserstory();
         			break;
             }
         }
@@ -66,6 +72,7 @@ wsServer.on('request', function(request) {
 // App Variables
 var currentUsers = {};
 var carddisplay = {};
+var currentUserstory = '';
 
 var readFile = function(filename) {
 	var output = '';
@@ -138,7 +145,19 @@ getCardUpdateList = function () {
 broadcastCards = function() {
 	var pushData = getCardUpdateList();
     wsServer.broadcastUTF(JSON.stringify(pushData));	
+};
+
+getUserstoryUpdate = function() {
+	return {
+		type: 'userstory',
+		userstory: currentUserstory
+	};
 }
+
+broadcastUserstory = function() {
+	var pushData = getUserstoryUpdate();
+	wsServer.broadcastUTF(JSON.stringify(pushData));
+};
 
 app.post('/logout', function(req, res) {
 	var user;
