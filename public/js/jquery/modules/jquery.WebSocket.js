@@ -121,6 +121,9 @@
 				userstory = userstory.nl2br();
 				$(this.elements.userstoryText).html(userstory);
 				$(this.elements.editUserStoryButton).removeAttr('disabled');
+				if (userstory.length > 0) {
+					$(this.elements.userstory).show(400);
+				}
 			};
 
 			return this;
