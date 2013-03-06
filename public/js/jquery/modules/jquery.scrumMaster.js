@@ -10,10 +10,16 @@
 		});
 
 		$(options.pokerCardsResetButton).on('click', function(event) {
-			var pushData = {
-				type: 'reset-cards'
-			};
-			window.managedSocket.send(JSON.stringify(pushData));
+			var reallyDelete,
+				pushData;
+
+			reallyDelete = confirm('Wirklich leeren?');
+			if (reallyDelete) {
+				var pushData = {
+					type: 'reset-cards'
+				};
+				window.managedSocket.send(JSON.stringify(pushData));
+			}
 		});
 	};	
 
