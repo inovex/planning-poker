@@ -106,7 +106,7 @@
 					}
 				}
 				if (cardsTotal == 0) {
-					$(this.elements.pokerCardSelectedClass).removeClass(this.elements.pokerCardSelectedClass);
+					$('.' + this.elements.pokerCardSelectedClass).removeClass(this.elements.pokerCardSelectedClass);
 				};
 			}
 
