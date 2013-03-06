@@ -42,8 +42,11 @@ wsServer.on('request', function(request) {
             		break;
 
         		case 'play-card':
-        			carddisplay.cards[messageData.userId] = messageData.cardValue
-        			broadcastCards();
+        			// Allow only if cards are not already shown
+        			if (!carddisplay.show) {
+	        			carddisplay.cards[messageData.userId] = messageData.cardValue
+	        			broadcastCards();
+        			}
         			break;
 
         		case 'show-cards':
