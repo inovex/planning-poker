@@ -200,6 +200,6 @@ app.post('/logout', function(req, res) {
     });
 });
 
-httpServer.listen(config.http.port, config.http.listen, function() {
+httpServer.listen(config.http.port, function() {
 	console.log('HTTP Server running at http://' + config.http.listen + ':' + config.http.port + '/');
 });
