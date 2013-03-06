@@ -53,6 +53,11 @@ wsServer.on('request', function(request) {
         			wsServer.broadcastUTF(JSON.stringify(pushData));
         			break;
 
+        		case 'reset-cards':
+        			carddisplay = {};
+        			broadcastCards();
+        			break;
+
         		case 'post-userstory':
         			currentUserstory  = messageData.userstory;
         			broadcastUserstory();

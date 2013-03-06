@@ -8,6 +8,13 @@
 			};
 			window.managedSocket.send(JSON.stringify(pushData));
 		});
+
+		$(options.pokerCardsResetButton).on('click', function(event) {
+			var pushData = {
+				type: 'reset-cards'
+			};
+			window.managedSocket.send(JSON.stringify(pushData));
+		});
 	};	
 
 	jQuery.fn.scrumMaster.options = {

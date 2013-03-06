@@ -72,12 +72,16 @@
 				</div>
 			*/
 			this.handleCardDisplay = function(cards) {
+				var cardsTotal = 0;
+
 				$(this.elements.pokerFelt).empty();
 				$(this.elements.pokerCardsShowButton).attr('disabled', 'disabled');
 				for (var userId in cards) {
 					var card,
 						pokerCardId,
 						amountDevs;
+
+					cardsTotal++;
 
 					pokerCardId = 'poker-card-' + userId;
 					card = $('#' + pokerCardId);
@@ -101,6 +105,9 @@
 						$(this.elements.pokerCardsShowButton).removeAttr('disabled');
 					}
 				}
+				if (cardsTotal == 0) {
+					$(this.elements.pokerCardSelectedClass).removeClass(this.elements.pokerCardSelectedClass);
+				};
 			}
 
 			this.handleShowCards = function() {
