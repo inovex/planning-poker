@@ -20,9 +20,9 @@
 					<p class="poker-login-user">
 						<label>Bitte gibt deine Rolle an</label>
 						<select name="role">
-							<option value="dev">Entwickler</option>
-							<option value="po">Product Owner</option>
-							<option value="sm">Scrum Master</option>
+							<option value="developer">Entwickler</option>
+							<option value="productOwner">Product Owner</option>
+							<option value="scrumMaster">Scrum Master</option>
 						</select>
 					</p>
 
@@ -90,6 +90,9 @@
 			<div class="poker-cards-show scrum-master">
 				<button id="poker-cards-show-button" disabled="disabled">Karten aufdecken</button>
 			</div>
+			<form class="poker-userstory-form scrum-product-owner">
+				<textarea id="poker-userstory-textarea"></textarea>
+			</form>
 			<div class="poker-separator">&nbsp;</div>
 		</div>
 	</div>
@@ -102,7 +105,7 @@
 	<script type="text/javascript">
 		var options = {
 			socket: {
-				address: '192.168.2.108',
+				address: '127.0.0.1',
 				port: 80
 			},
 			lsUserKey: 'user'
@@ -125,9 +128,19 @@
 			nameClass: '.poker-userinfo-name',
 			roleClass: '.poker-userinfo-role',
 			lsUserKey: options.lsUserKey,
-			scrumMaster: {
-				hide: ['.scrum-developer'],
-				show: ['.scrum-master']
+			roleSettings: {
+				developer: {
+					hide: ['.scrum-master', '.scrum-product-owner'],
+					show: []
+				},
+				scrumMaster: {
+					hide: ['.scrum-developer', '.scrum-product-owner'],
+					show: ['.scrum-master']
+				},
+				productOwner: {
+					hide: ['.scrum-developer', '.scrum-master'],
+					show: ['.scrum-product-owner']
+				}
 			}
 		});
 
