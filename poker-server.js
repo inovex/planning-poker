@@ -42,7 +42,7 @@ wsServer.on('request', function(request) {
             		break;
 
         		case 'play-card':
-        			carddisplay[messageData.userId] = messageData.cardValue
+        			carddisplay.cards[messageData.userId] = messageData.cardValue
         			broadcastCards();
         			break;
 
@@ -50,11 +50,15 @@ wsServer.on('request', function(request) {
         			var pushData = {
         				type: 'show-cards'
         			};
+        			carddisplay.show = true;
         			wsServer.broadcastUTF(JSON.stringify(pushData));
         			break;
 
         		case 'reset-cards':
-        			carddisplay = {};
+        			carddisplay = {
+        				cards: {},
+        				show: false
+        			};
         			broadcastCards();
         			break;
 
@@ -76,7 +80,10 @@ wsServer.on('request', function(request) {
 
 // App Variables
 var currentUsers = {};
-var carddisplay = {};
+var carddisplay = {
+	cards: {},
+	show: false
+};
 var currentUserstory = '';
 
 var readFile = function(filename) {
