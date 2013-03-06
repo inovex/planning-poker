@@ -147,6 +147,7 @@ img.poker-logout {
 
 .poker-felt .poker-card {
 	margin-bottom: 5px;
+	border-color: #000;
 }
 
 .poker-felt .poker-card-player {
@@ -190,7 +191,11 @@ img.poker-logout {
 
 .poker-card-back {
 	display: none;
-	border-color: #000;
+}
+
+.poker-card-back img {
+	position: relative;
+	top: 14px;
 }
 
 .poker-card-display-hidden .poker-card {

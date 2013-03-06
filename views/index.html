@@ -8,7 +8,7 @@
 	<script type="text/javascript" src="js/jquery/modules/jquery.login.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.logout.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.cardselection.js"></script>
-	<script type="text/javascript" src="js/jquery/modules/jquery.showcards.js"></script>
+	<script type="text/javascript" src="js/jquery/modules/jquery.scrumMaster.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.productOwner.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.WebSocket.js"></script>
 </head>
@@ -103,6 +103,7 @@
 			</div>
 			<div class="poker-cards-show scrum-master">
 				<button id="poker-cards-show-button" disabled="disabled">Karten aufdecken</button>
+				<button id="poker-cards-reset-button">Kartenfeld leeren</button>
 			</div>
 			<form class="poker-userstory-form scrum-product-owner">
 				<textarea id="poker-userstory-textarea"></textarea>
@@ -171,7 +172,10 @@
 			selectedClass: 'poker-card-selected'
 		});
 
-		$('#poker-cards-show-button').showcards();
+		$('.scrum-master').scrumMaster({
+			pokerCardsShowButton: '#poker-cards-show-button',
+			pokerCardsResetButton: '#poker-cards-reset-button'
+		});
 
 		$('.scrum-product-owner').productOwner({
 			postUserStoryTextarea: '#poker-userstory-textarea',

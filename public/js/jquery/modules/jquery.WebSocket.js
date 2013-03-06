@@ -95,7 +95,7 @@
 					card.find('.poker-card-value').html(cards[userId]);
 					card.find('.poker-card-player').html(window.currentUsers[userId].name);
 
-					amountDevs = $('.poker-role-dev').length;
+					amountDevs = $('.poker-role-developer').length;
 					// Schauen, ob alle devs abgestimmt haben
 					if (amountDevs > 0 && amountDevs == $('.poker-card-value').length) {
 						$(this.elements.pokerCardsShowButton).removeAttr('disabled');
