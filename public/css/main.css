@@ -42,6 +42,16 @@ button {
 	cursor: pointer;
 }
 
+.poker-ajax-loader {
+	display: none;
+}
+
+.poker-ajax-loader-background {
+	background-image: url(../img/ajax-loader.gif);
+	background-repeat: no-repeat;
+	background-position: 2%;
+}
+
 /** Role specific definitions */
 
 .scrum-master, .scrum-product-owner {

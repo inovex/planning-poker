@@ -41,12 +41,13 @@
 			formData,
 			user;
 
+		options = event.data.options;
 		// Prevent default and disable login button
 		event.preventDefault();
 		$(event.data.form).find('.poker-login-submit').attr('disabled', 'disabled');
+		$(event.data.form).find('.poker-login-submit').addClass(options.loaderBackgroundClass)
 
 		user = {};
-		options = event.data.options;
 		formData = $(event.data.form).serializeArray();
 		for (var i = 0; i < formData.length; i++) {
 			user[formData[i].name] = formData[i].value;
@@ -100,6 +101,7 @@
 			productOwner: 'Product Owner',
 			scrumMaster: 'Scrum Master'
 		},
+		loaderBackgroundClass: null,
 		roleSettings: {
 			developer: {
 				show: [],

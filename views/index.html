@@ -17,7 +17,7 @@
 	<div class="poker-overlay" id="poker-notification">
 		<div class="poker-message">
 			<p class="poker-top" id="poker-notification-title"></p>
-			<p id="poker-notification-text"></p>
+			<p id="poker-notification-text"><img src="img/ajax-loader.gif" /></p>
 		</div>
 	</div>
 	<div class="poker-overlay" id="poker-login">
@@ -131,7 +131,8 @@
 				address: '127.0.0.1',
 				port: 80
 			},
-			lsUserKey: 'user'
+			lsUserKey: 'user',
+			loaderBackgroundClass: 'poker-ajax-loader-background'
 		};
 
 		var socket = $.WebSocket(options.socket);
@@ -141,6 +142,7 @@
 			userInfoClass: '.poker-userinfo',
 			nameClass: '.poker-userinfo-name',
 			roleClass: '.poker-userinfo-role',
+			loaderBackgroundClass: options.loaderBackgroundClass,
 			lsUserKey: options.lsUserKey,
 			roleSettings: {
 				developer: {
@@ -195,7 +197,8 @@
 			userstory: '.poker-userstory',
 			userstoryText: '#poker-userstory-text',
 			editUserStoryButton: '#poker-userstory-edit-button',
-			notification: '#poker-notification'
+			notification: '#poker-notification',
+			loaderBackgroundClass: options.loaderBackgroundClass
 		};
 		socketOptions.listeners = {
 			open: [

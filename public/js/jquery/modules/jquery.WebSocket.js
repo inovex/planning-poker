@@ -16,8 +16,8 @@
 			};
 
 			this.reconnectionCallback = function() {
-				me.connect();
 				if (window.managedSocket.readyState == window.managedSocket.CLOSED || window.managedSocket.readyState == window.managedSocket.CONNECTING) {
+					me.connect();
 					// Try to reconnect every 3 seconds
 					window.setTimeout(me.reconnectionCallback, 3000);
 				} else {
@@ -37,11 +37,14 @@
 
 				window.managedSocket.onclose = function(event) {
 					var notification,
+						notificationText,
 						reconnectionCallback;
 
 					notification = $(me.elements.notification);
 					notification.find('#poker-notification-title').html('Verbindung unterbrochen');
-					notification.find('#poker-notification-text').html('Versuche die Verbindung wiederherzustellen');
+					notificationText = notification.find('#poker-notification-text');
+					notificationText.html('Versuche die Verbindung wiederherzustellen...');
+					notificationText.addClass(me.elements.loaderBackgroundClass);
 					notification.show(400);
 
 					me.reconnectionCallback();
