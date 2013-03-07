@@ -8,7 +8,7 @@ Installation
 ============
 1. Run setup.sh
 
-		./install-npm-depencies.sh
+		./setup.sh
 
 2. Run server
 
