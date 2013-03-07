@@ -128,22 +128,9 @@
 			lsUserKey: 'user'
 		};
 
-		window.managedSocket = $.WebSocket(
-			options.socket,
-			{
-				userlist: '.poker-users-online',
-				pokerFelt: '.poker-felt',
-				pokerCardsShowButton: '#poker-cards-show-button',
-				pokerCardSelectedClass: 'poker-card-selected',
-				showCardsSelectorClass: 'poker-card-display',
-				showCardsToggleClass: 'poker-card-display-hidden',
-				userstory: '.poker-userstory',
-				userstoryText: '#poker-userstory-text',
-				editUserStoryButton: '#poker-userstory-edit-button'
-			}
-		);
+		var socket = $.WebSocket(options.socket);
 
-		$('#poker-login-form').login({
+		var loginListener = $('#poker-login-form').login({
 			overlay: '.poker-overlay',
 			userInfoClass: '.poker-userinfo',
 			nameClass: '.poker-userinfo-name',
@@ -190,6 +177,29 @@
 		$(window).on('load', function() {
 			$('.poker-login-user input[type="text"]').focus();
 		});
+
+		var socketOptions = options.socket;
+		socketOptions.elements = {
+			userlist: '.poker-users-online',
+			pokerFelt: '.poker-felt',
+			pokerCardsShowButton: '#poker-cards-show-button',
+			pokerCardSelectedClass: 'poker-card-selected',
+			showCardsSelectorClass: 'poker-card-display',
+			showCardsToggleClass: 'poker-card-display-hidden',
+			userstory: '.poker-userstory',
+			userstoryText: '#poker-userstory-text',
+			editUserStoryButton: '#poker-userstory-edit-button'
+		};
+		socketOptions.listeners = {
+			open: [
+				loginListener
+			],
+			login: [
+				loginListener
+			]
+		}
+		socket.setOptions(socketOptions);
+		socket.open();
 	</script>
 </body>
 

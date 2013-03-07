@@ -3,29 +3,41 @@
     // attach to jQuery
     $.extend({
         // export WebSocket = $.WebSocket
-        WebSocket: function(socketOptions, elements) {
+        WebSocket: function(options) {
 			var socket;
 
-			this.socketOptions = socketOptions;
-			this.elements = elements;
+			this.socketOptions = options;
 
-			this.open = function() {
+			window.managedSocket = new WebSocket('ws://' + this.socketOptions.address + ':' + this.socketOptions.port);
+
+			this.setOptions = function(options) {
+				this.elements = options.elements;
+				this.listeners = options.listeners;
+			};
+
+			this.open = function(listeners) {
 				var me;
 
-				window.managedSocket = new WebSocket('ws://' + this.socketOptions.address + ':' + this.socketOptions.port);
 				socket = window.managedSocket;
 				me = this;
 
 				socket.onopen = function(event) {
-					var socketData = {
-						type: 'get-initial-data'
-					};
-					socket.send(JSON.stringify(socketData));
+					if (typeof me.listeners.open != 'undefined') {
+						for(var i in me.listeners.open) {
+							me.listeners.open[i].onopen(event);
+						}
+					}
 				}
 
 				socket.onmessage = function(event) {
 					var data;
 					data = JSON.parse(event.data);
+
+					if (typeof me.listeners[data.type] != 'undefined') {
+						for(var i in me.listeners[data.type]) {
+							me.listeners[data.type][i].onmessage(data);
+						}
+					}
 
 					switch(data.type) {
 						case 'userlist':

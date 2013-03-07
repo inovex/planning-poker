@@ -3,19 +3,6 @@
 		options = jQuery.extend({}, jQuery.fn.login.options, options);
 		var user;
 
-		user = localStorage.getItem(options.lsUserKey);
-		if (user !== null) {
-			user = JSON.parse(user);
-			$.ajax({
-				url: '/login',
-				method: 'POST',
-				data: user,
-				success: function(data) {
-					jQuery.fn.login.postLogin(user, options);
-				}
-			});
-		}
-
 		// Klickhandler registrieren
 		$(this).each(function(key, item) {
 			var eventData;
@@ -25,37 +12,64 @@
 				form: item
 			};
 
-			$(item).on('submit', eventData, jQuery.fn.login.loginUser);
+			$(item).on('submit', eventData, jQuery.fn.login.loginUserCallback);
 		});
+
+		return {
+			onopen: function(event) {
+				user = localStorage.getItem(options.lsUserKey);
+				if (user !== null) {
+					user = JSON.parse(user);
+					jQuery.fn.login.loginUser(user, options);
+				}
+			},
+			onmessage: function(data) {
+				var socketData;
+				localStorage.setItem(options.lsUserKey, JSON.stringify(data.user));
+				jQuery.fn.login.postLogin(data.user, options);
+
+				socketData = {
+					type: 'get-initial-data'
+				};
+				window.managedSocket.send(JSON.stringify(socketData));
+			}
+		};
 	};
 
-	jQuery.fn.login.loginUser = function(event) {
-		var options;
+	jQuery.fn.login.loginUserCallback = function(event) {
+		var options,
+			formData,
+			user;
 
 		// Prevent default and disable login button
 		event.preventDefault();
 		$(event.data.form).find('.poker-login-submit').attr('disabled', 'disabled');
 
+		user = {};
 		options = event.data.options;
+		formData = $(event.data.form).serializeArray();
+		for (var i = 0; i < formData.length; i++) {
+			user[formData[i].name] = formData[i].value;
+		}
 
-		$.ajax({
-			url: '/login',
-			method: 'POST',
-			data: $(event.data.form).serialize(),
-			success: function(data) {
-				localStorage.setItem(options.lsUserKey, JSON.stringify(data));
-				jQuery.fn.login.postLogin(data, options);
-			},
-			fail: function(data) {
-				$(event.data.form).find('.poker-login-submit').removeAttr('disabled');	
-			}
-		});
+		jQuery.fn.login.loginUser(user, options);
+	}
+
+	jQuery.fn.login.loginUser = function(user, options) {
+		var loginData;
+
+		loginData = {
+			type: 'login',
+			user: user
+		};
+
+		window.managedSocket.send(JSON.stringify(loginData));
 	};
 
 	jQuery.fn.login.postLogin = function(user, options) {
 		jQuery.fn.login.preparePageForRole(user.role, options);
 		jQuery.fn.login.updateUserInfo(user, options);
-		jQuery.fn.login.openWebSocket(options);
+		//jQuery.fn.login.openWebSocket();
 		$(options.overlay).hide(400);
 	};
 
@@ -76,7 +90,7 @@
 		$(options.userInfoClass).show();
 	};
 
-	jQuery.fn.login.openWebSocket = function(options) {
+	jQuery.fn.login.openWebSocket = function() {
 		window.managedSocket.open();
 	}
 

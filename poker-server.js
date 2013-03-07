@@ -35,6 +35,38 @@ wsServer.on('request', function(request) {
             console.log('Received Message: ' + message.utf8Data);
             var messageData = JSON.parse(message.utf8Data);
             switch(messageData.type) {
+            	case 'login':
+            		var user,
+				    	sha1sum,
+				    	sendData;
+
+			    	user = messageData.user;
+			    	if (typeof user.id !== 'undefined') {
+			    		currentUsers[user.id] = user;
+			    		sendData = {
+				        	type: 'login',
+				        	user: user
+				        };
+			    		connection.sendUTF(JSON.stringify(sendData));
+			    		broadcastUsers();
+			    	} else {
+				    	// Create random id for user
+				    	sha1sum = crypto.createHash('sha1');
+						crypto.randomBytes(256, function(ex, buf) {
+							if (ex) throw ex;
+							sha1sum.update(buf);
+							user.id = sha1sum.digest('hex');
+					        currentUsers[user.id] = user;
+					        sendData = {
+					        	type: 'login',
+					        	user: user
+					        };
+			        		connection.sendUTF(JSON.stringify(sendData));
+			        		broadcastUsers();
+						});
+					}
+            		break;
+
             	case 'get-initial-data':
             		connection.sendUTF(JSON.stringify(getUserUpdateList()));
             		connection.sendUTF(JSON.stringify(getCardUpdateList()));
