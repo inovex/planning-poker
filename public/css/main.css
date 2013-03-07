@@ -42,6 +42,11 @@ button {
 	cursor: pointer;
 }
 
+img {
+	position: relative;
+	top: 3px;	
+}
+
 .poker-ajax-loader {
 	display: none;
 }
@@ -93,6 +98,10 @@ button {
 	z-index: 2;
 }
 
+.poker-logout {
+	cursor: pointer;
+}
+
 .poker-message {
 	width: 200px;
 	height: 190px;
@@ -115,11 +124,6 @@ button {
 
 .poker-message .poker-login-user {
 	margin-bottom: 10px;
-}
-
-img.poker-logout {
-	position: relative;
-	top: 3px;	
 }
 
 .poker-separator {
