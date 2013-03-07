@@ -30,9 +30,9 @@ wsServer = new WebSocketServer({
 wsServer.on('request', function(request) {
 	var connection = request.accept();
     console.log((new Date()) + ' Connection accepted.');
-    connection.on('message', function(message) {
+    connection.on('message', function(message, param2) {
         if (message.type === 'utf8') {
-            console.log('Received Message: ' + message.utf8Data);
+            //console.log('Received Message: ' + message.utf8Data);
             var messageData = JSON.parse(message.utf8Data);
             switch(messageData.type) {
             	case 'login':
@@ -65,6 +65,7 @@ wsServer.on('request', function(request) {
 			        		broadcastUsers();
 						});
 					}
+					this.user = user;
             		break;
 
             	case 'get-initial-data':
@@ -109,6 +110,15 @@ wsServer.on('request', function(request) {
         }
     });
     connection.on('close', function(reasonCode, description) {
+    	currentUsers[this.user.id] = null;
+		delete currentUsers[this.user.id];
+
+		carddisplay[this.user.id] = null;
+		delete carddisplay.cards[this.user.id];
+
+		broadcastUsers();
+		broadcastCards();
+
         console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
     });
 });
@@ -205,32 +215,6 @@ broadcastUserstory = function() {
 	var pushData = getUserstoryUpdate();
 	wsServer.broadcastUTF(JSON.stringify(pushData));
 };
-
-app.post('/logout', function(req, res) {
-	var user;
-
-	req.on('data', function (data) {
-        user += data;
-        if (user.length > 1e6) {
-            // FLOOD ATTACK OR FAULTY CLIENT, NUKE REQUEST
-            request.connection.destroy();
-        }
-    });
-
-	req.on('end', function () {
-		user = qs.parse(user);
-
-		currentUsers[user.id] = null;
-		delete currentUsers[user.id];
-
-		carddisplay[user.id] = null;
-		delete carddisplay[user.id];
-
-		broadcastUsers();
-		broadcastCards();
-    	res.json(true);
-    });
-});
 
 httpServer.listen(config.http.port, config.http.listen, function() {
 	console.log('HTTP Server running at http://' + config.http.listen + ':' + config.http.port + '/');

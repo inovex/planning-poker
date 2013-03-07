@@ -9,17 +9,8 @@
 				window.managedSocket.close();
 
 				user = JSON.parse(localStorage.getItem(options.lsUserKey));
-
-				$.ajax({
-					async: true,
-					url: '/logout',
-					method: 'post',
-					data: user,
-					success: function() {
-						localStorage.clear();
-						window.location.reload();
-					}
-				});
+				localStorage.clear();
+				window.location.reload();
 			})
 		});
 	};
