@@ -66,7 +66,24 @@ button {
 	right: 0;
 }
 
-.poker-login {
+#poker-notification {
+	display: none;
+	z-index: 3;
+}
+
+#poker-notification-title {
+
+}
+
+#poker-notification-text {
+	padding: 60px 20px;
+}
+
+#poker-login {
+	z-index: 2;
+}
+
+.poker-message {
 	width: 200px;
 	height: 190px;
 	margin: 50px auto;
@@ -75,18 +92,18 @@ button {
 	text-align: center;
 }
 
-.poker-login .poker-top {
+.poker-message .poker-top {
 	height: 20px;
 	line-height: 20px;
 	color: #fff;
 	font-weight: bold;
 }
 
-.poker-login .poker-content {
+.poker-message .poker-content {
 	padding: 20px;
 }
 
-.poker-login .poker-login-user {
+.poker-message .poker-login-user {
 	margin-bottom: 10px;
 }
 

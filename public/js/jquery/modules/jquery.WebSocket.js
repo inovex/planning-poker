@@ -4,32 +4,50 @@
     $.extend({
         // export WebSocket = $.WebSocket
         WebSocket: function(options) {
-			var socket;
+			var socket,
+				me;
 
+			me = this;
 			this.socketOptions = options;
-
-			window.managedSocket = new WebSocket('ws://' + this.socketOptions.address + ':' + this.socketOptions.port);
 
 			this.setOptions = function(options) {
 				this.elements = options.elements;
 				this.listeners = options.listeners;
 			};
 
-			this.open = function(listeners) {
-				var me;
+			this.reconnectionCallback = function() {
+				me.connect();
+				if (window.managedSocket.readyState == window.managedSocket.CLOSED || window.managedSocket.readyState == window.managedSocket.CONNECTING) {
+					// Try to reconnect every 3 seconds
+					window.setTimeout(me.reconnectionCallback, 3000);
+				} else {
+					notification = $(me.elements.notification);
+					notification.hide(400);
+				}
+			}
 
-				socket = window.managedSocket;
-				me = this;
+			this.onclose = 
 
-				socket.onopen = function(event) {
-					if (typeof me.listeners.open != 'undefined') {
-						for(var i in me.listeners.open) {
-							me.listeners.open[i].onopen(event);
-						}
+			this.onopen = function(event) {
+				if (typeof me.listeners.open != 'undefined') {
+					for(var i in me.listeners.open) {
+						me.listeners.open[i].onopen(event);
 					}
 				}
 
-				socket.onmessage = function(event) {
+				window.managedSocket.onclose = function(event) {
+					var notification,
+						reconnectionCallback;
+
+					notification = $(me.elements.notification);
+					notification.find('#poker-notification-title').html('Verbindung unterbrochen');
+					notification.find('#poker-notification-text').html('Versuche die Verbindung wiederherzustellen');
+					notification.show(400);
+
+					me.reconnectionCallback();
+				};
+
+				window.managedSocket.onmessage = function(event) {
 					var data;
 					data = JSON.parse(event.data);
 
@@ -58,6 +76,14 @@
 					}
 				}
 			};
+
+			this.connect = function() {
+				socket = new WebSocket('ws://' + this.socketOptions.address + ':' + this.socketOptions.port);
+				window.managedSocket = socket;
+				socket.onopen = this.onopen;
+			};
+
+			this.connect();
 
 			this.handleUserList = function(users)  {
 				window.currentUsers = users;

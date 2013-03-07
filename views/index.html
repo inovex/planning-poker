@@ -14,8 +14,14 @@
 </head>
 
 <body>
-	<div class="poker-overlay">
-		<div class="poker-login">
+	<div class="poker-overlay" id="poker-notification">
+		<div class="poker-message">
+			<p class="poker-top" id="poker-notification-title"></p>
+			<p id="poker-notification-text"></p>
+		</div>
+	</div>
+	<div class="poker-overlay" id="poker-login">
+		<div class="poker-message">
 			<div class="poker-top">Login</div>
 				<div class="poker-content">
 				<form action="/login" method="post" id="poker-login-form">
@@ -188,7 +194,8 @@
 			showCardsToggleClass: 'poker-card-display-hidden',
 			userstory: '.poker-userstory',
 			userstoryText: '#poker-userstory-text',
-			editUserStoryButton: '#poker-userstory-edit-button'
+			editUserStoryButton: '#poker-userstory-edit-button',
+			notification: '#poker-notification'
 		};
 		socketOptions.listeners = {
 			open: [
@@ -199,7 +206,6 @@
 			]
 		}
 		socket.setOptions(socketOptions);
-		socket.open();
 	</script>
 </body>
 
