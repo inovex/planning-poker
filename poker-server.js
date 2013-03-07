@@ -110,14 +110,16 @@ wsServer.on('request', function(request) {
         }
     });
     connection.on('close', function(reasonCode, description) {
-    	currentUsers[this.user.id] = null;
-		delete currentUsers[this.user.id];
+    	if (typeof this.user != 'undefined') {
+	    	currentUsers[this.user.id] = null;
+			delete currentUsers[this.user.id];
 
-		carddisplay[this.user.id] = null;
-		delete carddisplay.cards[this.user.id];
+			carddisplay[this.user.id] = null;
+			delete carddisplay.cards[this.user.id];
 
-		broadcastUsers();
-		broadcastCards();
+			broadcastUsers();
+			broadcastCards();
+		}
 
         console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
     });
