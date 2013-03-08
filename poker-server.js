@@ -218,6 +218,6 @@ broadcastUserstory = function() {
 	wsServer.broadcastUTF(JSON.stringify(pushData));
 };
 
-httpServer.listen(config.http.port, config.http.listen, function() {
+httpServer.listen(config.http.port, function() {
 	console.log('HTTP Server running at http://' + config.http.listen + ':' + config.http.port + '/');
 });
