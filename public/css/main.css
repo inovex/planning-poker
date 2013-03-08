@@ -52,9 +52,7 @@ img {
 }
 
 .poker-ajax-loader-background {
-	background-image: url(../img/ajax-loader.gif);
-	background-repeat: no-repeat;
-	background-position: 2%;
+	background: url(../img/ajax-loader.gif) no-repeat 2%;
 }
 
 /** Role specific definitions */
