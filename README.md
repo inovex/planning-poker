@@ -1,7 +1,7 @@
 planning-poker
 ==============
 
-An online Planning Poker based on node.js
+An online Planning Poker based on node.js and WebSockets
 
 
 Installation
