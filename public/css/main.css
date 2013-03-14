@@ -350,3 +350,7 @@ img {
 	width: 255px;
 	display: inline;
 }
+
+.poker-chat-messages-new img {
+	cursor: pointer;
+}

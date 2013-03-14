@@ -61,12 +61,14 @@
 	jQuery.fn.chat.registerChat = function(me, options) {
 		var container,
 			newMessageForm,
-			newMessageText;
+			newMessageText,
+			postNewMessage;
+
 		container = me.find('.' + options.container);
 		newMessageForm = container.find('form');
 		newMessageText = newMessageForm.find('input');
 
-		newMessageForm.on('submit', function(event) {
+		postNewMessage = function(event) {
 			var newMessage;
 			event.preventDefault();
 
@@ -75,7 +77,10 @@
 				text: newMessageText.val()
 			};
 			window.managedSocket.send(JSON.stringify(newMessage));
-		});
+		};
+
+		newMessageForm.on('submit', postNewMessage);
+		newMessageForm.find('img').on('click', postNewMessage);
 	};
 
 	jQuery.fn.chat.receiveChatMessage = function(me, options, message) {
@@ -89,6 +94,8 @@
 		);
 		me.find('.' + options.messages).append(newMessage);
 		me.find('.' + options.container).find('input').val("");
+		// Doesn't work with this as needed. Need to find another way
+		// $('html, body').stop().animate({ scrollTop: newMessage.offset().top }, 10);
 	};
 
 	jQuery.fn.chat.options = {
