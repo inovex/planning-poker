@@ -144,7 +144,18 @@ var readFile = function(filename) {
 }
 
 app.get('/', function(req, res) {
-	res.render('index.html');
+	res.render(
+        'index.html',
+        {
+            layout: false,
+            locals: {
+                web: {
+                    address: config.http.web,
+                    port: config.http.port
+                }
+            }
+        }
+    );
 	res.end();
 });
 
@@ -219,5 +230,5 @@ broadcastUserstory = function() {
 };
 
 httpServer.listen(config.http.port, function() {
-	console.log('HTTP Server running at http://' + config.http.listen + ':' + config.http.port + '/');
+	console.log('HTTP Server running on port ' + config.http.port);
 });
