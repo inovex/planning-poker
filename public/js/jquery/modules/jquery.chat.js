@@ -29,6 +29,10 @@
 			tray.toggleClass(options.traySelected);
 			if (container.is(':visible')) {
 				me.find('input').focus();
+
+				$('.' + options.tray).find('span').removeClass(options.newMessage);
+				$('.' + options.newMessage).hide();
+				$('.' + options.noNewMessage).show();
 			}
 		};
 
@@ -84,7 +88,8 @@
 	};
 
 	jQuery.fn.chat.receiveChatMessage = function(me, options, message) {
-		var newMessage;
+		var newMessage,
+			container;
 
 		newMessage = $(
 			'<p>' + 
@@ -96,12 +101,22 @@
 		me.find('.' + options.container).find('input').val("");
 		// Doesn't work with this as needed. Need to find another way
 		// $('html, body').stop().animate({ scrollTop: newMessage.offset().top }, 10);
+
+		// If chat window is not open, show that there are new chat messages
+		container = me.find('.' + options.container);
+		if (!container.is(':visible')) {
+			$('.' + options.tray).find('span').addClass(options.newMessage);
+			$('.' + options.newMessage).show();
+			$('.' + options.noNewMessage).hide();
+		};
 	};
 
 	jQuery.fn.chat.options = {
 		container: 'poker-chat-messages-container',
 		tray: 'poker-chat-tray',
 		traySelected: 'poker-chat-tray-selected',
-		messages: 'poker-chat-messages'
+		messages: 'poker-chat-messages',
+		newMessage: 'poker-chat-new',
+		noNewMessage: 'poker-chat-nonew'
 	};
 })(jQuery, jQuery);
