@@ -1,4 +1,3 @@
-var http = require('http');
 var WebSocketServer = require('websocket').server;
 var fs = require('fs');
 var url = require('url');
@@ -9,6 +8,8 @@ var crypto = require('crypto');
 
 console.log('Loading config');
 var config = iniparser.parseSync('./config.ini');
+
+var http = require(config.http.protocol);
 
 var app = express();
 var httpServer = http.createServer(app);
@@ -144,16 +145,12 @@ var readFile = function(filename) {
 }
 
 app.get('/', function(req, res) {
+    console.log(config.http);
 	res.render(
         'index.html',
         {
-            layout: false,
-            locals: {
-                web: {
-                    address: config.http.web,
-                    port: config.http.port
-                }
-            }
+            web: config.http,
+            cards: config.cards
         }
     );
 	res.end();
@@ -230,5 +227,6 @@ broadcastUserstory = function() {
 };
 
 httpServer.listen(config.http.port, function() {
-	console.log('HTTP Server running on port ' + config.http.port);
+	console.log('HTTP Server running with config:');
+    console.log(config.http);
 });

@@ -11,6 +11,7 @@
 	<script type="text/javascript" src="js/jquery/modules/jquery.scrumMaster.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.productOwner.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.WebSocket.js"></script>
+	<base href="<%= web.protocol %>://<%= web.address %>"></base>
 </head>
 
 <body>
@@ -94,18 +95,9 @@
 				<img src="img/icon/door_out.png" alt="Ausloggen" title="Ausloggen" class="poker-logout" />
 			</div>
 			<div class="poker-cards scrum-developer">
-				<a class="poker-card">0</a>
-				<a class="poker-card">1/2</a>
-				<a class="poker-card">1</a>
-				<a class="poker-card">2</a>
-				<a class="poker-card">3</a>
-				<a class="poker-card">5</a>
-				<a class="poker-card">8</a>
-				<a class="poker-card">13</a>
-				<a class="poker-card">20</a>
-				<a class="poker-card">40</a>
-				<a class="poker-card">100</a>
-				<a class="poker-card">?</a>
+				<% for (var card in cards) { %>
+					<a class="poker-card"><%= cards[card] %></a>
+				<% } %>
 			</div>
 			<div class="poker-cards-show scrum-master">
 				<button id="poker-cards-show-button" disabled="disabled"><img src="img/icon/pictures.png" alt="" /> Karten aufdecken</button>
