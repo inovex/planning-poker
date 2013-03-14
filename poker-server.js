@@ -113,10 +113,11 @@ wsServer.on('request', function(request) {
         			broadcastUserstory();
         			break;
 
-                case 'post-chatmessage':
-                    console.log(this.user);
+                case 'post-chat-message':
                     chatMessage = {
-                        text: messageData.text
+                        type: 'new-chat-message',
+                        text: messageData.text,
+                        user: this.user
                     };
                     wsServer.broadcastUTF(JSON.stringify(chatMessage));
                     break;

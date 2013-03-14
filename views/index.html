@@ -158,7 +158,7 @@
 			pokerCardBackClass: '.poker-card-back'
 		});
 
-		$('.poker-chat').chat();
+		var chatListener = $('.poker-chat').chat();
 
 		$('.scrum-master').scrumMaster({
 			pokerCardsShowButton: '#poker-cards-show-button',
@@ -196,6 +196,9 @@
 			],
 			login: [
 				loginListener
+			],
+			'new-chat-message': [
+				chatListener
 			]
 		}
 		socket.setOptions(socketOptions);
