@@ -147,40 +147,6 @@ app.get('/', function(req, res) {
 	res.end();
 });
 
-app.post('/login', function(req, res) {
-    var user,
-    	sha1sum;
-
-    user = '';
-    //res.set('Content-Type', 'application/json');
-    req.on('data', function (data) {
-        user += data;
-        if (user.length > 1e6) {
-            // FLOOD ATTACK OR FAULTY CLIENT, NUKE REQUEST
-            request.connection.destroy();
-        }
-    });
-    req.on('end', function () {
-    	user = qs.parse(user);
-    	if (typeof user.id !== 'undefined') {
-    		currentUsers[user.id] = user;
-    		res.json(user);
-    		broadcastUsers();
-    	} else {
-	    	// Create random id for user
-	    	sha1sum = crypto.createHash('sha1');
-			crypto.randomBytes(256, function(ex, buf) {
-				if (ex) throw ex;
-				sha1sum.update(buf);
-				user.id = sha1sum.digest('hex');
-		        currentUsers[user.id] = user;
-        		res.json(user);
-        		broadcastUsers();
-			});
-		}
-    });
-});
-
 getUserUpdateList = function () {
 	return {
     	type: 'userlist',
