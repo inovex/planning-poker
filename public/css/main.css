@@ -311,3 +311,31 @@ img {
 	width: 100%;
 	height: 150px;
 }
+
+/** Chat */
+.poker-chat {
+	float: right;
+}
+
+.poker-chat-tray {
+	cursor: pointer;
+	float: right;
+	margin-left: 245px;
+	padding: 5px;
+	border: 1px solid transparent;
+}
+
+.poker-chat-tray-selected {
+	border: 1px solid #000;
+}
+
+.poker-chat-messages {
+	display: none;
+	border: 1px solid #000;
+	width: 300px;
+	position: absolute;
+	height: 250px;
+	background-color: #fff;
+	z-index: 1;
+	margin-top: 30px;
+}

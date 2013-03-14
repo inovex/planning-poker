@@ -112,6 +112,14 @@ wsServer.on('request', function(request) {
         			currentUserstory  = messageData.userstory;
         			broadcastUserstory();
         			break;
+
+                case 'post-chatmessage':
+                    console.log(this.user);
+                    chatMessage = {
+                        text: messageData.text
+                    };
+                    wsServer.broadcastUTF(JSON.stringify(chatMessage));
+                    break;
             }
         }
         else if (message.type === 'binary') {

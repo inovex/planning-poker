@@ -8,6 +8,7 @@
 	<script type="text/javascript" src="js/jquery/modules/jquery.login.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.logout.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.cardselection.js"></script>
+	<script type="text/javascript" src="js/jquery/modules/jquery.chat.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.scrumMaster.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.productOwner.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.WebSocket.js"></script>
@@ -52,6 +53,13 @@
 
 		<div class="poker-content">
 			<h1>Planning Poker online</h1>
+			<div class="poker-chat">
+				<div class="poker-chat-tray">
+					<img src="img/icon/comments.png" alt="Chat" />
+					<span>Chat</span>
+				</div>
+				<div class="poker-chat-messages"></div>
+			</div>
 			<div class="poker-users">
 				<p>Im Raum:</p>
 				<p class="poker-users-online"></p>
@@ -143,6 +151,8 @@
 			selectedClass: 'poker-card-selected',
 			pokerCardBackClass: '.poker-card-back'
 		});
+
+		$('.poker-chat').chat();
 
 		$('.scrum-master').scrumMaster({
 			pokerCardsShowButton: '#poker-cards-show-button',
