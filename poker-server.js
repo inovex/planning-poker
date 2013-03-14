@@ -9,14 +9,23 @@ var crypto = require('crypto');
 console.log('Loading config');
 var config = iniparser.parseSync('./config.ini');
 
+// HTTP Server
 var http = require(config.http.protocol);
-
 var app = express();
 var httpServer = http.createServer(app);
 app.use(express.static(__dirname + config.filesystem.public_files));
 app.set('views', __dirname + config.filesystem.view_files);
 app.engine('html', require('ejs').renderFile);
 
+// App Variables
+var currentUsers = {};
+var carddisplay = {
+    cards: {},
+    show: false
+};
+var currentUserstory = '';
+
+// WebSocket Server
 console.log('Creating WebSocket Server');
 wsServer = new WebSocketServer({
     httpServer: httpServer,
@@ -125,24 +134,6 @@ wsServer.on('request', function(request) {
         console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
     });
 });
-
-// App Variables
-var currentUsers = {};
-var carddisplay = {
-	cards: {},
-	show: false
-};
-var currentUserstory = '';
-
-var readFile = function(filename) {
-	var output = '';
-	try {
-		output = fs.readFileSync(__dirname + '/' + filename, 'utf-8');
-	} catch (e) {
-		console.log(e);
-	}
-	return output;
-}
 
 app.get('/', function(req, res) {
     console.log(config.http);
