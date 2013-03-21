@@ -7,7 +7,7 @@
 
 			postUserStoryButton = $(options.postUserStoryButton);
 
-			if ($(event.target).val().length > 0) {
+			if ($(event.target).val().length > 9) {
 				postUserStoryButton.removeAttr('disabled');
 			} else {
 				postUserStoryButton.attr('disabled', 'disabled')
