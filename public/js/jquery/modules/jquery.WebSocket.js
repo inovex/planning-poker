@@ -98,7 +98,7 @@
 						user;
 
 					user = users[userId];
-					userArray.push('<span class="poker-role poker-role-' + user.role + '">' + user.name + '</span>');
+					userArray.push('<span class="poker-role poker-role-' + user.role + '">' + $(user.name).text() + '</span>');
 				}
 				$(this.elements.userlist).html(userArray.join(', '));
 			};
@@ -146,7 +146,7 @@
 						$(this.elements.pokerFelt).append(card);
 					}
 					card.find('.poker-card-value').html(cards[userId]);
-					card.find('.poker-card-player').html(window.currentUsers[userId].name);
+					card.find('.poker-card-player').text(window.currentUsers[userId].name);
 
 					amountDevs = $('.poker-role-developer').length;
 					// Schauen, ob alle devs abgestimmt haben
@@ -168,7 +168,7 @@
 
 			this.handleUserstory = function(userstory) {
 				userstory = userstory.nl2br();
-				$(this.elements.userstoryText).html(userstory);
+				$(this.elements.userstoryText).text(userstory);
 				$(this.elements.editUserStoryButton).removeAttr('disabled');
 				if (userstory.length > 0) {
 					$(this.elements.userstory).show(400);

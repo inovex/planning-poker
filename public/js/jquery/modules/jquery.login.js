@@ -85,7 +85,7 @@
 	};
 
 	jQuery.fn.login.updateUserInfo = function(user, options) {
-		$(options.nameClass).html(user.name);
+		$(options.nameClass).text(user.name);
 		$(options.roleClass).html(options.availableRoles[user.role]);
 		$(options.roleClass).addClass('poker-role-' + user.role);
 		$(options.userInfoClass).show();
