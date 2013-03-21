@@ -98,7 +98,7 @@
 						user;
 
 					user = users[userId];
-					userArray.push('<span class="poker-role poker-role-' + user.role + '">' + $(user.name).text() + '</span>');
+					userArray.push('<span class="poker-role poker-role-' + user.role + '">' + $.escape(user.name) + '</span>');
 				}
 				$(this.elements.userlist).html(userArray.join(', '));
 			};

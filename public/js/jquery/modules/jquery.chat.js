@@ -93,8 +93,8 @@
 
 		newMessage = $(
 			'<p>' + 
-				'<span class="poker-role-' + message.user.role + '">' + message.user.name + ':</span> ' +
-				'<span>' + $(message.text).text() + '</span>' +
+				'<span class="poker-role-' + message.user.role + '">' + $.escape(message.user.name) + ':</span> ' +
+				'<span>' + $.escape(message.text) + '</span>' +
 			'</p>'
 		);
 		me.find('.' + options.messages).append(newMessage);
