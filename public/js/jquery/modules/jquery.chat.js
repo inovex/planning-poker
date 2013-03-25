@@ -96,7 +96,7 @@
 		messageText = messageText.parselinks();
 		newMessage = $(
 			'<p>' + 
-				'<span class="poker-role-' + message.user.role + '">' + $.escape(message.user.name) + ':</span> ' +
+				'<span class="poker-role-' + message.user.role + '">' + message.user.name.escape() + ':</span> ' +
 				'<span>' + messageText + '</span>' +
 			'</p>'
 		);
