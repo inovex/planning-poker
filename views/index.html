@@ -34,6 +34,7 @@
 							<option value="developer">Entwickler</option>
 							<option value="productOwner">Product Owner</option>
 							<option value="scrumMaster">Scrum Master</option>
+							<option value="spectator">Beobachter</option>
 						</select>
 					</p>
 
@@ -121,7 +122,13 @@
 				port: <%= web.port %>
 			},
 			lsUserKey: 'user',
-			loaderBackgroundClass: 'poker-ajax-loader-background'
+			loaderBackgroundClass: 'poker-ajax-loader-background',
+			availableRoles: {
+				developer: 'Entwickler',
+				productOwner: 'Product Owner',
+				scrumMaster: 'Scrum Master',
+				spectator: 'Beobachter'
+			}
 		};
 
 		var socket = $.WebSocket(options);
@@ -133,6 +140,7 @@
 			roleClass: '.poker-userinfo-role',
 			loaderBackgroundClass: options.loaderBackgroundClass,
 			lsUserKey: options.lsUserKey,
+			availableRoles: options.availableRoles,
 			roleSettings: {
 				developer: {
 					hide: ['.scrum-master', '.scrum-product-owner'],
@@ -145,6 +153,10 @@
 				productOwner: {
 					hide: ['.scrum-developer', '.scrum-master'],
 					show: ['.scrum-product-owner']
+				},
+				spectator: {
+					hide: ['.scrum-developer', '.scrum-master', '.scrum-product-owner'],
+					show: []
 				}
 			}
 		});

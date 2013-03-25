@@ -96,11 +96,7 @@
 	}
 
 	jQuery.fn.login.options = {
-		availableRoles: {
-			developer: 'Entwickler',
-			productOwner: 'Product Owner',
-			scrumMaster: 'Scrum Master'
-		},
+		availableRoles: {},
 		loaderBackgroundClass: null,
 		roleSettings: {
 			developer: {
@@ -112,6 +108,10 @@
 				hide: []
 			},
 			productOwner: {
+				show: [],
+				hide: []
+			},
+			spectator: {
 				show: [],
 				hide: []
 			}

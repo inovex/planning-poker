@@ -271,6 +271,10 @@ img {
 	color: #666;
 }
 
+.poker-role-spectator {
+	color: #c0c0c0;
+}
+
 .poker-users p {
 	float: left;
 }
