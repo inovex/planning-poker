@@ -34,8 +34,6 @@
 				}
 			}
 
-			this.onclose = 
-
 			this.onopen = function(event) {
 				if (typeof me.listeners.open != 'undefined') {
 					for(var i in me.listeners.open) {
