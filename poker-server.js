@@ -121,6 +121,21 @@ wsServer.on('request', function(request) {
                     };
                     wsServer.broadcastUTF(JSON.stringify(chatMessage));
                     break;
+
+                case 'reset-room':
+                    currentUserstory = '';
+                    carddisplay = {
+                        cards: {},
+                        show: false
+                    };
+                    broadcastCards();
+                    broadcastUserstory();
+
+                    var pushData = {
+                        type: 'reset-room'
+                    };
+                    wsServer.broadcastUTF(JSON.stringify(pushData));
+                    break;
             }
         }
         else if (message.type === 'binary') {
