@@ -8,9 +8,17 @@
 				me;
 
 			me = this;
-			this.socketOptions = options;
+			this.options = options;
 
 			this.setOptions = function(options) {
+				// Option keys which will be set as class properties
+				var optionsAsProperty = ['elements', 'listeners'];
+
+				for (var key in options) {
+					if (optionsAsProperty.indexOf(key) != -1) {
+						this[key] = options[key];
+					}
+				}
 				this.elements = options.elements;
 				this.listeners = options.listeners;
 			};
@@ -81,7 +89,7 @@
 			};
 
 			this.connect = function() {
-				socket = new WebSocket('ws://' + this.socketOptions.address + ':' + this.socketOptions.port);
+				socket = new WebSocket('ws://' + this.options.socket.address + ':' + this.options.socket.port);
 				window.managedSocket = socket;
 				socket.onopen = this.onopen;
 			};

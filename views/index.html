@@ -124,7 +124,7 @@
 			loaderBackgroundClass: 'poker-ajax-loader-background'
 		};
 
-		var socket = $.WebSocket(options.socket);
+		var socket = $.WebSocket(options);
 
 		var loginListener = $('#poker-login-form').login({
 			overlay: '.poker-overlay',
@@ -177,7 +177,7 @@
 			$('.poker-login-user input[type="text"]').focus();
 		});
 
-		var socketOptions = options.socket;
+		var socketOptions = options;
 		socketOptions.elements = {
 			userlist: '.poker-users-online',
 			pokerFelt: '.poker-felt',
@@ -189,7 +189,7 @@
 			userstoryText: '#poker-userstory-text',
 			editUserStoryButton: '#poker-userstory-edit-button',
 			notification: '#poker-notification',
-			loaderBackgroundClass: options.loaderBackgroundClass
+			loaderBackgroundClass: options.loaderBackgroundClass,
 		};
 		socketOptions.listeners = {
 			open: [
