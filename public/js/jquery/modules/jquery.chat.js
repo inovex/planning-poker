@@ -92,7 +92,7 @@
 			container,
 			messageText;
 
-		messageText = $.escape(message.text);
+		messageText = message.text.escape();
 		messageText = messageText.parselinks();
 		newMessage = $(
 			'<p>' + 

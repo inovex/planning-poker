@@ -119,7 +119,7 @@
 						user;
 
 					user = users[userId];
-					userArray.push('<span class="poker-role poker-role-' + user.role + '">' + $.escape(user.name) + '</span>');
+					userArray.push('<span class="poker-role poker-role-' + user.role + '">' + user.name.escape() + '</span>');
 				}
 				$(this.elements.userlist).html(userArray.join(', '));
 			};
@@ -186,7 +186,7 @@
 			}
 
 			this.handleUserstory = function(userstory) {
-				userstory = $.escape(userstory);
+				userstory = userstory.escape();
 				userstory = userstory.parselinks();
 				userstory = userstory.nl2br();
 				$(this.elements.userstoryText).html(userstory);

@@ -17,4 +17,12 @@ String.prototype.parselinks = function() {
 String.prototype.removelinks = function() {
 	var regexp = /<a [^>]*>(.*)<\/a>/gi;
 	return this.replace(regexp, '$1');
-}
+};
+
+String.prototype.escape = function() {
+	return this
+		.replace(/&(?!\w+;)/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;');
+};
