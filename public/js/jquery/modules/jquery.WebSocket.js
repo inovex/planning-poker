@@ -9,13 +9,12 @@
 
 			me = this;
 			this.options = options;
+			// Option keys which will be set as class properties in setProperties
+			this.optionsAsProperty = ['elements', 'listeners'];
 
 			this.setOptions = function(options) {
-				// Option keys which will be set as class properties
-				var optionsAsProperty = ['elements', 'listeners'];
-
 				for (var key in options) {
-					if (optionsAsProperty.indexOf(key) != -1) {
+					if (this.optionsAsProperty.indexOf(key) != -1) {
 						this[key] = options[key];
 					}
 				}
