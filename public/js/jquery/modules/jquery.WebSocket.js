@@ -181,15 +181,15 @@
 			}
 
 			this.handleShowCards = function() {
-				//showCardsSelectorClass: null,
-				//showCardsToggleClass: null
 				$('.' + this.elements.showCardsSelectorClass).removeClass(this.elements.showCardsToggleClass);
 				$(this.elements.pokerCardsShowButton).attr('disabled', 'disabled');
 			}
 
 			this.handleUserstory = function(userstory) {
+				userstory = $.escape(userstory);
+				userstory = userstory.parselinks();
 				userstory = userstory.nl2br();
-				$(this.elements.userstoryText).text(userstory);
+				$(this.elements.userstoryText).html(userstory);
 				$(this.elements.editUserStoryButton).removeAttr('disabled');
 				if (userstory.length > 0) {
 					$(this.elements.userstory).show(400);

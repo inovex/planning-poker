@@ -89,12 +89,15 @@
 
 	jQuery.fn.chat.receiveChatMessage = function(me, options, message) {
 		var newMessage,
-			container;
+			container,
+			messageText;
 
+		messageText = $.escape(message.text);
+		messageText = messageText.parselinks();
 		newMessage = $(
 			'<p>' + 
 				'<span class="poker-role-' + message.user.role + '">' + $.escape(message.user.name) + ':</span> ' +
-				'<span>' + $.escape(message.text) + '</span>' +
+				'<span>' + messageText + '</span>' +
 			'</p>'
 		);
 		me.find('.' + options.messages).append(newMessage);

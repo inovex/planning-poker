@@ -37,7 +37,9 @@
 			postUserStoryTextarea = $(options.postUserStoryTextarea);
 			userStoryTextarea = $(options.userStoryText);
 
-			postUserStoryTextarea.val(userStoryTextarea.html().removeBr());
+			userstory = userStoryTextarea.html().removeBr();
+			userstory = userstory.removelinks();
+			postUserStoryTextarea.val(userstory);
 			postUserStoryTextarea.focus();
 		});
 	};
