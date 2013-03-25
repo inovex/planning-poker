@@ -1,10 +1,14 @@
 (function(jQuery, $) {
 	jQuery.fn.login = function(options) {
 		options = jQuery.extend({}, jQuery.fn.login.options, options);
-		var user;
+		var user,
+			me,
+			nameField,
+			submitButton;
 
+		me = $(this);
 		// Klickhandler registrieren
-		$(this).each(function(key, item) {
+		me.each(function(key, item) {
 			var eventData;
 
 			eventData = {
@@ -13,6 +17,17 @@
 			};
 
 			$(item).on('submit', eventData, jQuery.fn.login.loginUserCallback);
+		});
+
+		nameField = me.find('input[type="text"]');
+		submitButton = me.find('input[type="submit"]');
+		// username must be at least 2 chars long
+		nameField.on('keyup', function(event) {
+			if ($(event.target).val().length >= 2) {
+				submitButton.removeAttr('disabled');
+			} else {
+				submitButton.attr('disabled', 'disabled');
+			}
 		});
 
 		return {
@@ -41,10 +56,18 @@
 			formData,
 			user;
 
-		options = event.data.options;
-		// Prevent default and disable login button
+		// Prevent default
 		event.preventDefault();
-		$(event.data.form).find('.poker-login-submit').attr('disabled', 'disabled');
+
+		// if submit button is disabled: do nothing (can occur when user presses enter but button is disabled)
+		submitButton = $(event.data.form).find('.poker-login-submit');
+		if (submitButton.attr('disabled') == 'disabled') {
+			return;
+		}
+
+		options = event.data.options;
+		// Disable login button and show user that something is happening
+		submitButton.attr('disabled', 'disabled');
 		$(event.data.form).find('.poker-login-submit').addClass(options.loaderBackgroundClass)
 
 		user = {};
