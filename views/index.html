@@ -118,7 +118,8 @@
 		var options = {
 			socket: {
 				address: '<%= web.address %>',
-				port: <%= web.port %>
+				port: <%= web.port %>,
+				maxReconnects: 100
 			},
 			lsUserKey: 'user',
 			loaderBackgroundClass: 'poker-ajax-loader-background',

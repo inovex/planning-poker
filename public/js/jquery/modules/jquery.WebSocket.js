@@ -12,7 +12,9 @@
 			// Option keys which will be set as class properties in setProperties
 			this.optionsAsProperty = ['elements', 'listeners'];
 			// Websocket messages / listeners which are allowed when user is not logged in
-			this.allowedListenersWhenLoggedOut = ['open', 'login']
+			this.allowedListenersWhenLoggedOut = ['open', 'login'];
+			// number of reconnects tried
+			this.reconnectsTried = 0;
 
 			this.setOptions = function(options) {
 				for (var key in options) {
@@ -25,15 +27,26 @@
 			};
 
 			this.reconnectionCallback = function() {
-				if (window.managedSocket.readyState == window.managedSocket.CLOSED || window.managedSocket.readyState == window.managedSocket.CONNECTING) {
-					me.connect();
-					// Try to reconnect every 3 seconds
-					window.setTimeout(me.reconnectionCallback, 3000);
+				me.reconnectsTried++;
+				notification = $(me.elements.notification);
+				if (me.checkMaxReconnects()) {
+					if (window.managedSocket.readyState == window.managedSocket.CLOSED || window.managedSocket.readyState == window.managedSocket.CONNECTING) {
+						me.connect();
+						// Try to reconnect every 3 seconds
+						window.setTimeout(me.reconnectionCallback, 3000);
+					} else {
+						notification.hide(400);
+					}
 				} else {
-					notification = $(me.elements.notification);
-					notification.hide(400);
+					notificationText = notification.find('#poker-notification-text');
+					notificationText.html('Konnte die Verbindung nicht wiederherstellen. Bitte versuch es später noch einmal.');
+					notificationText.removeClass(me.elements.loaderBackgroundClass);
 				}
-			}
+			};
+
+			this.checkMaxReconnects = function() {
+				return (me.options.socket.maxReconnects > me.reconnectsTried);
+			};
 
 			this.isUserLoggedIn = function() {
 				return localStorage.getItem(me.options.lsUserKey) !== null;
