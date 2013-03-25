@@ -11,6 +11,8 @@
 			this.options = options;
 			// Option keys which will be set as class properties in setProperties
 			this.optionsAsProperty = ['elements', 'listeners'];
+			// Websocket messages / listeners which are allowed when user is not logged in
+			this.allowedListenersWhenLoggedOut = ['open', 'login']
 
 			this.setOptions = function(options) {
 				for (var key in options) {
@@ -32,6 +34,14 @@
 					notification.hide(400);
 				}
 			}
+
+			this.isUserLoggedIn = function() {
+				return localStorage.getItem(me.options.lsUserKey) !== null;
+			};
+
+			this.isAllowedListenerWhenLoggedOut = function(listener) {
+				return me.allowedListenersWhenLoggedOut.indexOf(listener) != -1
+			};
 
 			this.onopen = function(event) {
 				if (typeof me.listeners.open != 'undefined') {
@@ -58,6 +68,12 @@
 				window.managedSocket.onmessage = function(event) {
 					var data;
 					data = JSON.parse(event.data);
+
+					// If user is logged off and he shall not get the update from the websocket:
+					// exit method
+					if (!me.isUserLoggedIn() && !me.isAllowedListenerWhenLoggedOut(data.type)) {
+						return;
+					}
 
 					if (typeof me.listeners[data.type] != 'undefined') {
 						for(var i in me.listeners[data.type]) {
