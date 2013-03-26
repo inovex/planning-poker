@@ -81,6 +81,14 @@ var getInitialDataListener = function(messageData) {
     this.connection.sendUTF(JSON.stringify(getUserstoryUpdate()));
 };
 
+var playCardListener = function(messageData) {
+    // Allow only if cards are not already shown
+    if (!carddisplay.show) {
+        carddisplay.cards[messageData.userId] = messageData.cardValue
+        broadcastCards();
+    }
+};
+
 var PokerConnectionHandler = function() {};
 PokerConnectionHandler.prototype = new EventEmitter();
 
@@ -119,14 +127,6 @@ PokerConnectionHandler.prototype.onmessage = function(message) {
         var messageData = JSON.parse(message.utf8Data);
         this.emit(messageData.type, messageData, this);
         switch(messageData.type) {
-            case 'play-card':
-                // Allow only if cards are not already shown
-                if (!carddisplay.show) {
-                    carddisplay.cards[messageData.userId] = messageData.cardValue
-                    broadcastCards();
-                }
-                break;
-
             case 'show-cards':
                 var pushData = {
                     type: 'show-cards'
@@ -182,6 +182,7 @@ wsServer.on('request', function(request) {
     var connectionHandler = new PokerConnectionHandler();
     connectionHandler.on('login', pokerLoginListener);
     connectionHandler.on('get-initial-data', getInitialDataListener);
+    connectionHandler.on('play-card', playCardListener);
 
 	connectionHandler.setConnection(request.accept());
 
