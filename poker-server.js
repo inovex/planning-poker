@@ -6,6 +6,8 @@ var express = require('express');
 var iniparser = require('iniparser');
 var crypto = require('crypto');
 
+var EventEmitter = require('events').EventEmitter;
+
 console.log('Loading config');
 var config = iniparser.parseSync('./config.ini');
 
@@ -37,17 +39,52 @@ wsServer = new WebSocketServer({
     autoAcceptConnections: false
 });
 
-PokerConnectionHandler = function() {};
+var pokerLoginListener = function(messageData, connectionHandler) {
+    var user,
+        sha1sum,
+        sendData;
+
+    // For callbacks
+    connection = connectionHandler.connection;
+
+    user = messageData.user;
+    if (typeof user.id !== 'undefined') {
+        currentUsers[user.id] = user;
+        sendData = {
+            type: 'login',
+            user: user
+        };
+        connection.sendUTF(JSON.stringify(sendData));
+        broadcastUsers();
+    } else {
+        // Create random id for user
+        sha1sum = crypto.createHash('sha1');
+        crypto.randomBytes(256, function(ex, buf) {
+            if (ex) throw ex;
+            sha1sum.update(buf);
+            user.id = sha1sum.digest('hex');
+            currentUsers[user.id] = user;
+            sendData = {
+                type: 'login',
+                user: user
+            };
+            connection.sendUTF(JSON.stringify(sendData));
+            broadcastUsers();
+        });
+    }
+    connectionHandler.user = user;
+};
+
+var PokerConnectionHandler = function() {};
+PokerConnectionHandler.prototype = new EventEmitter();
 
 PokerConnectionHandler.prototype.connection = null;
 
 PokerConnectionHandler.prototype.setConnection = function(connection) {
     var me;
     me = this;
-    console.log('foobar');
     this.connection = connection;
     this.connection.on('message', function(message) {
-        console.log(message);
         me.onmessage.call(me, message);
     });
 
@@ -71,42 +108,10 @@ PokerConnectionHandler.prototype.onmessage = function(message) {
     if (message.type === 'utf8') {
         //console.log('Received Message: ' + message.utf8Data);
         var messageData = JSON.parse(message.utf8Data);
+        this.emit(messageData.type, messageData, this);
         switch(messageData.type) {
             case 'login':
-                var user,
-                    sha1sum,
-                    sendData,
-                    me;
-
-                // For callbacks
-                connection = this.connection;
-
-                user = messageData.user;
-                if (typeof user.id !== 'undefined') {
-                    currentUsers[user.id] = user;
-                    sendData = {
-                        type: 'login',
-                        user: user
-                    };
-                    this.connection.sendUTF(JSON.stringify(sendData));
-                    broadcastUsers();
-                } else {
-                    // Create random id for user
-                    sha1sum = crypto.createHash('sha1');
-                    crypto.randomBytes(256, function(ex, buf) {
-                        if (ex) throw ex;
-                        sha1sum.update(buf);
-                        user.id = sha1sum.digest('hex');
-                        currentUsers[user.id] = user;
-                        sendData = {
-                            type: 'login',
-                            user: user
-                        };
-                        connection.sendUTF(JSON.stringify(sendData));
-                        broadcastUsers();
-                    });
-                }
-                this.user = user;
+                
                 break;
 
             case 'get-initial-data':
@@ -176,6 +181,8 @@ PokerConnectionHandler.prototype.onmessage = function(message) {
 
 wsServer.on('request', function(request) {
     var connectionHandler = new PokerConnectionHandler();
+    connectionHandler.addListener('login', pokerLoginListener);
+
 	connectionHandler.setConnection(request.accept());
 
     console.log((new Date()) + ' Connection accepted.');
