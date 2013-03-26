@@ -37,126 +37,149 @@ wsServer = new WebSocketServer({
     autoAcceptConnections: false
 });
 
-wsServer.on('request', function(request) {
-	var connection = request.accept();
-    console.log((new Date()) + ' Connection accepted.');
-    connection.on('message', function(message, param2) {
-        if (message.type === 'utf8') {
-            //console.log('Received Message: ' + message.utf8Data);
-            var messageData = JSON.parse(message.utf8Data);
-            switch(messageData.type) {
-            	case 'login':
-            		var user,
-				    	sha1sum,
-				    	sendData;
+PokerConnectionHandler = function() {};
 
-			    	user = messageData.user;
-			    	if (typeof user.id !== 'undefined') {
-			    		currentUsers[user.id] = user;
-			    		sendData = {
-				        	type: 'login',
-				        	user: user
-				        };
-			    		connection.sendUTF(JSON.stringify(sendData));
-			    		broadcastUsers();
-			    	} else {
-				    	// Create random id for user
-				    	sha1sum = crypto.createHash('sha1');
-						crypto.randomBytes(256, function(ex, buf) {
-							if (ex) throw ex;
-							sha1sum.update(buf);
-							user.id = sha1sum.digest('hex');
-					        currentUsers[user.id] = user;
-					        sendData = {
-					        	type: 'login',
-					        	user: user
-					        };
-			        		connection.sendUTF(JSON.stringify(sendData));
-			        		broadcastUsers();
-						});
-					}
-					this.user = user;
-            		break;
+PokerConnectionHandler.prototype.connection = null;
 
-            	case 'get-initial-data':
-            		connection.sendUTF(JSON.stringify(getUserUpdateList()));
-            		connection.sendUTF(JSON.stringify(getCardUpdateList()));
-            		connection.sendUTF(JSON.stringify(getUserstoryUpdate()));
-            		break;
-
-        		case 'play-card':
-        			// Allow only if cards are not already shown
-        			if (!carddisplay.show) {
-	        			carddisplay.cards[messageData.userId] = messageData.cardValue
-	        			broadcastCards();
-        			}
-        			break;
-
-        		case 'show-cards':
-        			var pushData = {
-        				type: 'show-cards'
-        			};
-        			carddisplay.show = true;
-        			wsServer.broadcastUTF(JSON.stringify(pushData));
-        			break;
-
-        		case 'reset-cards':
-        			carddisplay = {
-        				cards: {},
-        				show: false
-        			};
-        			broadcastCards();
-        			break;
-
-        		case 'post-userstory':
-        			currentUserstory  = messageData.userstory;
-        			broadcastUserstory();
-        			break;
-
-                case 'post-chat-message':
-                    chatMessage = {
-                        type: 'new-chat-message',
-                        text: messageData.text,
-                        user: this.user
-                    };
-                    wsServer.broadcastUTF(JSON.stringify(chatMessage));
-                    break;
-
-                case 'reset-room':
-                    currentUserstory = '';
-                    carddisplay = {
-                        cards: {},
-                        show: false
-                    };
-                    broadcastCards();
-                    broadcastUserstory();
-
-                    var pushData = {
-                        type: 'reset-room'
-                    };
-                    wsServer.broadcastUTF(JSON.stringify(pushData));
-                    break;
-            }
-        }
-        else if (message.type === 'binary') {
-            console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
-            //connection.sendBytes(message.binaryData);
-        }
+PokerConnectionHandler.prototype.setConnection = function(connection) {
+    var me;
+    me = this;
+    console.log('foobar');
+    this.connection = connection;
+    this.connection.on('message', function(message) {
+        console.log(message);
+        me.onmessage.call(me, message);
     });
+
     connection.on('close', function(reasonCode, description) {
-    	if (typeof this.user != 'undefined') {
-	    	currentUsers[this.user.id] = null;
-			delete currentUsers[this.user.id];
+        if (typeof this.user != 'undefined') {
+            currentUsers[this.user.id] = null;
+            delete currentUsers[this.user.id];
 
-			carddisplay[this.user.id] = null;
-			delete carddisplay.cards[this.user.id];
+            carddisplay[this.user.id] = null;
+            delete carddisplay.cards[this.user.id];
 
-			broadcastUsers();
-			broadcastCards();
-		}
+            broadcastUsers();
+            broadcastCards();
+        }
 
         console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
     });
+};
+
+PokerConnectionHandler.prototype.onmessage = function(message) {
+    if (message.type === 'utf8') {
+        //console.log('Received Message: ' + message.utf8Data);
+        var messageData = JSON.parse(message.utf8Data);
+        switch(messageData.type) {
+            case 'login':
+                var user,
+                    sha1sum,
+                    sendData,
+                    me;
+
+                // For callbacks
+                connection = this.connection;
+
+                user = messageData.user;
+                if (typeof user.id !== 'undefined') {
+                    currentUsers[user.id] = user;
+                    sendData = {
+                        type: 'login',
+                        user: user
+                    };
+                    this.connection.sendUTF(JSON.stringify(sendData));
+                    broadcastUsers();
+                } else {
+                    // Create random id for user
+                    sha1sum = crypto.createHash('sha1');
+                    crypto.randomBytes(256, function(ex, buf) {
+                        if (ex) throw ex;
+                        sha1sum.update(buf);
+                        user.id = sha1sum.digest('hex');
+                        currentUsers[user.id] = user;
+                        sendData = {
+                            type: 'login',
+                            user: user
+                        };
+                        connection.sendUTF(JSON.stringify(sendData));
+                        broadcastUsers();
+                    });
+                }
+                this.user = user;
+                break;
+
+            case 'get-initial-data':
+                this.connection.sendUTF(JSON.stringify(getUserUpdateList()));
+                this.connection.sendUTF(JSON.stringify(getCardUpdateList()));
+                this.connection.sendUTF(JSON.stringify(getUserstoryUpdate()));
+                break;
+
+            case 'play-card':
+                // Allow only if cards are not already shown
+                if (!carddisplay.show) {
+                    carddisplay.cards[messageData.userId] = messageData.cardValue
+                    broadcastCards();
+                }
+                break;
+
+            case 'show-cards':
+                var pushData = {
+                    type: 'show-cards'
+                };
+                carddisplay.show = true;
+                wsServer.broadcastUTF(JSON.stringify(pushData));
+                break;
+
+            case 'reset-cards':
+                carddisplay = {
+                    cards: {},
+                    show: false
+                };
+                broadcastCards();
+                break;
+
+            case 'post-userstory':
+                currentUserstory  = messageData.userstory;
+                broadcastUserstory();
+                break;
+
+            case 'post-chat-message':
+                chatMessage = {
+                    type: 'new-chat-message',
+                    text: messageData.text,
+                    user: this.user
+                };
+                wsServer.broadcastUTF(JSON.stringify(chatMessage));
+                break;
+
+            case 'reset-room':
+                currentUserstory = '';
+                carddisplay = {
+                    cards: {},
+                    show: false
+                };
+                broadcastCards();
+                broadcastUserstory();
+
+                var pushData = {
+                    type: 'reset-room'
+                };
+                wsServer.broadcastUTF(JSON.stringify(pushData));
+                break;
+        }
+    }
+    else if (message.type === 'binary') {
+        console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
+    }
+};
+
+wsServer.on('request', function(request) {
+    var connectionHandler = new PokerConnectionHandler();
+	connectionHandler.setConnection(request.accept());
+
+    console.log((new Date()) + ' Connection accepted.');
+
 });
 
 app.get('/', function(req, res) {
