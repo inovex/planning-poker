@@ -39,13 +39,13 @@ wsServer = new WebSocketServer({
     autoAcceptConnections: false
 });
 
-var pokerLoginListener = function(messageData, connectionHandler) {
+var pokerLoginListener = function(messageData) {
     var user,
         sha1sum,
         sendData;
 
     // For callbacks
-    connection = connectionHandler.connection;
+    connection = this.connection;
 
     user = messageData.user;
     if (typeof user.id !== 'undefined') {
@@ -72,7 +72,11 @@ var pokerLoginListener = function(messageData, connectionHandler) {
             broadcastUsers();
         });
     }
-    connectionHandler.user = user;
+    this.user = user;
+};
+
+var getInitialDataListener = function(messageData) {
+
 };
 
 var PokerConnectionHandler = function() {};
@@ -89,19 +93,22 @@ PokerConnectionHandler.prototype.setConnection = function(connection) {
     });
 
     connection.on('close', function(reasonCode, description) {
-        if (typeof this.user != 'undefined') {
-            currentUsers[this.user.id] = null;
-            delete currentUsers[this.user.id];
-
-            carddisplay[this.user.id] = null;
-            delete carddisplay.cards[this.user.id];
-
-            broadcastUsers();
-            broadcastCards();
-        }
-
-        console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
+        me.onclose.call(me, reasonCode, description);
     });
+};
+
+PokerConnectionHandler.prototype.onclose = function(reasonCode, description) {
+    console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
+    if (typeof this.user != 'undefined') {
+        currentUsers[this.user.id] = null;
+        delete currentUsers[this.user.id];
+
+        carddisplay[this.user.id] = null;
+        delete carddisplay.cards[this.user.id];
+
+        broadcastUsers();
+        broadcastCards();
+    }
 };
 
 PokerConnectionHandler.prototype.onmessage = function(message) {
@@ -110,9 +117,6 @@ PokerConnectionHandler.prototype.onmessage = function(message) {
         var messageData = JSON.parse(message.utf8Data);
         this.emit(messageData.type, messageData, this);
         switch(messageData.type) {
-            case 'login':
-                
-                break;
 
             case 'get-initial-data':
                 this.connection.sendUTF(JSON.stringify(getUserUpdateList()));
