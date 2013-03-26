@@ -105,6 +105,11 @@ var resetCardsListener = function(messageData) {
     broadcastCards();
 };
 
+var postUserstoryListener = function(messageData) {
+    currentUserstory  = messageData.userstory;
+    broadcastUserstory();
+};
+
 var PokerConnectionHandler = function() {};
 PokerConnectionHandler.prototype = new EventEmitter();
 
@@ -143,14 +148,6 @@ PokerConnectionHandler.prototype.onmessage = function(message) {
         var messageData = JSON.parse(message.utf8Data);
         this.emit(messageData.type, messageData, this);
         switch(messageData.type) {
-            case 'reset-cards':
-                break;
-
-            case 'post-userstory':
-                currentUserstory  = messageData.userstory;
-                broadcastUserstory();
-                break;
-
             case 'post-chat-message':
                 chatMessage = {
                     type: 'new-chat-message',
@@ -188,6 +185,7 @@ wsServer.on('request', function(request) {
     connectionHandler.on('play-card', playCardListener);
     connectionHandler.on('show-cards', showCardsListener);
     connectionHandler.on('reset-cards', resetCardsListener);
+    connectionHandler.on('post-userstory', postUserstoryListener);
 
 	connectionHandler.setConnection(request.accept());
 
