@@ -31,7 +31,7 @@
 			var reallyReset,
 				pushData;
 
-			reallyReset = confirm('Wirklich zurücksetzen?');
+			reallyReset = confirm('Wirklich zurücksetzen? Dies löscht auch die Userstory.');
 			if (reallyReset) {
 				pushData = {
 						type: 'reset-room'
