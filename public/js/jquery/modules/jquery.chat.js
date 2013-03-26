@@ -73,14 +73,20 @@
 		newMessageText = newMessageForm.find('input');
 
 		postNewMessage = function(event) {
-			var newMessage;
+			var newMessage,
+				messageText;
 			event.preventDefault();
 
-			newMessage = {
-				type: 'post-chat-message',
-				text: newMessageText.val()
-			};
-			window.managedSocket.send(JSON.stringify(newMessage));
+			messageText = newMessageText.val();
+			// Don't allow empty messages
+			// Also don't allow messages that only consist of spaces
+			if (messageText.replace(/ /g, "").length > 0) {
+				newMessage = {
+					type: 'post-chat-message',
+					text: messageText
+				};
+				window.managedSocket.send(JSON.stringify(newMessage));
+			}
 		};
 
 		newMessageForm.on('submit', postNewMessage);
