@@ -89,6 +89,14 @@ var playCardListener = function(messageData) {
     }
 };
 
+var showCardsListener = function(messageData) {
+    var pushData = {
+        type: 'show-cards'
+    };
+    carddisplay.show = true;
+    wsServer.broadcastUTF(JSON.stringify(pushData));
+};
+
 var PokerConnectionHandler = function() {};
 PokerConnectionHandler.prototype = new EventEmitter();
 
@@ -127,14 +135,6 @@ PokerConnectionHandler.prototype.onmessage = function(message) {
         var messageData = JSON.parse(message.utf8Data);
         this.emit(messageData.type, messageData, this);
         switch(messageData.type) {
-            case 'show-cards':
-                var pushData = {
-                    type: 'show-cards'
-                };
-                carddisplay.show = true;
-                wsServer.broadcastUTF(JSON.stringify(pushData));
-                break;
-
             case 'reset-cards':
                 carddisplay = {
                     cards: {},
@@ -183,6 +183,7 @@ wsServer.on('request', function(request) {
     connectionHandler.on('login', pokerLoginListener);
     connectionHandler.on('get-initial-data', getInitialDataListener);
     connectionHandler.on('play-card', playCardListener);
+    connectionHandler.on('show-cards', showCardsListener);
 
 	connectionHandler.setConnection(request.accept());
 
