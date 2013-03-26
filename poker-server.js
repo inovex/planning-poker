@@ -110,6 +110,15 @@ var postUserstoryListener = function(messageData) {
     broadcastUserstory();
 };
 
+var postChatMessageListener = function(messageData) {
+    chatMessage = {
+        type: 'new-chat-message',
+        text: messageData.text,
+        user: this.user
+    };
+    wsServer.broadcastUTF(JSON.stringify(chatMessage));
+};
+
 var PokerConnectionHandler = function() {};
 PokerConnectionHandler.prototype = new EventEmitter();
 
@@ -149,12 +158,7 @@ PokerConnectionHandler.prototype.onmessage = function(message) {
         this.emit(messageData.type, messageData, this);
         switch(messageData.type) {
             case 'post-chat-message':
-                chatMessage = {
-                    type: 'new-chat-message',
-                    text: messageData.text,
-                    user: this.user
-                };
-                wsServer.broadcastUTF(JSON.stringify(chatMessage));
+                
                 break;
 
             case 'reset-room':
@@ -186,6 +190,7 @@ wsServer.on('request', function(request) {
     connectionHandler.on('show-cards', showCardsListener);
     connectionHandler.on('reset-cards', resetCardsListener);
     connectionHandler.on('post-userstory', postUserstoryListener);
+    connectionHandler.on('post-chat-message', postChatMessageListener);
 
 	connectionHandler.setConnection(request.accept());
 
