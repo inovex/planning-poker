@@ -119,6 +119,21 @@ var postChatMessageListener = function(messageData) {
     wsServer.broadcastUTF(JSON.stringify(chatMessage));
 };
 
+var resetRoomListener = function(messageData) {
+    currentUserstory = '';
+    carddisplay = {
+        cards: {},
+        show: false
+    };
+    broadcastCards();
+    broadcastUserstory();
+
+    var pushData = {
+        type: 'reset-room'
+    };
+    wsServer.broadcastUTF(JSON.stringify(pushData));
+}
+
 var PokerConnectionHandler = function() {};
 PokerConnectionHandler.prototype = new EventEmitter();
 
@@ -155,27 +170,8 @@ PokerConnectionHandler.prototype.onmessage = function(message) {
     if (message.type === 'utf8') {
         //console.log('Received Message: ' + message.utf8Data);
         var messageData = JSON.parse(message.utf8Data);
+        // Emit message type as event
         this.emit(messageData.type, messageData, this);
-        switch(messageData.type) {
-            case 'post-chat-message':
-                
-                break;
-
-            case 'reset-room':
-                currentUserstory = '';
-                carddisplay = {
-                    cards: {},
-                    show: false
-                };
-                broadcastCards();
-                broadcastUserstory();
-
-                var pushData = {
-                    type: 'reset-room'
-                };
-                wsServer.broadcastUTF(JSON.stringify(pushData));
-                break;
-        }
     }
     else if (message.type === 'binary') {
         console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
@@ -191,6 +187,7 @@ wsServer.on('request', function(request) {
     connectionHandler.on('reset-cards', resetCardsListener);
     connectionHandler.on('post-userstory', postUserstoryListener);
     connectionHandler.on('post-chat-message', postChatMessageListener);
+    connectionHandler.on('reset-room', resetRoomListener);
 
 	connectionHandler.setConnection(request.accept());
 
