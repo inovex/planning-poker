@@ -124,17 +124,34 @@
 
 			this.handleUserList = function(users)  {
 				window.currentUsers = users;
-				var userArray;
+				var userArray,
+					userArraySorted;
 
 				userArray = [];
+				userArraySorted = [];
+
+				// First: Sort the users by role
+				// The sorting order is the one given in availableRoles (see index.html for this definition)
+				for (var role in options.availableRoles) {
+					userArray[role] = [];
+				}
 				for (userId in users) {
 					var span,
 						user;
 
 					user = users[userId];
-					userArray.push('<span class="poker-role poker-role-' + user.role + '">' + user.name.escape() + '</span>');
+					userArray[user.role].push(user);
 				}
-				$(this.elements.userlist).html(userArray.join(', '));
+				// Second: Create HTML Elements in one one-dimensional array that then is already
+				// sorted like we want it
+				for (var role in options.availableRoles) {
+					for (userId in userArray[role]) {
+						user = userArray[role][userId];
+						userArraySorted.push('<span class="poker-role poker-role-' + user.role + '">' + user.name.escape() + '</span>');
+					}
+				}
+				// Third: Set logged in users
+				$(this.elements.userlist).html(userArraySorted.join(', '));
 			};
 
 			/**
