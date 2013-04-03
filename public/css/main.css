@@ -187,6 +187,18 @@ img {
 	text-align: center;
 }
 
+.poker-felt-copyright {
+	text-align: right;
+	position: absolute;
+	margin-top: -27px;
+	margin-left: 8px;
+}
+
+.poker-felt-copyright a {
+	color: #b0b0b0;
+	text-decoration: none;
+}
+
 .poker-cards {
 	clear: both;
 	padding-left: 17px;
