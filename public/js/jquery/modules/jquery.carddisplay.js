@@ -13,6 +13,15 @@
 		return listeners;
 	};
 
+	/**
+		<div class="poker-card-display poker-card-display-hidden">
+			<a class="poker-card">8</a>
+			<a class="poker-card poker-card-back">
+				<img src="img/inovex-logo.png" alt="" />
+			</a>
+			<span class="poker-card-player">Khalid</a>
+		</div>
+	*/
 	jQuery.fn.carddisplay.showcards = function(cardsData, options) {
 		var cardsTotal,
 			cards,
@@ -23,9 +32,11 @@
 		if (cardsData.show === false) {
 			cardsHiddenClass = 'poker-card-display-hidden';
 		}
+		console.log('foo2');
 
 		$(this).empty();
 		$(options.pokerCardsShowButton).attr('disabled', 'disabled');
+		console.log(cards);
 		for (var userId in cards) {
 			var card,
 				pokerCardId,
