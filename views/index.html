@@ -12,6 +12,7 @@
 	<script type="text/javascript" src="js/jquery/modules/jquery.scrumMaster.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.productOwner.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.userlist.js"></script>
+	<script type="text/javascript" src="js/jquery/modules/jquery.userstory.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.carddisplay.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.WebSocket.js"></script>
 	<base href="<%= web.protocol %>://<%= web.address %>"></base>
@@ -200,6 +201,11 @@
 			availableRoles: options.availableRoles
 		});
 
+		var userstoryListener = $('.poker-userstory').userstory({
+			userstoryText: '#poker-userstory-text',
+			editUserStoryButton: '#poker-userstory-edit-button',
+		});
+
 		var carddisplayListener = $('.poker-felt').carddisplay({
 			pokerCardsShowButton: '#poker-cards-show-button',
 			pokerCardSelectedClass: 'poker-card-selected',
@@ -211,9 +217,6 @@
 
 		var socketOptions = options;
 		socketOptions.elements = {
-			userstory: '.poker-userstory',
-			userstoryText: '#poker-userstory-text',
-			editUserStoryButton: '#poker-userstory-edit-button',
 			notification: '#poker-notification',
 			loaderBackgroundClass: options.loaderBackgroundClass,
 		};
@@ -222,6 +225,7 @@
 			scrumMasterListener,
 			chatListener,
 			userlistListener,
+			userstoryListener,
 			carddisplayListener
 		];
 		socket.setOptions(socketOptions);
