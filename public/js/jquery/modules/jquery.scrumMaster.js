@@ -50,6 +50,11 @@
 			console.log('Room resetted');
 		});
 
+		listeners.on('show-cards', function(event, message) {
+			$('.' + options.showCardsSelectorClass).removeClass(options.showCardsToggleClass);
+			$(options.pokerCardsShowButton).attr('disabled', 'disabled');
+		});
+
 		return listeners;
 	};	
 
@@ -57,6 +62,8 @@
 		pokerCardsShowButton: null,
 		pokerCardsResetButton: null,
 		pokerRoomResetButton: null,
+		showCardsSelectorClass: null,
+		showCardsToggleClass: null,
 		userstory: null
 	};
 })(jQuery, jQuery);

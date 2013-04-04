@@ -97,10 +97,6 @@
 							me.handleCardDisplay(data.data);
 							break;
 
-						case 'show-cards':
-							me.handleShowCards();
-							break;
-
 						case 'userstory':
 							me.handleUserstory(data.userstory);
 							break;
@@ -202,12 +198,7 @@
 				if (cardsTotal == 0) {
 					$('.' + this.elements.pokerCardSelectedClass).removeClass(this.elements.pokerCardSelectedClass);
 				};
-			}
-
-			this.handleShowCards = function() {
-				$('.' + this.elements.showCardsSelectorClass).removeClass(this.elements.showCardsToggleClass);
-				$(this.elements.pokerCardsShowButton).attr('disabled', 'disabled');
-			}
+			};
 
 			this.handleUserstory = function(userstory) {
 				userstory = userstory.escape();
