@@ -32,11 +32,9 @@
 		if (cardsData.show === false) {
 			cardsHiddenClass = 'poker-card-display-hidden';
 		}
-		console.log('foo2');
 
 		$(this).empty();
 		$(options.pokerCardsShowButton).attr('disabled', 'disabled');
-		console.log(cards);
 		for (var userId in cards) {
 			var card,
 				pokerCardId,
