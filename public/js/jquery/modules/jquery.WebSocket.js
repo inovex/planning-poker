@@ -55,10 +55,8 @@
 			};
 
 			this.onopen = function(event) {
-				if (typeof me.listeners.open != 'undefined') {
-					for(var i in me.listeners.open) {
-						$(me.listeners.open[i]).trigger('open', [event]);
-					}
+				for(var i in me.listeners) {
+					$(me.listeners[i]).trigger('open', [event]);
 				}
 
 				window.managedSocket.onclose = function(event) {
@@ -86,13 +84,8 @@
 						return;
 					}
 
-					if (typeof me.listeners[data.type] != 'undefined') {
-						for(var i in me.listeners[data.type]) {
-							if (typeof me.listeners[data.type][i].onmessage == 'function') {
-								me.listeners[data.type][i].onmessage(data);
-							}
-							$(me.listeners[data.type][i]).trigger(data.type, [data]);
-						}
+					for(var i in me.listeners) {
+						$(me.listeners[i]).trigger(data.type, [data]);
 					}
 
 					switch(data.type) {

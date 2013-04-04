@@ -210,20 +210,12 @@
 			notification: '#poker-notification',
 			loaderBackgroundClass: options.loaderBackgroundClass,
 		};
-		socketOptions.listeners = {
-			open: [
-				loginListener
-			],
-			login: [
-				loginListener
-			],
-			'reset-room': [
-				scrumMasterListener
-			],
-			'new-chat-message': [
-				chatListener
-			]
-		}
+		socketOptions.listeners = [
+			loginListener,
+			loginListener,
+			scrumMasterListener,
+			chatListener
+		];
 		socket.setOptions(socketOptions);
 	</script>
 </body>
