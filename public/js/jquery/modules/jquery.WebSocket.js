@@ -9,7 +9,7 @@
 
 			me = this;
 			this.options = options;
-			// Option keys which will be set as class properties in setProperties
+			// Option keys which will be set as class properties in setOptions
 			this.optionsAsProperty = ['elements', 'listeners'];
 			// Websocket messages / listeners which are allowed when user is not logged in
 			this.allowedListenersWhenLoggedOut = ['open', 'login'];
@@ -22,8 +22,6 @@
 						this[key] = options[key];
 					}
 				}
-				this.elements = options.elements;
-				this.listeners = options.listeners;
 			};
 
 			this.reconnectionCallback = function() {

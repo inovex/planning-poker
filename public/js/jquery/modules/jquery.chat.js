@@ -1,6 +1,7 @@
 (function($, jQuery) {
 	jQuery.fn.chat = function(options) {
-		var me;
+		var me,
+			listeners;
 
 		options = jQuery.extend({}, jQuery.fn.chat.options, options);
 		me = $(this);
@@ -8,11 +9,13 @@
 		jQuery.fn.chat.registerTrayActions(me, options);
 		jQuery.fn.chat.registerChat(me, options);
 
-		return {
-			onmessage: function(data) {
-				jQuery.fn.chat.receiveChatMessage(me, options, data);
-			}
-		}
+		listeners = $({});
+
+		listeners.on('new-chat-message', function(event, data) {
+			jQuery.fn.chat.receiveChatMessage(me, options, data);
+		});
+
+		return listeners;
 	};
 
 	jQuery.fn.chat.registerTrayActions = function(me, options) {
