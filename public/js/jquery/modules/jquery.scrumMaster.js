@@ -2,7 +2,8 @@
 	jQuery.fn.scrumMaster = function(options) {
 		options = jQuery.extend({}, jQuery.fn.scrumMaster.options, options);
 
-		var me;
+		var me,
+			listeners;
 
 		me = $(this);
 		me.options = options;
@@ -40,13 +41,16 @@
 			}
 		});
 
-		return {
-			onmessage: function(message) {
-				// Type: 'reset-room'
-				// So far this is the only type this module supports, so there is no need for a use case yet
-				$(options.userstory).hide(400);
-			}
-		}
+		listeners = $({});
+
+		listeners.on('reset-room', function(event, message) {
+			// Type: 'reset-room'
+			// So far this is the only type this module supports, so there is no need for a use case yet
+			$(options.userstory).hide(400);
+			console.log('Room resetted');
+		});
+
+		return listeners;
 	};	
 
 	jQuery.fn.scrumMaster.options = {

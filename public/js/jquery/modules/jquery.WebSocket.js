@@ -59,7 +59,7 @@
 			this.onopen = function(event) {
 				if (typeof me.listeners.open != 'undefined') {
 					for(var i in me.listeners.open) {
-						me.listeners.open[i].onopen(event);
+						$(me.listeners.open[i]).trigger('open', [event]);
 					}
 				}
 
@@ -90,7 +90,10 @@
 
 					if (typeof me.listeners[data.type] != 'undefined') {
 						for(var i in me.listeners[data.type]) {
-							me.listeners[data.type][i].onmessage(data);
+							if (typeof me.listeners[data.type][i].onmessage == 'function') {
+								me.listeners[data.type][i].onmessage(data);
+							}
+							$(me.listeners[data.type][i]).trigger(data.type, [data]);
 						}
 					}
 

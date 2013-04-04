@@ -4,7 +4,8 @@
 		var user,
 			me,
 			nameField,
-			submitButton;
+			submitButton,
+			listeners;
 
 		me = $(this);
 		// Klickhandler registrieren
@@ -30,25 +31,28 @@
 			}
 		});
 
-		return {
-			onopen: function(event) {
-				user = localStorage.getItem(options.lsUserKey);
-				if (user !== null) {
-					user = JSON.parse(user);
-					jQuery.fn.login.loginUser(user, options);
-				}
-			},
-			onmessage: function(data) {
-				var socketData;
-				localStorage.setItem(options.lsUserKey, JSON.stringify(data.user));
-				jQuery.fn.login.postLogin(data.user, options);
+		listeners = $({});
 
-				socketData = {
-					type: 'get-initial-data'
-				};
-				window.managedSocket.send(JSON.stringify(socketData));
+		listeners.on('login', function(event, data) {
+			var socketData;
+			localStorage.setItem(options.lsUserKey, JSON.stringify(data.user));
+			jQuery.fn.login.postLogin(data.user, options);
+
+			socketData = {
+				type: 'get-initial-data'
+			};
+			window.managedSocket.send(JSON.stringify(socketData));
+		});
+
+		listeners.on('open', function(event, wsEvent) {
+			user = localStorage.getItem(options.lsUserKey);
+			if (user !== null) {
+				user = JSON.parse(user);
+				jQuery.fn.login.loginUser(user, options);
 			}
-		};
+		});
+
+		return listeners;
 	};
 
 	jQuery.fn.login.loginUserCallback = function(event) {
