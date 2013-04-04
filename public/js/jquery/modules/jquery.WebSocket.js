@@ -90,7 +90,7 @@
 
 					switch(data.type) {
 						case 'carddisplay':
-							me.handleCardDisplay(data.data);
+							//me.handleCardDisplay(data.data);
 							break;
 
 						case 'userstory':
