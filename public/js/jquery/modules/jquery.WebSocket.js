@@ -89,10 +89,6 @@
 					}
 
 					switch(data.type) {
-						case 'userlist':
-							me.handleUserList(data.data)
-							break;
-
 						case 'carddisplay':
 							me.handleCardDisplay(data.data);
 							break;
@@ -111,38 +107,6 @@
 			};
 
 			this.connect();
-
-			this.handleUserList = function(users)  {
-				window.currentUsers = users;
-				var userArray,
-					userArraySorted;
-
-				userArray = [];
-				userArraySorted = [];
-
-				// First: Sort the users by role
-				// The sorting order is the one given in availableRoles (see index.html for this definition)
-				for (var role in options.availableRoles) {
-					userArray[role] = [];
-				}
-				for (userId in users) {
-					var span,
-						user;
-
-					user = users[userId];
-					userArray[user.role].push(user);
-				}
-				// Second: Create HTML Elements in one one-dimensional array that then is already
-				// sorted like we want it
-				for (var role in options.availableRoles) {
-					for (userId in userArray[role]) {
-						user = userArray[role][userId];
-						userArraySorted.push('<span class="poker-role poker-role-' + user.role + '">' + user.name.escape() + '</span>');
-					}
-				}
-				// Third: Set logged in users
-				$(this.elements.userlist).html(userArraySorted.join(', '));
-			};
 
 			/**
 				<div class="poker-card-display poker-card-display-hidden">

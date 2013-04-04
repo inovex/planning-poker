@@ -11,6 +11,7 @@
 	<script type="text/javascript" src="js/jquery/modules/jquery.chat.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.scrumMaster.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.productOwner.js"></script>
+	<script type="text/javascript" src="js/jquery/modules/jquery.userlist.js"></script>
 	<script type="text/javascript" src="js/jquery/modules/jquery.WebSocket.js"></script>
 	<base href="<%= web.protocol %>://<%= web.address %>"></base>
 </head>
@@ -194,6 +195,10 @@
 			userStoryText: '#poker-userstory-text'
 		});
 
+		var userlistListener = $('.poker-users-online').userlist({
+			availableRoles: options.availableRoles
+		});
+
 		$(window).on('load', function() {
 			$('.poker-login-user input[type="text"]').focus();
 		});
@@ -214,7 +219,8 @@
 			loginListener,
 			loginListener,
 			scrumMasterListener,
-			chatListener
+			chatListener,
+			userlistListener
 		];
 		socket.setOptions(socketOptions);
 	</script>
