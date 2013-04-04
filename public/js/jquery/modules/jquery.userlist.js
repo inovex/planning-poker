@@ -8,18 +8,18 @@
 
 		listeners = $({});
 		listeners.on('userlist', function(event, message) {
-			jQuery.fn.userlist.update.call(me, message.data);
+			jQuery.fn.userlist.update.call(me, message.data, options);
 		});
 		return listeners;
 	};
 
-	jQuery.fn.userlist.update = function(users) {
+	jQuery.fn.userlist.update = function(users, options) {
 		var userArray,
 			userArraySorted;
 
 		window.currentUsers = users;
 
-		userArray = jQuery.fn.userlist.sort(users);
+		userArray = jQuery.fn.userlist.sort(users, options);
 		userArraySorted = [];
 
 		
@@ -35,7 +35,7 @@
 		$(this).html(userArraySorted.join(', '));
 	};
 
-	jQuery.fn.userlist.sort = function(users) {
+	jQuery.fn.userlist.sort = function(users, options) {
 		var userArray;
 
 		userArray = [];
