@@ -61,7 +61,7 @@
 				<div class="poker-chat-tray">
 					<img src="img/icon/comments.png" alt="Chat" class="poker-chat-nonew" />
 					<img src="img/icon/comments_add.png" alt="Chat" class="poker-chat-new" />
-					<span><%= __('chat') %></span>
+					<span><%= __('room-chat') %></span>
 				</div>
 				<div class="poker-chat-messages-container">
 					<div class="poker-chat-messages"></div>
@@ -72,7 +72,7 @@
 				</div>
 			</div>
 			<div class="poker-users">
-				<p><%= __('in-room') %>:</p>
+				<p><%= __('room-present') %>:</p>
 				<p class="poker-users-online">
 				</p>
 			</div>
@@ -80,11 +80,11 @@
 			<div class="poker-separator">&nbsp;</div>
 
 			<div class="poker-userstory">
-				<p>Aktuelle Userstory:</p>
+				<p><%= __('userstory-current') %>:</p>
 				<div class="poker-userstory-text-container">
 					<p id="poker-userstory-text"></p>
 					<p class="poker-userstory-edit scrum-product-owner">
-						<button id="poker-userstory-edit-button" disabled="disabled"><img src="img/icon/page_edit.png" alt="" /> Userstory bearbeiten</button>
+						<button id="poker-userstory-edit-button" disabled="disabled"><img src="img/icon/page_edit.png" alt="" /> <%= __('userstory-edit') %></button>
 					</p>
 				</div>
 			</div>
@@ -96,7 +96,7 @@
 			</div>
 			<div class="poker-separator">&nbsp;</div>
 			<div class="poker-userinfo">
-				Du bist angemeldet als: <span class="poker-userinfo-name"></span> (<span class="poker-userinfo-role"></span>)
+				<%= __('user-current') %>: <span class="poker-userinfo-name"></span> (<span class="poker-userinfo-role"></span>)
 				<img src="img/icon/door_out.png" alt="Ausloggen" title="Ausloggen" class="poker-logout" />
 			</div>
 			<div class="poker-cards scrum-developer">
@@ -105,13 +105,13 @@
 				<% } %>
 			</div>
 			<div class="poker-cards-show scrum-master">
-				<button id="poker-room-reset"><img src="img/icon/page_delete.png" alt=""> Raum zurücksetzen</button>
-				<button id="poker-cards-reset-button"><img src="img/icon/page_refresh.png" alt="" /> Kartenfeld leeren</button>
-				<button id="poker-cards-show-button" disabled="disabled"><img src="img/icon/pictures.png" alt="" /> Karten aufdecken</button>
+				<button id="poker-room-reset"><img src="img/icon/page_delete.png" alt=""> <%= __('room-reset') %></button>
+				<button id="poker-cards-reset-button"><img src="img/icon/page_refresh.png" alt="" /> <%= __('cards-reset') %></button>
+				<button id="poker-cards-show-button" disabled="disabled"><img src="img/icon/pictures.png" alt="" /> <%= __('cards-show') %></button>
 			</div>
 			<form class="poker-userstory-form scrum-product-owner">
 				<textarea id="poker-userstory-textarea"></textarea>
-				<button id="poker-userstory-post" disabled="disabled"><img src="img/icon/page_go.png" alt="" /> Userstory &uuml;bernehmen</button>
+				<button id="poker-userstory-post" disabled="disabled"><img src="img/icon/page_go.png" alt="" /> <%= __('userstory-post') %></button>
 			</form>
 			<div class="poker-separator">&nbsp;</div>
 		</div>

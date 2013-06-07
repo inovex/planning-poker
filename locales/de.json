@@ -11,6 +11,16 @@
 	"role-scrumMaster": "Scrum Master",
 	"role-spectator": "Beobachter",
 
-	"chat": "Chat",
-	"in-room": "Im Raum"
+	"room-chat": "Chat",
+	"room-present": "Im Raum",
+	"room-reset": "Raum zurücksetzen",
+
+	"cards-reset": "Kartenfeld leeren",
+	"cards-show": "Karten aufdecken",
+
+	"userstory-current": "Aktuelle Userstory",
+	"userstory-edit": "Userstory bearbeiten",
+	"userstory-post": "Userstory übernehmen",
+
+	"user-current": "Du bist angemeldet als"
 }
