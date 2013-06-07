@@ -19,7 +19,7 @@
 			var reallyDelete,
 				pushData;
 
-			reallyDelete = confirm('Wirklich leeren?');
+			reallyDelete = confirm(options["i18n"]["cards-reset-confirm"]);
 			if (reallyDelete) {
 				var pushData = {
 					type: 'reset-cards'
