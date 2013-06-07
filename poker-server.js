@@ -29,11 +29,9 @@ i18n.configure({
     directory: './locales',
     updateFiles: false
 });
-console.log('Setting locale to "' + config.general.locale + '"');
 app.configure(function() {
     app.use(i18n.init);
 });
-console.log(i18n.getCatalog());
 
 // App Variables
 var currentUsers = {};
