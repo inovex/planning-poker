@@ -14,13 +14,12 @@
 	"room-chat": "Chat",
 	"room-present": "Im Raum",
 	"room-reset": "Raum zurücksetzen",
+	"room-youare": "Du bist angemeldet als",
 
 	"cards-reset": "Kartenfeld leeren",
 	"cards-show": "Karten aufdecken",
 
 	"userstory-current": "Aktuelle Userstory",
 	"userstory-edit": "Userstory bearbeiten",
-	"userstory-post": "Userstory übernehmen",
-
-	"user-current": "Du bist angemeldet als"
+	"userstory-post": "Userstory übernehmen"
 }
