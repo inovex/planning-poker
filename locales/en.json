@@ -1,3 +1,31 @@
 {
-	
+	"title": "Planning Poker online",
+
+	"login-title": "Login",
+	"login-role": "Please select your role",
+	"login-name": "Please enter your name",
+	"login-button": "Login",
+
+	"role-dev": "Developer",
+	"role-productOwner": "Product Owner",
+	"role-scrumMaster": "Scrum Master",
+	"role-spectator": "Spectator",
+
+	"room-chat": "Chat",
+	"room-present": "In the room",
+	"room-reset": "Reset room",
+	"room-reset-confirm": "Do you really want to reset? This will also delete the user story.",
+	"room-youare": "You are logged in as",
+
+	"cards-reset": "Reset cards",
+	"cards-reset-confirm": "Really reset the cards?",
+	"cards-show": "Show cards",
+
+	"userstory-current": "Current userstory",
+	"userstory-edit": "Edit userstory",
+	"userstory-post": "Post userstory",
+
+	"connection-interrupted": "Connection interrupted",
+	"connection-reconnecting": "Trying to reconnect...",
+	"connection-broken": "Couldn\\'t reconnect. Please try again later."
 }
