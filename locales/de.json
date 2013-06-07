@@ -1,11 +1,16 @@
 {
-	"title": "Planning Poker online | inovex GmbH",
+	"title": "Planning Poker online",
 
 	"login-title": "Login",
 	"login-role": "Bitte gibt deine Rolle an",
+	"login-name": "Bitte gib deinen Namen an",
+	"login-button": "Einloggen",
 
 	"role-dev": "Entwickler",
 	"role-productOwner": "Product Owner",
 	"role-scrumMaster": "Scrum Master",
-	"role-spectator": "Beobachter"
+	"role-spectator": "Beobachter",
+
+	"chat": "Chat",
+	"in-room": "Im Raum"
 }

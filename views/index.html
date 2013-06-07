@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><%= __('title') %></title>
+	<title><%= __('title') %> | inovex GmbH</title>
 	<link rel="stylesheet" type="text/css" href="css/main.css" />
 	<script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="js/string-functions.js"></script>
@@ -41,12 +41,12 @@
 					</p>
 
 					<p class="poker-login-user">
-						<label>Bitte gib deinen Namen an</label>
+						<label><%= __('login-name') %></label>
 						<input type="text" name="name" />
 					</p>
 
 					<p class="poker-login-user">
-						<input type="submit" value="Einloggen" class="poker-login-submit" disabled="disabled" />
+						<input type="submit" value="<%= __('login-button') %>" class="poker-login-submit" disabled="disabled" />
 					</p>
 				</form>
 			</div>
@@ -56,12 +56,12 @@
 		<div class="poker-top">&nbsp;</div>
 
 		<div class="poker-content">
-			<h1>Planning Poker online</h1>
+			<h1><%= __('title') %></h1>
 			<div class="poker-chat">
 				<div class="poker-chat-tray">
 					<img src="img/icon/comments.png" alt="Chat" class="poker-chat-nonew" />
 					<img src="img/icon/comments_add.png" alt="Chat" class="poker-chat-new" />
-					<span>Chat</span>
+					<span><%= __('chat') %></span>
 				</div>
 				<div class="poker-chat-messages-container">
 					<div class="poker-chat-messages"></div>
@@ -72,7 +72,7 @@
 				</div>
 			</div>
 			<div class="poker-users">
-				<p>Im Raum:</p>
+				<p><%= __('in-room') %>:</p>
 				<p class="poker-users-online">
 				</p>
 			</div>
