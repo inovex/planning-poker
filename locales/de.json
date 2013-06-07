@@ -23,5 +23,9 @@
 
 	"userstory-current": "Aktuelle Userstory",
 	"userstory-edit": "Userstory bearbeiten",
-	"userstory-post": "Userstory übernehmen"
+	"userstory-post": "Userstory übernehmen",
+
+	"connection-interrupted": "Verbindung unterbrochen",
+	"connection-reconnecting": "Versuche die Verbindung wiederherzustellen...",
+	"connection-broken": "Konnte die Verbindung nicht wiederherstellen. Bitte versuch es später noch einmal."
 }

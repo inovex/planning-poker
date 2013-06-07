@@ -37,7 +37,7 @@
 					}
 				} else {
 					notificationText = notification.find('#poker-notification-text');
-					notificationText.html('Konnte die Verbindung nicht wiederherstellen. Bitte versuch es später noch einmal.');
+					notificationText.html(options["i18n"]["connection-broken"]);
 					notificationText.removeClass(me.elements.loaderBackgroundClass);
 				}
 			};
@@ -65,9 +65,9 @@
 						reconnectionCallback;
 
 					notification = $(me.elements.notification);
-					notification.find('#poker-notification-title').html('Verbindung unterbrochen');
+					notification.find('#poker-notification-title').html(options["i18n"]["connection-interrupted"]);
 					notificationText = notification.find('#poker-notification-text');
-					notificationText.html('Versuche die Verbindung wiederherzustellen...');
+					notificationText.html(options["i18n"]["connection-reconnecting"]);
 					notificationText.addClass(me.elements.loaderBackgroundClass);
 					notification.show(400);
 

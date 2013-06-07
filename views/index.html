@@ -123,6 +123,14 @@
 		</div>
 	</footer>
 	<script type="text/javascript">
+		var i18n = {
+			'room-reset-confirm': '<%= __("room-reset-confirm") %>',
+			'cards-reset-confirm': '<%= __("cards-reset-confirm") %>',
+			'connection-interrupted': '<%= __("connection-interrupted") %>',
+			'connection-reconnecting': '<%= __("connection-reconnecting") %>',
+			'connection-broken:': '<%= __("connection-broken") %>'
+		};
+
 		var options = {
 			socket: {
 				address: '<%= web.address %>',
@@ -136,12 +144,8 @@
 				productOwner: '<%= __("role-productOwner") %>',
 				scrumMaster: '<%= __("role-scrumMaster") %>',
 				spectator: '<%= __("role-spectator") %>'
-			}
-		};
-
-		var i18n = {
-			'room-reset-confirm': '<%= __("room-reset-confirm") %>',
-			'cards-reset-confirm': '<%= __("cards-reset-confirm") %>'
+			},
+			i18n: i18n
 		};
 
 		var socket = $.WebSocket(options);
