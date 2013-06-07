@@ -4,6 +4,15 @@ planning-poker
 An online Planning Poker based on node.js and WebSockets. So far only in german language but i18n is planned.
 
 
+Screenshots
+===========
+[![Login](https://github.com/djungowski/planning-poker/raw/master/misc/screenshot-1.png)](https://github.com/djungowski/planning-poker/raw/master/misc/screenshot-1.png)
+[![Altering the userstory](https://github.com/djungowski/planning-poker/raw/master/misc/screenshot-3.png)](https://github.com/djungowski/planning-poker/raw/master/misc/screenshot-3.png)
+[![Using the chat](https://github.com/djungowski/planning-poker/raw/master/misc/screenshot-4.png)](https://github.com/djungowski/planning-poker/raw/master/misc/screenshot-4.png)
+[![Laying cards](https://github.com/djungowski/planning-poker/raw/master/misc/screenshot-5.png)](https://github.com/djungowski/planning-poker/raw/master/misc/screenshot-5.png)
+[![Showing cards](https://github.com/djungowski/planning-poker/raw/master/misc/screenshot-6.png)](https://github.com/djungowski/planning-poker/raw/master/misc/screenshot-6.png)
+
+
 Installation
 ============
 1. Run setup.sh
