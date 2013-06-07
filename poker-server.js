@@ -5,7 +5,8 @@ var WebSocketServer = require('websocket').server,
     express = require('express'),
     iniparser = require('iniparser'),
     crypto = require('crypto'),
-    i18n = require('i18n');
+    i18n = require('i18n'),
+    path = require('path');
 
 var EventEmitter = require('events').EventEmitter;
 
@@ -22,10 +23,17 @@ app.engine('html', require('ejs').renderFile);
 
 // i18n config
 i18n.configure({
-    locales: ['en', 'de']
+    locales: ['en', 'de'],
+    defaultLocale: config.general.locale,
+    // See https://github.com/mashpie/i18n-node/issues/61
+    directory: './locales',
+    updateFiles: false
 });
 console.log('Setting locale to "' + config.general.locale + '"');
-i18n.setLocale(config.general.locale);
+app.configure(function() {
+    app.use(i18n.init);
+});
+console.log(i18n.getCatalog());
 
 // App Variables
 var currentUsers = {};
@@ -161,7 +169,6 @@ PokerConnectionHandler.prototype.setConnection = function(connection) {
 };
 
 PokerConnectionHandler.prototype.onclose = function(reasonCode, description) {
-    console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
     if (typeof this.user != 'undefined') {
         currentUsers[this.user.id] = null;
         delete currentUsers[this.user.id];

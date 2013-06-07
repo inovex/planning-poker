@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Planning Poker online | inovex GmbH</title>
+	<title><%= __('title') %></title>
 	<link rel="stylesheet" type="text/css" href="css/main.css" />
 	<script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="js/string-functions.js"></script>
@@ -27,16 +27,16 @@
 	</div>
 	<div class="poker-overlay" id="poker-login">
 		<div class="poker-message">
-			<div class="poker-top">Login</div>
+			<div class="poker-top"><%= __('login-title') %></div>
 				<div class="poker-content">
 				<form action="/login" method="post" id="poker-login-form">
 					<p class="poker-login-user">
-						<label>Bitte gibt deine Rolle an</label>
+						<label><%= __('login-role') %></label>
 						<select name="role">
-							<option value="developer">Entwickler</option>
-							<option value="productOwner">Product Owner</option>
-							<option value="scrumMaster">Scrum Master</option>
-							<option value="spectator">Beobachter</option>
+							<option value="developer"><%= __('role-dev') %></option>
+							<option value="productOwner"><%= __('role-productOwner') %></option>
+							<option value="scrumMaster"><%= __('role-scrumMaster') %></option>
+							<option value="spectator"><%= __('role-spectator') %></option>
 						</select>
 					</p>
 
