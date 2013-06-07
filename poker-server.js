@@ -20,6 +20,13 @@ app.use(express.static(__dirname + config.filesystem.public_files));
 app.set('views', __dirname + config.filesystem.view_files);
 app.engine('html', require('ejs').renderFile);
 
+// i18n config
+i18n.configure({
+    locales: ['en', 'de']
+});
+console.log('Setting locale to "' + config.general.locale + '"');
+i18n.setLocale(config.general.locale);
+
 // App Variables
 var currentUsers = {};
 var carddisplay = {
