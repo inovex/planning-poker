@@ -1,10 +1,11 @@
-var WebSocketServer = require('websocket').server;
-var fs = require('fs');
-var url = require('url');
-var qs = require('querystring');
-var express = require('express');
-var iniparser = require('iniparser');
-var crypto = require('crypto');
+var WebSocketServer = require('websocket').server,
+    fs = require('fs'),
+    url = require('url'),
+    qs = require('querystring'),
+    express = require('express'),
+    iniparser = require('iniparser'),
+    crypto = require('crypto'),
+    i18n = require('i18n');
 
 var EventEmitter = require('events').EventEmitter;
 
