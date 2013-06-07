@@ -32,7 +32,7 @@
 			var reallyReset,
 				pushData;
 
-			reallyReset = confirm('Wirklich zurücksetzen? Dies löscht auch die Userstory.');
+			reallyReset = confirm(options["i18n"]["room-reset-confirm"]);
 			if (reallyReset) {
 				pushData = {
 						type: 'reset-room'
@@ -47,7 +47,6 @@
 			// Type: 'reset-room'
 			// So far this is the only type this module supports, so there is no need for a use case yet
 			$(options.userstory).hide(400);
-			console.log('Room resetted');
 		});
 
 		listeners.on('show-cards', function(event, message) {
@@ -64,6 +63,7 @@
 		pokerRoomResetButton: null,
 		showCardsSelectorClass: null,
 		showCardsToggleClass: null,
-		userstory: null
+		userstory: null,
+		"i18n": null
 	};
 })(jQuery, jQuery);

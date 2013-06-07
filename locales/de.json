@@ -14,6 +14,7 @@
 	"room-chat": "Chat",
 	"room-present": "Im Raum",
 	"room-reset": "Raum zurücksetzen",
+	"room-reset-confirm": "Wirklich zurücksetzen? Dies löscht auch die Userstory.",
 	"room-youare": "Du bist angemeldet als",
 
 	"cards-reset": "Kartenfeld leeren",
