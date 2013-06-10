@@ -30,8 +30,7 @@ PokerConnectionHandler.prototype.setConnection = function(connection) {
 
 PokerConnectionHandler.prototype.onclose = function(reasonCode, description) {
     if (typeof this.user != 'undefined') {
-        this.pokerData.users[this.user.id] = null;
-        delete this.pokerData.users[this.user.id];
+        this.pokerData.users.remove(this.user.id);
 
         this.pokerData.carddisplay[this.user.id] = null;
         delete this.pokerData.carddisplay.cards[this.user.id];
