@@ -6,9 +6,7 @@ var WebSocketServer = require('websocket').server,
     iniparser = require('iniparser'),
     crypto = require('crypto'),
     i18n = require('i18n'),
-    path = require('path'),
-    pokerConnection = require('./poker-connection.js'),
-    pokerBroadcaster = require('./poker-broadcaster.js');
+    path = require('path');
 
 console.log('Loading config');
 var config = iniparser.parseSync('./config.ini');
@@ -33,8 +31,10 @@ app.configure(function() {
     app.use(i18n.init);
 });
 
-// App Variables
-var pokerUsers = require('./poker-users.js'),
+// Poker App specific Variables
+var pokerConnection = require('./poker-connection.js'),
+    pokerBroadcaster = require('./poker-broadcaster.js'),
+    pokerUsers = require('./poker-users.js'),
     pokerUserstory = require('./poker-userstory.js'),
     pokerCards = require('./poker-cards.js');
 
