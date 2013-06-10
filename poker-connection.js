@@ -7,11 +7,10 @@ PokerConnectionHandler.prototype.connection = null;
 
 PokerConnectionHandler.prototype.pokerData = {};
 
-PokerConnectionHandler.prototype.init = function(currentUsers, carddisplay, currentUserstory) {
+PokerConnectionHandler.prototype.init = function(currentUsers, carddisplay) {
     this.pokerData = {
         "users": currentUsers,
-        "carddisplay": carddisplay,
-        "userstory": currentUserstory
+        "carddisplay": carddisplay
     };
 };
 
