@@ -7,7 +7,8 @@ var WebSocketServer = require('websocket').server,
     crypto = require('crypto'),
     i18n = require('i18n'),
     path = require('path'),
-    pokerConnection = require('./poker-connection.js');
+    pokerConnection = require('./poker-connection.js'),
+    pokerBroadcaster = require('./poker-broadcaster.js');
 
 console.log('Loading config');
 var config = iniparser.parseSync('./config.ini');
@@ -48,6 +49,8 @@ wsServer = new WebSocketServer({
     // to accept it.
     autoAcceptConnections: false
 });
+
+pokerBroadcaster.init(wsServer);
 
 var pokerLoginListener = function(messageData) {
     var user,
@@ -104,7 +107,7 @@ var showCardsListener = function(messageData) {
         type: 'show-cards'
     };
     pokerCards.show = true;
-    wsServer.broadcastUTF(JSON.stringify(pushData));
+    pokerBroadcaster.broadcast(pushData);
 };
 
 var resetCardsListener = function(messageData) {
@@ -123,7 +126,7 @@ var postChatMessageListener = function(messageData) {
         text: messageData.text,
         user: this.user
     };
-    wsServer.broadcastUTF(JSON.stringify(chatMessage));
+    pokerBroadcaster.broadcast(chatMessage);
 };
 
 var resetRoomListener = function(messageData) {
@@ -135,7 +138,7 @@ var resetRoomListener = function(messageData) {
     var pushData = {
         type: 'reset-room'
     };
-    wsServer.broadcastUTF(JSON.stringify(pushData));
+    pokerBroadcaster.broadcast(pushData);
 }
 
 
@@ -178,7 +181,7 @@ getUserUpdateList = function () {
 
 broadcastUsers = function() {
 	var pushData = getUserUpdateList();
-    wsServer.broadcastUTF(JSON.stringify(pushData));
+    pokerBroadcaster.broadcast(pushData);
 }
 
 getCardUpdateList = function () {
@@ -190,7 +193,7 @@ getCardUpdateList = function () {
 
 broadcastCards = function() {
 	var pushData = getCardUpdateList();
-    wsServer.broadcastUTF(JSON.stringify(pushData));	
+    pokerBroadcaster.broadcast(pushData);	
 };
 
 getUserstoryUpdate = function() {
@@ -202,7 +205,7 @@ getUserstoryUpdate = function() {
 
 broadcastUserstory = function() {
 	var pushData = getUserstoryUpdate();
-	wsServer.broadcastUTF(JSON.stringify(pushData));
+	pokerBroadcaster.broadcast(pushData);
 };
 
 httpServer.listen(config.http.port, function() {
