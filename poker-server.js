@@ -26,7 +26,7 @@ i18n.configure({
     locales: ['en', 'de'],
     defaultLocale: config.locale.default,
     // See https://github.com/mashpie/i18n-node/issues/61
-    directory: './locales',
+    directory: __dirname + '/locales',
     updateFiles: false
 });
 app.configure(function() {
