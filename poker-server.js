@@ -6,7 +6,8 @@ var WebSocketServer = require('websocket').server,
     iniparser = require('iniparser'),
     crypto = require('crypto'),
     i18n = require('i18n'),
-    path = require('path');
+    path = require('path'),
+    pokerConnection = require('./poker-connection.js');
 
 console.log('Loading config');
 var config = iniparser.parseSync('./config.ini');
@@ -150,7 +151,12 @@ var resetRoomListener = function(messageData) {
 
 wsServer.on('request', function(request) {
     //var connectionHandler = new PokerConnectionHandler();
-    var connectionHandler = require('./poker-connection.js');
+    var connectionHandler = pokerConnection.getNewHandler();
+    connectionHandler.init({
+        "users": currentUsers,
+        "carddisplay": carddisplay,
+        "userstory": currentUserstory
+    });
     connectionHandler.on('login', pokerLoginListener);
     connectionHandler.on('get-initial-data', getInitialDataListener);
     connectionHandler.on('play-card', playCardListener);
