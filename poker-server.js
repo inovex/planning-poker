@@ -8,8 +8,6 @@ var WebSocketServer = require('websocket').server,
     i18n = require('i18n'),
     path = require('path');
 
-var EventEmitter = require('events').EventEmitter;
-
 console.log('Loading config');
 var config = iniparser.parseSync('./config.ini');
 
@@ -148,51 +146,11 @@ var resetRoomListener = function(messageData) {
     wsServer.broadcastUTF(JSON.stringify(pushData));
 }
 
-var PokerConnectionHandler = function() {};
-PokerConnectionHandler.prototype = new EventEmitter();
 
-PokerConnectionHandler.prototype.connection = null;
-
-PokerConnectionHandler.prototype.setConnection = function(connection) {
-    var me;
-    me = this;
-    this.connection = connection;
-    this.connection.on('message', function(message) {
-        me.onmessage.call(me, message);
-    });
-
-    connection.on('close', function(reasonCode, description) {
-        me.onclose.call(me, reasonCode, description);
-    });
-};
-
-PokerConnectionHandler.prototype.onclose = function(reasonCode, description) {
-    if (typeof this.user != 'undefined') {
-        currentUsers[this.user.id] = null;
-        delete currentUsers[this.user.id];
-
-        carddisplay[this.user.id] = null;
-        delete carddisplay.cards[this.user.id];
-
-        broadcastUsers();
-        broadcastCards();
-    }
-};
-
-PokerConnectionHandler.prototype.onmessage = function(message) {
-    if (message.type === 'utf8') {
-        //console.log('Received Message: ' + message.utf8Data);
-        var messageData = JSON.parse(message.utf8Data);
-        // Emit message type as event
-        this.emit(messageData.type, messageData, this);
-    }
-    else if (message.type === 'binary') {
-        console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
-    }
-};
 
 wsServer.on('request', function(request) {
-    var connectionHandler = new PokerConnectionHandler();
+    //var connectionHandler = new PokerConnectionHandler();
+    var connectionHandler = require('./poker-connection.js');
     connectionHandler.on('login', pokerLoginListener);
     connectionHandler.on('get-initial-data', getInitialDataListener);
     connectionHandler.on('play-card', playCardListener);
