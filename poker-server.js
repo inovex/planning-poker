@@ -7,9 +7,7 @@ var WebSocketServer = require('websocket').server,
     crypto = require('crypto'),
     i18n = require('i18n'),
     path = require('path'),
-    pokerConnection = require('./poker-connection.js'),
-    pokerUsers = require('./poker-users.js'),
-    pokerUserstory = require('./poker-userstory.js');
+    pokerConnection = require('./poker-connection.js');
 
 console.log('Loading config');
 var config = iniparser.parseSync('./config.ini');
@@ -35,12 +33,9 @@ app.configure(function() {
 });
 
 // App Variables
-//var currentUsers = {};
-var carddisplay = {
-    cards: {},
-    show: false
-};
-//var currentUserstory = '';
+var pokerUsers = require('./poker-users.js'),
+    pokerUserstory = require('./poker-userstory.js'),
+    pokerCards = require('./poker-cards.js');
 
 // WebSocket Server
 console.log('Creating WebSocket Server');
@@ -97,9 +92,9 @@ var getInitialDataListener = function(messageData) {
 };
 
 var playCardListener = function(messageData) {
-    // Allow only if cards are not already shown
-    if (!carddisplay.show) {
-        carddisplay.cards[messageData.userId] = messageData.cardValue
+    var cardSet = pokerCards.setCard(messageData.userId, messageData.cardValue);
+    // If a new card could be set, broadcast
+    if (cardSet) {
         broadcastCards();
     }
 };
@@ -108,15 +103,12 @@ var showCardsListener = function(messageData) {
     var pushData = {
         type: 'show-cards'
     };
-    carddisplay.show = true;
+    pokerCards.show = true;
     wsServer.broadcastUTF(JSON.stringify(pushData));
 };
 
 var resetCardsListener = function(messageData) {
-    carddisplay = {
-        cards: {},
-        show: false
-    };
+    pokerCards.reset();
     broadcastCards();
 };
 
@@ -136,10 +128,7 @@ var postChatMessageListener = function(messageData) {
 
 var resetRoomListener = function(messageData) {
     pokerUserstory.remove();
-    carddisplay = {
-        cards: {},
-        show: false
-    };
+    pokerCards.reset();
     broadcastCards();
     broadcastUserstory();
 
@@ -153,7 +142,7 @@ var resetRoomListener = function(messageData) {
 
 wsServer.on('request', function(request) {
     var connectionHandler = pokerConnection.getNewHandler();
-    connectionHandler.init(pokerUsers, carddisplay);
+    connectionHandler.init(pokerUsers, pokerCards);
     connectionHandler.on('login', pokerLoginListener);
     connectionHandler.on('get-initial-data', getInitialDataListener);
     connectionHandler.on('play-card', playCardListener);
@@ -195,7 +184,7 @@ broadcastUsers = function() {
 getCardUpdateList = function () {
 	return {
     	type: 'carddisplay',
-    	data: carddisplay
+    	data: pokerCards.getAll()
     };
 };
 
