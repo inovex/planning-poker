@@ -168,7 +168,6 @@ wsServer.on('request', function(request) {
 });
 
 app.get('/', function(req, res) {
-    console.log(config.http);
 	res.render(
         'index.html',
         {
