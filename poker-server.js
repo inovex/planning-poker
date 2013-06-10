@@ -8,7 +8,8 @@ var WebSocketServer = require('websocket').server,
     i18n = require('i18n'),
     path = require('path'),
     pokerConnection = require('./poker-connection.js'),
-    pokerUsers = require('./poker-users.js');
+    pokerUsers = require('./poker-users.js'),
+    pokerUserstory = require('./poker-userstory.js');
 
 console.log('Loading config');
 var config = iniparser.parseSync('./config.ini');
@@ -39,7 +40,7 @@ var carddisplay = {
     cards: {},
     show: false
 };
-var currentUserstory = '';
+//var currentUserstory = '';
 
 // WebSocket Server
 console.log('Creating WebSocket Server');
@@ -120,7 +121,7 @@ var resetCardsListener = function(messageData) {
 };
 
 var postUserstoryListener = function(messageData) {
-    currentUserstory  = messageData.userstory;
+    pokerUserstory.set(messageData.userstory);
     broadcastUserstory();
 };
 
@@ -134,7 +135,7 @@ var postChatMessageListener = function(messageData) {
 };
 
 var resetRoomListener = function(messageData) {
-    currentUserstory = '';
+    pokerUserstory.remove();
     carddisplay = {
         cards: {},
         show: false
@@ -152,7 +153,7 @@ var resetRoomListener = function(messageData) {
 
 wsServer.on('request', function(request) {
     var connectionHandler = pokerConnection.getNewHandler();
-    connectionHandler.init(pokerUsers, carddisplay, currentUserstory);
+    connectionHandler.init(pokerUsers, carddisplay);
     connectionHandler.on('login', pokerLoginListener);
     connectionHandler.on('get-initial-data', getInitialDataListener);
     connectionHandler.on('play-card', playCardListener);
@@ -206,7 +207,7 @@ broadcastCards = function() {
 getUserstoryUpdate = function() {
 	return {
 		type: 'userstory',
-		userstory: currentUserstory
+		userstory: pokerUserstory.get()
 	};
 }
 
