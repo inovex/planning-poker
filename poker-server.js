@@ -152,11 +152,7 @@ var resetRoomListener = function(messageData) {
 wsServer.on('request', function(request) {
     //var connectionHandler = new PokerConnectionHandler();
     var connectionHandler = pokerConnection.getNewHandler();
-    connectionHandler.init({
-        "users": currentUsers,
-        "carddisplay": carddisplay,
-        "userstory": currentUserstory
-    });
+    connectionHandler.init(currentUsers, carddisplay, currentUserstory);
     connectionHandler.on('login', pokerLoginListener);
     connectionHandler.on('get-initial-data', getInitialDataListener);
     connectionHandler.on('play-card', playCardListener);

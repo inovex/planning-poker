@@ -7,8 +7,12 @@ PokerConnectionHandler.prototype.connection = null;
 
 PokerConnectionHandler.prototype.pokerData = {};
 
-PokerConnectionHandler.prototype.init = function(pokerData) {
-    this.pokerData = pokerData;
+PokerConnectionHandler.prototype.init = function(currentUsers, carddisplay, currentUserstory) {
+    this.pokerData = {
+        "users": currentUsers,
+        "carddisplay": carddisplay,
+        "userstory": currentUserstory
+    };
 };
 
 PokerConnectionHandler.prototype.setConnection = function(connection) {
@@ -39,9 +43,7 @@ PokerConnectionHandler.prototype.onclose = function(reasonCode, description) {
 };
 
 PokerConnectionHandler.prototype.onmessage = function(message) {
-    console.log(this.pokerData);
     if (message.type === 'utf8') {
-        //console.log('Received Message: ' + message.utf8Data);
         var messageData = JSON.parse(message.utf8Data);
         // Emit message type as event
         this.emit(messageData.type, messageData, this);
