@@ -50,14 +50,7 @@ pokerBroadcaster.init(wsServer);
 wsServer.on('request', function(request) {
     var connectionHandler = pokerConnection.getNewHandler();
     connectionHandler.init(pokerUsers, pokerCards);
-    connectionHandler.on('login', pokerEventHandlers.loginListener);
-    connectionHandler.on('get-initial-data', pokerEventHandlers.getInitialDataListener);
-    connectionHandler.on('play-card', pokerEventHandlers.playCardListener);
-    connectionHandler.on('show-cards', pokerEventHandlers.showCardsListener);
-    connectionHandler.on('reset-cards', pokerEventHandlers.resetCardsListener);
-    connectionHandler.on('post-userstory', pokerEventHandlers.postUserstoryListener);
-    connectionHandler.on('post-chat-message', pokerEventHandlers.postChatMessageListener);
-    connectionHandler.on('reset-room', pokerEventHandlers.resetRoomListener);
+    pokerEventHandlers.registerAllForConnectionHandler(connectionHandler);
     connectionHandler.setConnection(request.accept());
 
     console.log((new Date()) + ' Connection accepted.');
