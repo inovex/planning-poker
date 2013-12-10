@@ -149,8 +149,7 @@ wsServer.on('request', function(request) {
     connectionHandler.on('post-userstory', postUserstoryListener);
     connectionHandler.on('post-chat-message', postChatMessageListener);
     connectionHandler.on('reset-room', resetRoomListener);
-
-	connectionHandler.setConnection(request.accept());
+    connectionHandler.setConnection(request.accept());
 
     console.log((new Date()) + ' Connection accepted.');
 
