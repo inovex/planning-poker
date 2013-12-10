@@ -9,7 +9,7 @@ var config = require('iniparser').parseSync('./config.ini'),
     pokerBroadCasts = require('./lib/poker-broadcasts.js'),
     // HTTP Server
     http = require(config.http.protocol),
-    server = require('./bootstrap/websocket-server.js');
+    server = require('./bootstrap/server.js');
 
 // This path cannot be completely set in the config
 // Also see https://github.com/mashpie/i18n-node/issues/61

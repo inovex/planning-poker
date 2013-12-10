@@ -2,22 +2,22 @@ var WebSocketServer = require('websocket').server,
     express = require('express'),
     i18n = require('i18n');
     
-BootstrapWebsocketServer = function() {};
+BootstrapServer = function() {};
 
-BootstrapWebsocketServer.getInstance = function() {
-    if (BootstrapWebsocketServer.__instance == null) {
-        BootstrapWebsocketServer.__instance = new BootstrapWebsocketServer();
+BootstrapServer.getInstance = function() {
+    if (BootstrapServer.__instance == null) {
+        BootstrapServer.__instance = new BootstrapServer();
     }
     
-    return BootstrapWebsocketServer.__instance;
+    return BootstrapServer.__instance;
 };
 
-BootstrapWebsocketServer.__instance = null;
+BootstrapServer.__instance = null;
 
-BootstrapWebsocketServer.prototype.httpServer = null;
-BootstrapWebsocketServer.prototype.config = {};
+BootstrapServer.prototype.httpServer = null;
+BootstrapServer.prototype.config = {};
 
-BootstrapWebsocketServer.prototype.bootstrap = function(http, config) {
+BootstrapServer.prototype.bootstrap = function(http, config) {
     this.config = config;
     
     this.configureI18n();
@@ -32,7 +32,7 @@ BootstrapWebsocketServer.prototype.bootstrap = function(http, config) {
     return wsServer;
 };
 
-BootstrapWebsocketServer.prototype.createAndGetExpressApp = function() {
+BootstrapServer.prototype.createAndGetExpressApp = function() {
     var app = express();
     app.use(express.static(__dirname + this.config.filesystem.public_files));
     app.set('views', __dirname + this.config.filesystem.view_files);
@@ -44,7 +44,7 @@ BootstrapWebsocketServer.prototype.createAndGetExpressApp = function() {
     return app;
 };
 
-BootstrapWebsocketServer.prototype.configureExpressAppRoutes = function(app) {
+BootstrapServer.prototype.configureExpressAppRoutes = function(app) {
     var server = this;
     app.get('/', function(req, res) {
         res.render(
@@ -58,7 +58,7 @@ BootstrapWebsocketServer.prototype.configureExpressAppRoutes = function(app) {
     });
 };
 
-BootstrapWebsocketServer.prototype.configureI18n = function() {
+BootstrapServer.prototype.configureI18n = function() {
     i18n.configure({
         locales: ['en', 'de'],
         defaultLocale: this.config.locale.default,
@@ -67,7 +67,7 @@ BootstrapWebsocketServer.prototype.configureI18n = function() {
     });
 };
 
-BootstrapWebsocketServer.prototype.run = function() {
+BootstrapServer.prototype.run = function() {
     var server = this;
     this.httpServer.listen(this.config.http.port, function() {
         console.log('HTTP Server running with config:');
@@ -75,4 +75,4 @@ BootstrapWebsocketServer.prototype.run = function() {
     });
 };
 
-module.exports = BootstrapWebsocketServer.getInstance();
+module.exports = BootstrapServer.getInstance();
