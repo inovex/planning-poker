@@ -20,32 +20,9 @@ BootstrapWebsocketServer.prototype.config = {};
 BootstrapWebsocketServer.prototype.bootstrap = function(http, config) {
     this.config = config;
     
+    this.configureI18n();
     var app = this.createAndGetExpressApp();
-    
     this.httpServer = http.createServer(app);
-
-    // i18n config
-    i18n.configure({
-        locales: ['en', 'de'],
-        defaultLocale: config.locale.default,
-        directory: config.filesystem.i18n,
-        updateFiles: false
-    });
-
-    app.configure(function() {
-        app.use(i18n.init);
-    });
-    
-    app.get('/', function(req, res) {
-        res.render(
-            'index.html',
-            {
-                web: config.http,
-                cards: config.cards
-            }
-        );
-        res.end();
-    });
     
     wsServer = new WebSocketServer({
         httpServer: this.httpServer,
@@ -65,7 +42,33 @@ BootstrapWebsocketServer.prototype.createAndGetExpressApp = function() {
     app.use(express.static(__dirname + this.config.filesystem.public_files));
     app.set('views', __dirname + this.config.filesystem.view_files);
     app.engine('html', require('ejs').renderFile);
+    
+    app.configure(function() {
+        app.use(i18n.init);
+    });
+    
+    var server = this;
+    app.get('/', function(req, res) {
+        res.render(
+            'index.html',
+            {
+                web: server.config.http,
+                cards: server.config.cards
+            }
+        );
+        res.end();
+    });
+    
     return app;
+};
+
+BootstrapWebsocketServer.prototype.configureI18n = function() {
+    i18n.configure({
+        locales: ['en', 'de'],
+        defaultLocale: this.config.locale.default,
+        directory: this.config.filesystem.i18n,
+        updateFiles: false
+    });
 };
 
 BootstrapWebsocketServer.prototype.run = function() {
