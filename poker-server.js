@@ -47,11 +47,6 @@ wsServer = new WebSocketServer({
 
 pokerBroadcaster.init(wsServer);
 
-var postUserstoryListener = function(messageData) {
-    pokerUserstory.set(messageData.userstory);
-    broadcastUserstory();
-};
-
 var postChatMessageListener = function(messageData) {
     chatMessage = {
         type: 'new-chat-message',
@@ -83,7 +78,7 @@ wsServer.on('request', function(request) {
     connectionHandler.on('play-card', pokerEventHandlers.playCardListener);
     connectionHandler.on('show-cards', pokerEventHandlers.showCardsListener);
     connectionHandler.on('reset-cards', pokerEventHandlers.resetCardsListener);
-    connectionHandler.on('post-userstory', postUserstoryListener);
+    connectionHandler.on('post-userstory', pokerEventHandlers.postUserstoryListener);
     connectionHandler.on('post-chat-message', postChatMessageListener);
     connectionHandler.on('reset-room', resetRoomListener);
     connectionHandler.setConnection(request.accept());
