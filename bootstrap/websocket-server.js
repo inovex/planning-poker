@@ -29,11 +29,6 @@ BootstrapWebsocketServer.prototype.bootstrap = function(http, config) {
         autoAcceptConnections: false
     });
     
-    this.httpServer.listen(config.http.port, function() {
-        console.log('HTTP Server running with config:');
-        console.log(config.http);
-    });
-    
     return wsServer;
 };
 
@@ -41,12 +36,15 @@ BootstrapWebsocketServer.prototype.createAndGetExpressApp = function() {
     var app = express();
     app.use(express.static(__dirname + this.config.filesystem.public_files));
     app.set('views', __dirname + this.config.filesystem.view_files);
-    app.engine('html', require('ejs').renderFile);
-    
+    app.engine('html', require('ejs').renderFile);    
     app.configure(function() {
         app.use(i18n.init);
     });
-    
+    this.configureExpressAppRoutes(app);
+    return app;
+};
+
+BootstrapWebsocketServer.prototype.configureExpressAppRoutes = function(app) {
     var server = this;
     app.get('/', function(req, res) {
         res.render(
@@ -58,8 +56,6 @@ BootstrapWebsocketServer.prototype.createAndGetExpressApp = function() {
         );
         res.end();
     });
-    
-    return app;
 };
 
 BootstrapWebsocketServer.prototype.configureI18n = function() {
@@ -72,7 +68,11 @@ BootstrapWebsocketServer.prototype.configureI18n = function() {
 };
 
 BootstrapWebsocketServer.prototype.run = function() {
-    
+    var server = this;
+    this.httpServer.listen(this.config.http.port, function() {
+        console.log('HTTP Server running with config:');
+        console.log(server.config.http);
+    });
 };
 
 module.exports = BootstrapWebsocketServer.getInstance();
