@@ -1,15 +1,28 @@
 var WebSocketServer = require('websocket').server,
     express = require('express'),
     i18n = require('i18n');
+    
+BootstrapWebsocketServer = function() {};
 
-module.exports = BootstrapWebsocketServer = function() {};
+BootstrapWebsocketServer.getInstance = function() {
+    if (BootstrapWebsocketServer.__instance == null) {
+        BootstrapWebsocketServer.__instance = new BootstrapWebsocketServer();
+    }
+    
+    return BootstrapWebsocketServer.__instance;
+};
 
-BootstrapWebsocketServer.bootstrap = function(http, config) {
-    var app = express();
-    var httpServer = http.createServer(app);
-    app.use(express.static(__dirname + config.filesystem.public_files));
-    app.set('views', __dirname + config.filesystem.view_files);
-    app.engine('html', require('ejs').renderFile);
+BootstrapWebsocketServer.__instance = null;
+
+BootstrapWebsocketServer.prototype.httpServer = null;
+BootstrapWebsocketServer.prototype.config = {};
+
+BootstrapWebsocketServer.prototype.bootstrap = function(http, config) {
+    this.config = config;
+    
+    var app = this.createAndGetExpressApp();
+    
+    this.httpServer = http.createServer(app);
 
     // i18n config
     i18n.configure({
@@ -35,14 +48,28 @@ BootstrapWebsocketServer.bootstrap = function(http, config) {
     });
     
     wsServer = new WebSocketServer({
-        httpServer: httpServer,
+        httpServer: this.httpServer,
         autoAcceptConnections: false
     });
     
-    httpServer.listen(config.http.port, function() {
+    this.httpServer.listen(config.http.port, function() {
         console.log('HTTP Server running with config:');
         console.log(config.http);
     });
     
     return wsServer;
 };
+
+BootstrapWebsocketServer.prototype.createAndGetExpressApp = function() {
+    var app = express();
+    app.use(express.static(__dirname + this.config.filesystem.public_files));
+    app.set('views', __dirname + this.config.filesystem.view_files);
+    app.engine('html', require('ejs').renderFile);
+    return app;
+};
+
+BootstrapWebsocketServer.prototype.run = function() {
+    
+};
+
+module.exports = BootstrapWebsocketServer.getInstance();
