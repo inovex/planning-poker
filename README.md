@@ -15,9 +15,9 @@ Screenshots
 
 Installation
 ============
-1. Run setup.sh
+1. Install dependencies
 
-		./setup.sh
+		npm install
 
 2. Run server
 
