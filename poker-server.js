@@ -47,12 +47,6 @@ wsServer = new WebSocketServer({
 
 pokerBroadcaster.init(wsServer);
 
-var getInitialDataListener = function(messageData) {
-    this.connection.sendUTF(JSON.stringify(getUserUpdateList()));
-    this.connection.sendUTF(JSON.stringify(getCardUpdateList()));
-    this.connection.sendUTF(JSON.stringify(getUserstoryUpdate()));
-};
-
 var playCardListener = function(messageData) {
     var cardSet = pokerCards.setCard(messageData.userId, messageData.cardValue);
     // If a new card could be set, broadcast
@@ -106,7 +100,7 @@ wsServer.on('request', function(request) {
     var connectionHandler = pokerConnection.getNewHandler();
     connectionHandler.init(pokerUsers, pokerCards);
     connectionHandler.on('login', pokerEventHandlers.loginListener);
-    connectionHandler.on('get-initial-data', getInitialDataListener);
+    connectionHandler.on('get-initial-data', pokerEventHandlers.getInitialDataListener);
     connectionHandler.on('play-card', playCardListener);
     connectionHandler.on('show-cards', showCardsListener);
     connectionHandler.on('reset-cards', resetCardsListener);
