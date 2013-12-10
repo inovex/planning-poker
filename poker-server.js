@@ -4,7 +4,6 @@ var WebSocketServer = require('websocket').server,
     qs = require('querystring'),
     express = require('express'),
     iniparser = require('iniparser'),
-    crypto = require('crypto'),
     i18n = require('i18n'),
     path = require('path');
 
@@ -33,10 +32,11 @@ app.configure(function() {
 
 // Poker App specific Variables
 var pokerConnection = require('./lib/poker-connection.js'),
-    pokerBroadcaster = require('./poker-broadcaster.js'),
-    pokerUsers = require('./poker-users.js'),
-    pokerUserstory = require('./poker-userstory.js'),
-    pokerCards = require('./poker-cards.js');
+    pokerBroadcaster = require('./lib/poker-broadcaster.js'),
+    pokerUsers = require('./lib/poker-users.js'),
+    pokerUserstory = require('./lib/poker-userstory.js'),
+    pokerCards = require('./lib/poker-cards.js')
+    pokerEventHandlers = require('./lib/poker-event-handlers.js');
 
 // WebSocket Server
 console.log('Creating WebSocket Server');
@@ -46,42 +46,6 @@ wsServer = new WebSocketServer({
 });
 
 pokerBroadcaster.init(wsServer);
-
-var pokerLoginListener = function(messageData) {
-    var user,
-        sha1sum,
-        sendData;
-
-    // For callbacks
-    connection = this.connection;
-
-    user = messageData.user;
-    if (typeof user.id !== 'undefined') {
-        pokerUsers.add(user);
-        sendData = {
-            type: 'login',
-            user: user
-        };
-        connection.sendUTF(JSON.stringify(sendData));
-        broadcastUsers();
-    } else {
-        // Create random id for user
-        sha1sum = crypto.createHash('sha1');
-        crypto.randomBytes(256, function(ex, buf) {
-            if (ex) throw ex;
-            sha1sum.update(buf);
-            user.id = sha1sum.digest('hex');
-            pokerUsers.add(user);
-            sendData = {
-                type: 'login',
-                user: user
-            };
-            connection.sendUTF(JSON.stringify(sendData));
-            broadcastUsers();
-        });
-    }
-    this.user = user;
-};
 
 var getInitialDataListener = function(messageData) {
     this.connection.sendUTF(JSON.stringify(getUserUpdateList()));
@@ -141,7 +105,7 @@ var resetRoomListener = function(messageData) {
 wsServer.on('request', function(request) {
     var connectionHandler = pokerConnection.getNewHandler();
     connectionHandler.init(pokerUsers, pokerCards);
-    connectionHandler.on('login', pokerLoginListener);
+    connectionHandler.on('login', pokerEventHandlers.loginListener);
     connectionHandler.on('get-initial-data', getInitialDataListener);
     connectionHandler.on('play-card', playCardListener);
     connectionHandler.on('show-cards', showCardsListener);
