@@ -38,6 +38,8 @@ var pokerConnection = require('./lib/poker-connection.js'),
     pokerCards = require('./lib/poker-cards.js')
     pokerEventHandlers = require('./lib/poker-event-handlers.js');
 
+require('./lib/poker-broadcasts.js');
+
 // WebSocket Server
 console.log('Creating WebSocket Server');
 wsServer = new WebSocketServer({
@@ -67,42 +69,6 @@ app.get('/', function(req, res) {
     );
 	res.end();
 });
-
-getUserUpdateList = function () {
-	return {
-    	type: 'userlist',
-    	data: pokerUsers.getAll()
-    };
-};
-
-broadcastUsers = function() {
-	var pushData = getUserUpdateList();
-    pokerBroadcaster.broadcast(pushData);
-}
-
-getCardUpdateList = function () {
-	return {
-    	type: 'carddisplay',
-    	data: pokerCards.getAll()
-    };
-};
-
-broadcastCards = function() {
-	var pushData = getCardUpdateList();
-    pokerBroadcaster.broadcast(pushData);	
-};
-
-getUserstoryUpdate = function() {
-	return {
-		type: 'userstory',
-		userstory: pokerUserstory.get()
-	};
-}
-
-broadcastUserstory = function() {
-	var pushData = getUserstoryUpdate();
-	pokerBroadcaster.broadcast(pushData);
-};
 
 httpServer.listen(config.http.port, function() {
 	console.log('HTTP Server running with config:');
