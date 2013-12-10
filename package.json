@@ -1,6 +1,6 @@
 {
     "name": "planning-poker",
-    "version": "0.5.0",
+    "version": "0.4.1",
     "description": "An online planning poker tool based on node.js and Websockets",
     "main": "poker-server.js",
     "repository": {
