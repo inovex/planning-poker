@@ -32,7 +32,7 @@ app.configure(function() {
 });
 
 // Poker App specific Variables
-var pokerConnection = require('./poker-connection.js'),
+var pokerConnection = require('./lib/poker-connection.js'),
     pokerBroadcaster = require('./poker-broadcaster.js'),
     pokerUsers = require('./poker-users.js'),
     pokerUserstory = require('./poker-userstory.js'),
