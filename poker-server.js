@@ -3,10 +3,9 @@ var config = require('iniparser').parseSync('./config.ini'),
     pokerConnection = require('./lib/poker-connection.js'),
     pokerBroadcaster = require('./lib/poker-broadcaster.js'),
     pokerUsers = require('./lib/poker-users.js'),
-    pokerUserstory = require('./lib/poker-userstory.js'),
     pokerCards = require('./lib/poker-cards.js')
     pokerEventHandlers = require('./lib/poker-event-handlers.js'),
-    pokerBroadCasts = require('./lib/poker-broadcasts.js'),
+    pokerBroadcasts = require('./lib/poker-broadcasts.js'),
     // HTTP Server
     http = require(config.http.protocol),
     server = require('./bootstrap/server.js');
