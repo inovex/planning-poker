@@ -1,7 +1,10 @@
 planning-poker
 ==============
-
 An online Planning Poker based on node.js and WebSockets. Supports english and german language.
+
+Current Version
+===============
+0.4.3
 
 
 Screenshots
