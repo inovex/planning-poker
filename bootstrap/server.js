@@ -22,8 +22,8 @@ BootstrapServer.prototype.bootstrap = function(http, config) {
     this.config = config;
     
     this.createExpressApp();
-    this.httpServer = http.createServer(this.expressApp);
-    this.websocketServer = this.createWebsocketServer();
+    this.createHttpServer();
+    this.createWebsocketServer();
     
     return this.websocketServer;
 };
@@ -32,8 +32,12 @@ BootstrapServer.prototype.createExpressApp = function() {
     this.expressApp = express.bootstrap(this.config);
 };
 
+BootstrapServer.prototype.createHttpServer = function() {
+    this.httpServer = http.createServer(this.expressApp);
+};
+
 BootstrapServer.prototype.createWebsocketServer = function() {
-    return new WebSocketServer({
+    this.websocketServer = new WebSocketServer({
         httpServer: this.httpServer,
         autoAcceptConnections: false
     });
