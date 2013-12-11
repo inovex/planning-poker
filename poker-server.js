@@ -16,14 +16,14 @@ var config = require('iniparser').parseSync('./config.ini'),
 config.filesystem.i18n = __dirname + config.filesystem.i18n;
 
 // Create HTTP Server
-server.bootstrap(http, config);
+var websocketServer = server.bootstrap(http, config);
 
 // WebSocket Server
 console.log('Creating WebSocket Server');
 
-pokerBroadcaster.init(wsServer);
+pokerBroadcaster.init(websocketServer);
 
-wsServer.on('request', function(request) {
+websocketServer.on('request', function(request) {
     var connectionHandler = pokerConnection.getNewHandler();
     connectionHandler.init(pokerUsers, pokerCards);
     pokerEventHandlers.registerAllForConnectionHandler(connectionHandler);

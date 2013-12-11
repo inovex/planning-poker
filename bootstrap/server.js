@@ -18,21 +18,29 @@ BootstrapServer.prototype.httpServer = null;
 BootstrapServer.prototype.config = {};
 
 BootstrapServer.prototype.bootstrap = function(http, config) {
+    var expressApp,
+        websocketServer;
+    
     this.config = config;
     
     this.configureI18n();
-    var app = this.createAndGetExpressApp();
-    this.httpServer = http.createServer(app);
+    expressApp = this.createExpressApp();
+    this.httpServer = http.createServer(expressApp);
+    websocketServer = this.createWebsocketServer();
     
-    wsServer = new WebSocketServer({
-        httpServer: this.httpServer,
-        autoAcceptConnections: false
-    });
-    
-    return wsServer;
+    return websocketServer;
 };
 
-BootstrapServer.prototype.createAndGetExpressApp = function() {
+BootstrapServer.prototype.configureI18n = function() {
+    i18n.configure({
+        locales: ['en', 'de'],
+        defaultLocale: this.config.locale.default,
+        directory: this.config.filesystem.i18n,
+        updateFiles: false
+    });
+};
+
+BootstrapServer.prototype.createExpressApp = function() {
     var app = express();
     app.use(express.static(__dirname + this.config.filesystem.public_files));
     app.set('views', __dirname + this.config.filesystem.view_files);
@@ -58,12 +66,10 @@ BootstrapServer.prototype.configureExpressAppRoutes = function(app) {
     });
 };
 
-BootstrapServer.prototype.configureI18n = function() {
-    i18n.configure({
-        locales: ['en', 'de'],
-        defaultLocale: this.config.locale.default,
-        directory: this.config.filesystem.i18n,
-        updateFiles: false
+BootstrapServer.prototype.createWebsocketServer = function() {
+    return new WebSocketServer({
+        httpServer: this.httpServer,
+        autoAcceptConnections: false
     });
 };
 
