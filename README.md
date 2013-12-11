@@ -4,7 +4,7 @@ An online Planning Poker based on node.js and WebSockets. Supports english and g
 
 Current Version
 ===============
-0.4.3
+0.4.4
 
 
 Screenshots
