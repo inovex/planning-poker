@@ -266,20 +266,23 @@ img {
 	float: left;
 }
 
-.poker-users-online {
-	font-weight: normal;
-	margin-left: 3px;
-}
-
 .poker-role {
 	background-repeat: no-repeat;
 	background-position: left center;
 	padding: 3px 5px 3px 18px;
 }
 
+.poker-users-online {
+	font-weight: normal;
+	margin-left: 3px;
+}
+
+.poker-users-online .poker-role-developer {
+	background-image: url(/img/icon/monitor.png);
+}
+
 .poker-role-developer {
 	color: #f46200;
-	background-image: url(/img/icon/monitor.png);
 }
 
 .poker-role-scrumMaster {
