@@ -32,7 +32,7 @@
 			}
 		}
 		// Third: Set logged in users
-		$(this).html(userArraySorted.join(', '));
+		$(this).html(userArraySorted.join(' '));
 	};
 
 	jQuery.fn.userlist.sort = function(users, options) {
