@@ -281,6 +281,10 @@ img {
 	background-image: url(/img/icon/monitor.png);
 }
 
+.poker-users-online .poker-role-productOwner {
+	background-image: url(/img/icon/piggy_bank.png);
+}
+
 .poker-role-developer {
 	color: #f46200;
 }
