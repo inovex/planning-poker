@@ -285,6 +285,14 @@ img {
 	background-image: url(/img/icon/piggy_bank.png);
 }
 
+.poker-users-online .poker-role-scrumMaster {
+	background-image: url(/img/icon/clapboard.png);
+}
+
+.poker-users-online .poker-role-spectator {
+	background-image: url(/img/icon/globe.png);
+}
+
 .poker-role-developer {
 	color: #f46200;
 }
