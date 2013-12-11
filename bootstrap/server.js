@@ -14,23 +14,22 @@ BootstrapServer.getInstance = function() {
 BootstrapServer.__instance = null;
 
 BootstrapServer.prototype.httpServer = null;
+BootstrapServer.prototype.websocketServer = null;
+BootstrapServer.prototype.expressApp = null;
 BootstrapServer.prototype.config = {};
 
 BootstrapServer.prototype.bootstrap = function(http, config) {
-    var expressApp,
-        websocketServer;
-    
     this.config = config;
     
-    expressApp = this.createExpressApp();
-    this.httpServer = http.createServer(expressApp);
-    websocketServer = this.createWebsocketServer();
+    this.createExpressApp();
+    this.httpServer = http.createServer(this.expressApp);
+    this.websocketServer = this.createWebsocketServer();
     
-    return websocketServer;
+    return this.websocketServer;
 };
 
 BootstrapServer.prototype.createExpressApp = function() {
-    return express.bootstrap(this.config);
+    this.expressApp = express.bootstrap(this.config);
 };
 
 BootstrapServer.prototype.createWebsocketServer = function() {
