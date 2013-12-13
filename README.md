@@ -48,3 +48,8 @@ Important: Leave out the http://. This setting is also used for the WebSockets c
 3. Poker cards
 --------------
 If for any reason you need other poker card values, you can edit these in the config.ini in the cards section.
+
+
+License
+=======
+Planning Poker is licensed under [AGPLv3](http://www.gnu.org/licenses/agpl-3.0.html)
