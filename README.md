@@ -52,4 +52,4 @@ If for any reason you need other poker card values, you can edit these in the co
 
 License
 =======
-Planning Poker is licensed under [AGPLv3](http://www.gnu.org/licenses/agpl-3.0.html). See LICENSE file for details.
+This software is licensed under [AGPLv3](http://www.gnu.org/licenses/agpl-3.0.html). See [LICENSE] for details.
