@@ -9,7 +9,7 @@ describe('User', function() {
 
         user.create(userDetails);
 
-        user.on('user-created', function(newUser) {
+        user.on('created', function(newUser) {
             expect(newUser.id.length).toBe(40);
             expect(newUser.name).toEqual(userDetails.name);
             expect(newUser.role).toEqual(userDetails.role);
