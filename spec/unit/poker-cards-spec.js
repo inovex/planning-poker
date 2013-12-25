@@ -25,6 +25,39 @@ describe('poker-cards', function() {
                 'heinz': 8
             },
             show: false
-        })
+        });
+        pokerCards.reset();
+    });
+
+    it('should not set the users card if cards are already shown', function() {
+        pokerCards.show = true;
+        pokerCards.setCard('egon', 5);
+        expect(pokerCards.getAll()).toEqual({
+            cards: {},
+            show: true
+        });
+        pokerCards.reset();
+    });
+
+    it('should remove a users card', function() {
+        pokerCards.setCard('bernd', 40);
+        pokerCards.removeCard('bernd');
+        expect(pokerCards.getAll()).toEqual({
+            cards: {},
+            show: false
+        });
+        pokerCards.reset();
+    });
+
+    it('should reset the card status', function() {
+        pokerCards.setCard('horst', 5);
+        pokerCards.setCard('heinz', 13);
+        pokerCards.setCard('egon', 8);
+        pokerCards.show = true;
+        pokerCards.reset();
+        expect(pokerCards.getAll()).toEqual({
+            cards: {},
+            show: false
+        });
     });
 });
