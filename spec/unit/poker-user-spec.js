@@ -1,4 +1,4 @@
-var user = require('../../lib/poker-user.js');
+var pokerUser = require('../../lib/poker-user.js');
 
 describe('User', function() {
     it('should create a new user', function(done) {
@@ -7,7 +7,7 @@ describe('User', function() {
             role: 'developer'
         };
 
-        user.create(userDetails);
+        var user = pokerUser.create(userDetails);
 
         user.on('created', function(newUser) {
             expect(newUser.id.length).toBe(40);
