@@ -50,6 +50,14 @@ Important: Leave out the http://. This setting is also used for the WebSockets c
 If for any reason you need other poker card values, you can edit these in the config.ini in the cards section.
 
 
+Running the specs
+=================
+1. If you don't have jasmine-node installed globally (jasmine-node is provided with the installation - see above)
+        node_modules/.bin/jasmine-node spec/
+
+2. If you have installed jasmine-node globally
+        jasmine-node spec/
+
 License
 =======
 This software is licensed under [AGPLv3](http://www.gnu.org/licenses/agpl-3.0.html). See [license file](LICENSE) for details.
