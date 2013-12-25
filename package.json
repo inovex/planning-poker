@@ -15,6 +15,7 @@
         "ejs":          "*",
         "iniparser":    "*",
         "websocket":    "*",
-        "i18n":         "*"
+        "i18n":         "*",
+        "jasmine-node": "*"
     }
 }
