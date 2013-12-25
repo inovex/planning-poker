@@ -1,25 +1,27 @@
-var websocketServerMock = require('../mock/websocket-server.js'),
-    pokerEventHandlers = require('../../lib/poker-event-handlers'),
+var pokerEventHandlers = require('../../lib/poker-event-handlers'),
     pokerBroadcaster = require('../../lib/poker-broadcaster');
-
-pokerBroadcaster.websocketServer = websocketServerMock;
-
 
 describe('postChatMessageListener', function() {
     it('should send a message to all clients', function() {
-        var messageText = 'Hallo, ich bin Bernd das Brot';
+        // Set Up WebsocketServer Mock
+        var websocketServerMock = {
+            broadcastUTF: function(message) {}
+        }
+        spyOn(websocketServerMock, 'broadcastUTF');
+        pokerBroadcaster.websocketServer = websocketServerMock;
 
         var messageData = {
-            text: messageText
+            text: 'Hallo, ich bin Bernd das Brot'
         };
-
         pokerEventHandlers.postChatMessageListener(messageData);
 
         var expected = JSON.stringify({
             "type": 'new-chat-message',
-            "text": messageText
+            "text": messageData.text
         });
+        expect(websocketServerMock.broadcastUTF).toHaveBeenCalledWith(expected);
 
-        expect(websocketServerMock.getBroadcastedJsonMessage()).toEqual(expected);
+        // Remove WebsocketServer mock
+        pokerBroadcaster.websocketServer = null;
     });
 });
