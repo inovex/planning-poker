@@ -27,4 +27,23 @@ describe('poker-connection', function() {
         expect(connectionMock.on).toHaveBeenCalledWith('message', jasmine.any(Function));
         expect(connectionMock.on).toHaveBeenCalledWith('close', jasmine.any(Function));
     });
+
+    it('should remove all connection listeners when connection is closed', function() {
+        var connectionMock = {
+            on: function() {},
+            removeAllListeners: function() {}
+        };
+        spyOn(connectionMock, 'removeAllListeners');
+
+        var connectionHandler = pokerConnection.getNewHandler();
+        connectionHandler.init(null, null);
+        connectionHandler.setConnection(connectionMock);
+
+        connectionHandler.onclose();
+        expect(connectionMock.removeAllListeners).toHaveBeenCalled();
+    });
+
+    it('should remove the user and all listeners when connection is closed', function() {
+
+    });
 });
