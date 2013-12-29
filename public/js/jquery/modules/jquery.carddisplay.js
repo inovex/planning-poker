@@ -59,8 +59,8 @@
 			card.find('.poker-card-player').text(window.currentUsers[userId].name);
 
 			amountDevs = $('.poker-role-developer').length;
-			// Schauen, ob alle devs abgestimmt haben
-			if (amountDevs > 0 && amountDevs == $('.poker-card-value').length) {
+			// Schauen, ob mind. 2 devs abgestimmt haben
+			if (amountDevs > 0 && $('.poker-card-value').length > 1) {
 				$(options.pokerCardsShowButton).removeAttr('disabled');
 			}
 		}
