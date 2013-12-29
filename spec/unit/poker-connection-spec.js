@@ -89,19 +89,14 @@ describe('poker-connection', function() {
     });
 
     it('should emit message receival if message type is utf8', function(done) {
-        var connectionMock = {
-            on: function() {}
-        };
-        spyOn(connectionMock, 'on');
-
         var connectionHandler = pokerConnection.getNewHandler();
         connectionHandler.init(null, null);
-        connectionHandler.setConnection(connectionMock);
 
         var expectedMessageData = {
             type: 'login',
             foo: 'bar'
         };
+
         var message = {
             type: 'utf8',
             utf8Data: JSON.stringify(expectedMessageData)
@@ -114,5 +109,29 @@ describe('poker-connection', function() {
         });
 
         connectionHandler.onmessage(message);
+    });
+
+    it('should do nothing, if received message is not utf8', function() {
+        var callbackMock = {
+            login: function(messageData, scope) {}
+        };
+        spyOn(callbackMock, 'login');
+
+        var connectionHandler = pokerConnection.getNewHandler();
+        connectionHandler.init(null, null);
+
+        var expectedMessageData = {
+            type: 'login',
+            foo: 'bar'
+        };
+
+        var message = {
+            type: 'binary',
+            utf8Data: JSON.stringify(expectedMessageData)
+        };
+
+        connectionHandler.on(expectedMessageData.type, callbackMock.login);
+        connectionHandler.onmessage(message);
+        expect(callbackMock.login).not.toHaveBeenCalled();
     });
 });
