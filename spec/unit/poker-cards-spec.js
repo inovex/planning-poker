@@ -60,4 +60,18 @@ describe('poker-cards', function() {
             show: false
         });
     });
+
+    it('should get all the cards', function() {
+        pokerCards.setCard('dan', 13);
+        pokerCards.setCard('jon', 8);
+        pokerCards.setCard('daphne', 20);
+        expect(pokerCards.getAll()).toEqual({
+            cards: {
+                'dan': 13,
+                'jon': 8,
+                'daphne': 20
+            },
+            show: false
+        })
+    });
 });
