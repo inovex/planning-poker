@@ -5,6 +5,13 @@ broadcastUsers = function() {};
 broadcastCards = function() {};
 
 describe('poker-connection', function() {
+    it('creates a new and unique handler', function() {
+        var handler1 = pokerConnection.getNewHandler();
+        var handler2 = pokerConnection.getNewHandler();
+
+        expect(handler1).toNotBe(handler2);
+    });
+
     it('should be initialized', function() {
         var currentUsers = [1,2,3];
         var carddisplay = [8,13,20];
