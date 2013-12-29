@@ -38,4 +38,25 @@ describe('poker-users', function() {
         });
         pokerUsers.currentUsers = {};
     });
+
+    it('should remove a user by his id', function() {
+        var user1 = {
+            id: 'foobar',
+            name: 'First user'
+        };
+        pokerUsers.add(user1);
+        pokerUsers.remove('foobar');
+        expect(pokerUsers.currentUsers).toEqual({});
+        pokerUsers.currentUsers = {};
+    });
+
+    it('should return all users', function() {
+        var user1 = {
+            id: 'foobar',
+            name: 'First user'
+        };
+        pokerUsers.add(user1);
+        expect(pokerUsers.getAll()).toEqual({'foobar': user1});
+        pokerUsers.currentUsers = {};
+    });
 });
