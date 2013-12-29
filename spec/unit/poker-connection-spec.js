@@ -13,4 +13,18 @@ describe('poker-connection', function() {
             "carddisplay": carddisplay
         });
     });
+
+    it('should set a connection', function() {
+        var connectionMock = {
+            on: function(type, callback) {}
+        };
+        spyOn(connectionMock, 'on');
+
+        var connectionHandler = pokerConnection.getNewHandler();
+        connectionHandler.init(null, null);
+        connectionHandler.setConnection(connectionMock);
+
+        expect(connectionMock.on).toHaveBeenCalledWith('message', jasmine.any(Function));
+        expect(connectionMock.on).toHaveBeenCalledWith('close', jasmine.any(Function));
+    });
 });
