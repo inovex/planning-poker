@@ -87,4 +87,32 @@ describe('poker-connection', function() {
         expect(connectionMock.on).toHaveBeenCalledWith('message', jasmine.any(Function));
         expect(connectionMock.on).toHaveBeenCalledWith('close', jasmine.any(Function));
     });
+
+    it('should emit message receival if message type is utf8', function(done) {
+        var connectionMock = {
+            on: function() {}
+        };
+        spyOn(connectionMock, 'on');
+
+        var connectionHandler = pokerConnection.getNewHandler();
+        connectionHandler.init(null, null);
+        connectionHandler.setConnection(connectionMock);
+
+        var expectedMessageData = {
+            type: 'login',
+            foo: 'bar'
+        };
+        var message = {
+            type: 'utf8',
+            utf8Data: JSON.stringify(expectedMessageData)
+        };
+
+        connectionHandler.on(expectedMessageData.type, function(messageData, scope) {
+            expect(messageData).toEqual(messageData);
+            expect(scope).toBe(connectionHandler);
+            done();
+        });
+
+        connectionHandler.onmessage(message);
+    });
 });
