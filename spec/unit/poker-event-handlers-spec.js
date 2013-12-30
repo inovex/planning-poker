@@ -98,4 +98,26 @@ describe('postChatMessageListener', function() {
             expect(modifiedCallback(expectedArguments[0], expectedArguments[1])).toEqual(expectedArguments);
         });
     });
+
+    describe('#registerAllForConnectionHandler', function() {
+        it('should register all listeners', function() {
+            var broadcasterMock = {};
+            var connectionHandlerMock = {
+                on: function() {}
+            };
+            spyOn(connectionHandlerMock, 'on');
+
+            var eventHandler = new PokerEventHandlers(broadcasterMock);
+            eventHandler.registerAllForConnectionHandler(connectionHandlerMock);
+
+            expect(connectionHandlerMock.on).toHaveBeenCalledWith('login', jasmine.any(Function));
+            expect(connectionHandlerMock.on).toHaveBeenCalledWith('get-initial-data', jasmine.any(Function));
+            expect(connectionHandlerMock.on).toHaveBeenCalledWith('play-card', jasmine.any(Function));
+            expect(connectionHandlerMock.on).toHaveBeenCalledWith('show-cards', jasmine.any(Function));
+            expect(connectionHandlerMock.on).toHaveBeenCalledWith('reset-cards', jasmine.any(Function));
+            expect(connectionHandlerMock.on).toHaveBeenCalledWith('post-userstory', jasmine.any(Function));
+            expect(connectionHandlerMock.on).toHaveBeenCalledWith('post-chat-message', jasmine.any(Function));
+            expect(connectionHandlerMock.on).toHaveBeenCalledWith('reset-room', jasmine.any(Function));
+        });
+    });
 });
