@@ -50,7 +50,27 @@ describe('poker-users', function() {
             pokerUsers.add(user1);
             pokerUsers.remove('foobar');
             expect(pokerUsers.currentUsers).toEqual({});
-            pokerUsers.currentUsers = {};
+            pokerUsers.removeAll();
+        });
+    });
+
+    describe('#removeAll', function() {
+        it('should remove all users', function() {
+            var user1 = {
+                id: 'user1',
+                name: 'First user',
+                role: 'developer'
+            };
+
+            var user2 = {
+                id: 'user2',
+                name: 'Second user',
+                role: 'developer'
+            };
+            pokerUsers.add(user1);
+            pokerUsers.add(user2);
+            pokerUsers.removeAll();
+            expect(pokerUsers.currentUsers).toEqual({});
         });
     });
 
