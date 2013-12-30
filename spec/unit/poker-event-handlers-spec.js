@@ -11,13 +11,16 @@ describe('postChatMessageListener', function() {
         expect(eventHandler.getUser()).toEqual(userMock);
     });
 
-    it('should broadcast a chat message with a user set', function() {
+    it('should broadcast a chat message', function() {
         var broadcasterMock = {
             broadcast: function(message) {}
         };
         spyOn(broadcasterMock, 'broadcast');
 
+        var userMock = {};
+
         var eventHandler = new pokerEventHandlers(broadcasterMock);
+        eventHandler.setUser(userMock);
 
         var messageData = {
             text: 'Hallo, ich bin Bernd das Brot'
@@ -26,7 +29,8 @@ describe('postChatMessageListener', function() {
 
         var expected = {
             "type": 'new-chat-message',
-            "text": messageData.text
+            "text": messageData.text,
+            "user": userMock
         };
         expect(broadcasterMock.broadcast).toHaveBeenCalledWith(expected);
     });
