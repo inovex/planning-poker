@@ -141,4 +141,13 @@ describe('poker-connection', function() {
             expect(callbackMock.login).not.toHaveBeenCalled();
         });
     });
+
+    describe('#setUser/#getUser', function() {
+        it('sets and gets a user', function() {
+            var userMock = {};
+            var connectionHandler = pokerConnection.getNewHandler();
+            connectionHandler.setUser(userMock);
+            expect(connectionHandler.getUser()).toBe(userMock);
+        });
+    });
 });
