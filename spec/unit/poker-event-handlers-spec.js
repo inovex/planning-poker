@@ -71,4 +71,16 @@ describe('postChatMessageListener', function() {
             expect(sendMessage).toThrow('Cannot post a chat message without a valid user');
         });
     });
+
+    describe('#createCallback', function() {
+        it('should create a callback with accessible "this" variable for the callbacks', function() {
+            var broadcasterMock = {};
+            var eventHandler = new pokerEventHandlers(broadcasterMock);
+            var originalCallback = function() {
+                return this;
+            };
+            var modifiedCallback = eventHandler.createCallback(originalCallback);
+            expect(modifiedCallback()).toBe(eventHandler);
+        });
+    });
 });
