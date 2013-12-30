@@ -29,8 +29,8 @@ describe('poker-connection', function() {
         });
     });
 
-    describe('#setConnection', function() {
-        it('should set a connection', function() {
+    describe('#setConnection/#getConnection', function() {
+        it('should set and get a connection', function() {
             var connectionMock = {
                 on: function(type, callback) {}
             };
@@ -42,6 +42,7 @@ describe('poker-connection', function() {
 
             expect(connectionMock.on).toHaveBeenCalledWith('message', jasmine.any(Function));
             expect(connectionMock.on).toHaveBeenCalledWith('close', jasmine.any(Function));
+            expect(connectionHandler.getConnection()).toBe(connectionMock);
         });
     });
 
