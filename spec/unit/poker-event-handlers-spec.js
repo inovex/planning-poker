@@ -1,4 +1,4 @@
-var pokerEventHandlers = require('../../lib/poker-event-handlers'),
+var PokerEventHandlers = require('../../lib/poker-event-handlers'),
     pokerBroadcaster = require('../../lib/poker-broadcaster');
 
 describe('postChatMessageListener', function() {
@@ -6,7 +6,7 @@ describe('postChatMessageListener', function() {
         it('should set and get a user', function() {
             var userMock = {};
             var broadcasterMock = {};
-            var eventHandler = new pokerEventHandlers(broadcasterMock);
+            var eventHandler = new PokerEventHandlers(broadcasterMock);
 
             eventHandler.setUser(userMock);
             expect(eventHandler.getUser()).toEqual(userMock);
@@ -16,7 +16,7 @@ describe('postChatMessageListener', function() {
     describe('#hasUser', function() {
         it('should be false when no user is set', function() {
             var broadcasterMock = {};
-            var eventHandler = new pokerEventHandlers(broadcasterMock);
+            var eventHandler = new PokerEventHandlers(broadcasterMock);
 
             expect(eventHandler.hasUser()).toBe(false);
         });
@@ -26,7 +26,7 @@ describe('postChatMessageListener', function() {
             var userMock = {
                 id: 'foobar'
             };
-            var eventHandler = new pokerEventHandlers(broadcasterMock);
+            var eventHandler = new PokerEventHandlers(broadcasterMock);
             eventHandler.setUser(userMock);
 
             expect(eventHandler.hasUser()).toBe(true);
@@ -44,7 +44,7 @@ describe('postChatMessageListener', function() {
                 id: 'foobar'
             };
 
-            var eventHandler = new pokerEventHandlers(broadcasterMock);
+            var eventHandler = new PokerEventHandlers(broadcasterMock);
             eventHandler.setUser(userMock);
 
             var messageData = {
@@ -64,7 +64,7 @@ describe('postChatMessageListener', function() {
             var broadcasterMock = {
                 broadcast: function() {}
             };
-            var eventHandler = new pokerEventHandlers(broadcasterMock);
+            var eventHandler = new PokerEventHandlers(broadcasterMock);
             var sendMessage = function() {
                 eventHandler.postChatMessageListener({})
             };
@@ -75,12 +75,27 @@ describe('postChatMessageListener', function() {
     describe('#createCallback', function() {
         it('should create a callback with accessible "this" variable for the callbacks', function() {
             var broadcasterMock = {};
-            var eventHandler = new pokerEventHandlers(broadcasterMock);
+            var eventHandler = new PokerEventHandlers(broadcasterMock);
             var originalCallback = function() {
                 return this;
             };
             var modifiedCallback = eventHandler.createCallback(originalCallback);
             expect(modifiedCallback()).toBe(eventHandler);
+        });
+
+        it('should pass arguments to the original function', function() {
+            var broadcasterMock = {};
+            var eventHandler = new PokerEventHandlers(broadcasterMock);
+            var originalCallback = function(id, name) {
+                return arguments;
+            };
+            var modifiedCallback = eventHandler.createCallback(originalCallback);
+
+            var expectedArguments = {
+                0: 'foobar',
+                1: 'bernd-das-brot'
+            };
+            expect(modifiedCallback(expectedArguments[0], expectedArguments[1])).toEqual(expectedArguments);
         });
     });
 });
