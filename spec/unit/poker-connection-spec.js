@@ -1,9 +1,5 @@
 var pokerConnection = require('../../lib/poker-connection');
 
-// TODO: remove asap. This is ugly
-broadcastUsers = function() {};
-broadcastCards = function() {};
-
 describe('poker-connection', function() {
     describe('#getNewHandler', function() {
         it('creates a new and unique handler', function() {

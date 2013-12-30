@@ -198,4 +198,28 @@ describe('postChatMessageListener', function() {
             pokerUsers.removeAll();
         });
     });
+
+    describe('#getInitialDataListener', function() {
+        var broadcasterMock = {};
+        var eventHandler = new PokerEventHandlers(broadcasterMock);
+
+        var connectionMock = {
+            sendUTF: function() {}
+        };
+
+        var connectionHandlerMock = {
+            getConnection: function() {}
+        };
+
+        it('should send the initial data', function() {
+            spyOn(connectionHandlerMock, 'getConnection').andReturn(connectionMock);
+            spyOn(connectionMock, 'sendUTF');
+
+            eventHandler.getInitialDataListener({}, connectionHandlerMock);
+            expect(connectionHandlerMock.getConnection).toHaveBeenCalled();
+            expect(connectionMock.sendUTF).toHaveBeenCalledWith(JSON.stringify(getUserUpdateList()));
+            expect(connectionMock.sendUTF).toHaveBeenCalledWith(JSON.stringify(getCardUpdateList()));
+            expect(connectionMock.sendUTF).toHaveBeenCalledWith(JSON.stringify(getUserstoryUpdate()));
+        });
+    });
 });

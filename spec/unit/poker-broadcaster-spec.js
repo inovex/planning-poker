@@ -1,5 +1,12 @@
 var pokerBroadcaster = require('../../lib/poker-broadcaster');
 
+// TODO: remove asap. This is ugly
+broadcastUsers = function() {};
+broadcastCards = function() {};
+getUserUpdateList = function() {};
+getCardUpdateList = function() {};
+getUserstoryUpdate = function() {};
+
 describe('poker-broadcaster', function() {
     describe('#broadcast', function() {
         it('should broadcast a JSON message as string', function() {
