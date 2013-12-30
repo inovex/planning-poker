@@ -40,7 +40,9 @@ describe('postChatMessageListener', function() {
             };
             spyOn(broadcasterMock, 'broadcast');
 
-            var userMock = {};
+            var userMock = {
+                id: 'foobar'
+            };
 
             var eventHandler = new pokerEventHandlers(broadcasterMock);
             eventHandler.setUser(userMock);
@@ -66,7 +68,7 @@ describe('postChatMessageListener', function() {
             var sendMessage = function() {
                 eventHandler.postChatMessageListener({})
             };
-            expect(sendMessage).toThrow();
+            expect(sendMessage).toThrow('Cannot post a chat message without a valid user');
         });
     });
 });
