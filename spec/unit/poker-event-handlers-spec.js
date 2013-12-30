@@ -128,12 +128,12 @@ describe('postChatMessageListener', function() {
             var connectionMock = {
                 sendUTF: function() {}
             };
+            spyOn(connectionMock, 'sendUTF');
 
             var connectionHandlerMock = {
-                getConnection: function() {
-                    return connectionMock
-                }
+                getConnection: function() {}
             };
+            spyOn(connectionHandlerMock, 'getConnection').andReturn(connectionMock);
 
             var userName = 'Bernd das Brot';
             var userRole = 'scrumMaster';
@@ -145,8 +145,15 @@ describe('postChatMessageListener', function() {
                 }
             };
             eventHandler.loginListener(messageData, connectionHandlerMock);
+            expect(connectionHandlerMock.getConnection).toHaveBeenCalled();
 
-            eventHandler.on('login', function() {
+            eventHandler.on('login', function(newUser) {
+                var expectedJsonMessage = {
+                    type: 'login',
+                    user: newUser
+                };
+                expect(connectionMock.sendUTF).toHaveBeenCalledWith(JSON.stringify(expectedJsonMessage));
+
                 // Cleanup
                 pokerUsers.removeAll();
                 done();
