@@ -25,7 +25,10 @@ pokerBroadcaster.init(websocketServer);
 websocketServer.on('request', function(request) {
     var connectionHandler = pokerConnection.getNewHandler();
     connectionHandler.init(pokerUsers, pokerCards);
-    pokerEventHandlers.registerAllForConnectionHandler(connectionHandler);
+
+    var eventHandlers = new pokerEventHandlers(pokerBroadcaster);
+    eventHandlers.registerAllForConnectionHandler(connectionHandler);
+    
     connectionHandler.setConnection(request.accept());
 
     console.log((new Date()) + ' Connection accepted.');
