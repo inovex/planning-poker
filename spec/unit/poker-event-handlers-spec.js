@@ -23,7 +23,9 @@ describe('postChatMessageListener', function() {
 
         it('should be true when a user is set', function() {
             var broadcasterMock = {};
-            var userMock = {};
+            var userMock = {
+                id: 'foobar'
+            };
             var eventHandler = new pokerEventHandlers(broadcasterMock);
             eventHandler.setUser(userMock);
 
