@@ -153,6 +153,11 @@ describe('postChatMessageListener', function() {
                     user: newUser
                 };
                 expect(connectionMock.sendUTF).toHaveBeenCalledWith(JSON.stringify(expectedJsonMessage));
+                expect(eventHandler.getUser()).toBe(newUser);
+
+                var expectedUsers = {};
+                expectedUsers[newUser.id] = newUser;
+                expect(pokerUsers.getAll()).toEqual(expectedUsers);
 
                 // Cleanup
                 pokerUsers.removeAll();
