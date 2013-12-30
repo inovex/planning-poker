@@ -33,6 +33,54 @@ describe('postChatMessageListener', function() {
         });
     });
 
+    describe('#createCallback', function() {
+        var broadcasterMock = {};
+        var eventHandler = new PokerEventHandlers(broadcasterMock);
+
+        it('should create a callback with accessible "this" variable for the callbacks', function() {
+            var originalCallback = function() {
+                return this;
+            };
+            var modifiedCallback = eventHandler.createCallback(originalCallback);
+            expect(modifiedCallback()).toBe(eventHandler);
+        });
+
+        it('should pass arguments to the original function', function() {
+            var originalCallback = function(id, name) {
+                return arguments;
+            };
+            var modifiedCallback = eventHandler.createCallback(originalCallback);
+
+            var expectedArguments = {
+                0: 'foobar',
+                1: 'bernd-das-brot'
+            };
+            expect(modifiedCallback(expectedArguments[0], expectedArguments[1])).toEqual(expectedArguments);
+        });
+    });
+
+    describe('#registerAllForConnectionHandler', function() {
+        it('should register all listeners', function() {
+            var broadcasterMock = {};
+            var connectionHandlerMock = {
+                on: function() {}
+            };
+            spyOn(connectionHandlerMock, 'on');
+
+            var eventHandler = new PokerEventHandlers(broadcasterMock);
+            eventHandler.registerAllForConnectionHandler(connectionHandlerMock);
+
+            expect(connectionHandlerMock.on).toHaveBeenCalledWith('login', jasmine.any(Function));
+            expect(connectionHandlerMock.on).toHaveBeenCalledWith('get-initial-data', jasmine.any(Function));
+            expect(connectionHandlerMock.on).toHaveBeenCalledWith('play-card', jasmine.any(Function));
+            expect(connectionHandlerMock.on).toHaveBeenCalledWith('show-cards', jasmine.any(Function));
+            expect(connectionHandlerMock.on).toHaveBeenCalledWith('reset-cards', jasmine.any(Function));
+            expect(connectionHandlerMock.on).toHaveBeenCalledWith('post-userstory', jasmine.any(Function));
+            expect(connectionHandlerMock.on).toHaveBeenCalledWith('post-chat-message', jasmine.any(Function));
+            expect(connectionHandlerMock.on).toHaveBeenCalledWith('reset-room', jasmine.any(Function));
+        });
+    });
+
     describe('#postChatMessageListener', function() {
         it('should broadcast a chat message', function() {
             var broadcasterMock = {
@@ -69,55 +117,6 @@ describe('postChatMessageListener', function() {
                 eventHandler.postChatMessageListener({})
             };
             expect(sendMessage).toThrow('Cannot post a chat message without a valid user');
-        });
-    });
-
-    describe('#createCallback', function() {
-        it('should create a callback with accessible "this" variable for the callbacks', function() {
-            var broadcasterMock = {};
-            var eventHandler = new PokerEventHandlers(broadcasterMock);
-            var originalCallback = function() {
-                return this;
-            };
-            var modifiedCallback = eventHandler.createCallback(originalCallback);
-            expect(modifiedCallback()).toBe(eventHandler);
-        });
-
-        it('should pass arguments to the original function', function() {
-            var broadcasterMock = {};
-            var eventHandler = new PokerEventHandlers(broadcasterMock);
-            var originalCallback = function(id, name) {
-                return arguments;
-            };
-            var modifiedCallback = eventHandler.createCallback(originalCallback);
-
-            var expectedArguments = {
-                0: 'foobar',
-                1: 'bernd-das-brot'
-            };
-            expect(modifiedCallback(expectedArguments[0], expectedArguments[1])).toEqual(expectedArguments);
-        });
-    });
-
-    describe('#registerAllForConnectionHandler', function() {
-        it('should register all listeners', function() {
-            var broadcasterMock = {};
-            var connectionHandlerMock = {
-                on: function() {}
-            };
-            spyOn(connectionHandlerMock, 'on');
-
-            var eventHandler = new PokerEventHandlers(broadcasterMock);
-            eventHandler.registerAllForConnectionHandler(connectionHandlerMock);
-
-            expect(connectionHandlerMock.on).toHaveBeenCalledWith('login', jasmine.any(Function));
-            expect(connectionHandlerMock.on).toHaveBeenCalledWith('get-initial-data', jasmine.any(Function));
-            expect(connectionHandlerMock.on).toHaveBeenCalledWith('play-card', jasmine.any(Function));
-            expect(connectionHandlerMock.on).toHaveBeenCalledWith('show-cards', jasmine.any(Function));
-            expect(connectionHandlerMock.on).toHaveBeenCalledWith('reset-cards', jasmine.any(Function));
-            expect(connectionHandlerMock.on).toHaveBeenCalledWith('post-userstory', jasmine.any(Function));
-            expect(connectionHandlerMock.on).toHaveBeenCalledWith('post-chat-message', jasmine.any(Function));
-            expect(connectionHandlerMock.on).toHaveBeenCalledWith('reset-room', jasmine.any(Function));
         });
     });
 });
