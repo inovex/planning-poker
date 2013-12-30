@@ -1,5 +1,5 @@
 var PokerEventHandlers = require('../../lib/poker-event-handlers'),
-    pokerBroadcaster = require('../../lib/poker-broadcaster');
+    pokerUsers = require('../../lib/poker-users');
 
 describe('postChatMessageListener', function() {
     describe('#setUser/#getUser', function() {
@@ -117,6 +117,40 @@ describe('postChatMessageListener', function() {
                 eventHandler.postChatMessageListener({})
             };
             expect(sendMessage).toThrow('Cannot post a chat message without a valid user');
+        });
+    });
+
+    describe('#loginListener', function() {
+        var broadcasterMock = {};
+        var eventHandler = new PokerEventHandlers(broadcasterMock);
+
+        it('logs in a new user', function(done) {
+            var connectionMock = {
+                sendUTF: function() {}
+            };
+
+            var connectionHandlerMock = {
+                getConnection: function() {
+                    return connectionMock
+                }
+            };
+
+            var userName = 'Bernd das Brot';
+            var userRole = 'scrumMaster';
+
+            var messageData = {
+                user: {
+                    name: userName,
+                    role: userRole
+                }
+            };
+            eventHandler.loginListener(messageData, connectionHandlerMock);
+
+            eventHandler.on('login', function() {
+                // Cleanup
+                pokerUsers.removeAll();
+                done();
+            });
         });
     });
 });
