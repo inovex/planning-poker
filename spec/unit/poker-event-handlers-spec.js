@@ -20,6 +20,15 @@ describe('postChatMessageListener', function() {
 
             expect(eventHandler.hasUser()).toBe(false);
         });
+
+        it('should be true when a user is set', function() {
+            var broadcasterMock = {};
+            var userMock = {};
+            var eventHandler = new pokerEventHandlers(broadcasterMock);
+            eventHandler.setUser(userMock);
+
+            expect(eventHandler.hasUser()).toBe(true);
+        });
     });
 
     describe('#postChatMessageListener', function() {
