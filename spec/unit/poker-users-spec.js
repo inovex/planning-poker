@@ -10,7 +10,7 @@ describe('poker-users', function() {
             pokerUsers.add(someUser);
 
             expect(pokerUsers.currentUsers).toEqual({'heinz': someUser});
-            pokerUsers.currentUsers = {};
+            pokerUsers.removeAll();
         });
 
         it('should add multiple users', function() {
@@ -37,7 +37,7 @@ describe('poker-users', function() {
                 'user2': user2,
                 'user3': user3
             });
-            pokerUsers.currentUsers = {};
+            pokerUsers.removeAll();
         });
     });
 
@@ -82,7 +82,7 @@ describe('poker-users', function() {
             };
             pokerUsers.add(user1);
             expect(pokerUsers.getAll()).toEqual({'foobar': user1});
-            pokerUsers.currentUsers = {};
+            pokerUsers.removeAll();
         });
     });
 });

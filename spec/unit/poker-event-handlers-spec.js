@@ -124,15 +124,16 @@ describe('postChatMessageListener', function() {
         var broadcasterMock = {};
         var eventHandler = new PokerEventHandlers(broadcasterMock);
 
-        it('logs in a new user', function(done) {
-            var connectionMock = {
-                sendUTF: function() {}
-            };
-            spyOn(connectionMock, 'sendUTF');
+        var connectionMock = {
+            sendUTF: function() {}
+        };
 
-            var connectionHandlerMock = {
-                getConnection: function() {}
-            };
+        var connectionHandlerMock = {
+            getConnection: function() {}
+        };
+
+        it('logs in a new user', function(done) {
+            spyOn(connectionMock, 'sendUTF');
             spyOn(connectionHandlerMock, 'getConnection').andReturn(connectionMock);
 
             var userName = 'Bernd das Brot';
@@ -163,6 +164,38 @@ describe('postChatMessageListener', function() {
                 pokerUsers.removeAll();
                 done();
             });
+        });
+
+        it('logs in a existing user', function() {
+            spyOn(connectionMock, 'sendUTF');
+            spyOn(connectionHandlerMock, 'getConnection').andReturn(connectionMock);
+
+            var userMock = {
+                id: 'dc99ace27be26fda36cedf06dae67d603a05fe65',
+                name: 'Bernd das Brot',
+                role: 'productOwner'
+            };
+
+            var messageData = {
+                user: userMock
+            };
+
+            eventHandler.loginListener(messageData, connectionHandlerMock);
+            expect(connectionHandlerMock.getConnection).toHaveBeenCalled();
+            expect(eventHandler.getUser()).toBe(userMock);
+
+            var expectedUsers = {};
+            expectedUsers[userMock.id] = userMock;
+            expect(pokerUsers.getAll()).toEqual(expectedUsers);
+
+            var expectedJsonMessage = {
+                type: 'login',
+                user: userMock
+            };
+            expect(connectionMock.sendUTF).toHaveBeenCalledWith(JSON.stringify(expectedJsonMessage));
+
+            // Cleanup
+            pokerUsers.removeAll();
         });
     });
 });
