@@ -11,11 +11,11 @@
         "name": "Dominik Jungowski"
     },
     "dependencies": {
-        "express":      "*",
-        "ejs":          "*",
-        "iniparser":    "*",
-        "websocket":    "*",
-        "i18n":         "*",
-        "jasmine-node": "*"
+        "express":      "^3.9.0",
+        "ejs":          "^1.0.0",
+        "iniparser":    "^1.0.5",
+        "websocket":    "^1.0.8",
+        "i18n":         "^0.4.1",
+        "jasmine-node": "^1.14.3"
     }
 }
