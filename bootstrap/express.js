@@ -18,7 +18,7 @@ BootstrapExpress.prototype.bootstrap = function(config) {
 
 BootstrapExpress.prototype.configureI18n = function() {
     i18n.configure({
-        locales: ['en', 'de'],
+        locales: ['en', 'de', 'sp'],
         defaultLocale: this.config.locale.default,
         directory: this.config.filesystem.i18n,
         updateFiles: false

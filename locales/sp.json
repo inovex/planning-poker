@@ -1,0 +1,31 @@
+{
+	"title": "Planning Poker online",
+
+	"login-title": "Login",
+	"login-role": "Selecciona tu rol",
+	"login-name": "¿Cuál es tu nombre?",
+	"login-button": "Login",
+
+	"role-dev": "Desarrollador",
+	"role-productOwner": "Product Owner",
+	"role-scrumMaster": "Scrum Master",
+	"role-spectator": "Espectador",
+
+	"room-chat": "Chat",
+	"room-present": "En la sala",
+	"room-reset": "Limpiar sala",
+	"room-reset-confirm": "¿Seguro que quiere reiniciar? Se borrarán todas las historias de usuario.",
+	"room-youare": "Has accedido como",
+
+	"cards-reset": "Reiniciar tarjetas",
+	"cards-reset-confirm": "¿De verdad quieres reiniciar las tarjetas?",
+	"cards-show": "Ver tarjetas",
+
+	"userstory-current": "Histora de usuario actual",
+	"userstory-edit": "Editar historia de usuario",
+	"userstory-post": "Publicar historia de usuario",
+
+	"connection-interrupted": "Conexión interrumpida",
+	"connection-reconnecting": "intentando reconectar...",
+	"connection-broken": "No se pudo reconectar. Intentalo más tarde"
+}
